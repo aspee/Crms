@@ -6,6 +6,10 @@
 package crms;
 
 import java.awt.CardLayout;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -20,11 +24,27 @@ public class Home extends javax.swing.JFrame {
     public Home() {
         initComponents();
         Hello.setText("Hello, "+Database.getName());
-        Cards.add(new AddC(),"Add Criminal");
         Cards.add(new SearchC(),"Search Criminal");
+        Cards.add(new AddC(),"Add Criminal");
         cl = (CardLayout)(Cards.getLayout());
+        addWindowListener(exitListener);
+        
+        
     }
+    WindowListener exitListener = new WindowAdapter() {
 
+            @Override
+            public void windowClosing(WindowEvent e) {
+                int confirm = JOptionPane.showOptionDialog(Home.this,
+                        "Are You Sure to Log Off?",
+                        "Exit Confirmation", JOptionPane.YES_NO_OPTION,
+                        JOptionPane.QUESTION_MESSAGE, null, null, null);
+                if (confirm == JOptionPane.YES_OPTION) {
+                    dispose();
+                    new Login().setVisible(true);
+                }
+            }
+        };
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -41,9 +61,9 @@ public class Home extends javax.swing.JFrame {
         Hello = new javax.swing.JLabel();
         Cards = new javax.swing.JPanel();
         jSeparator2 = new javax.swing.JSeparator();
-        jButton4 = new javax.swing.JButton();
+        LO = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
 
         jToolBar1.setFloatable(false);
         jToolBar1.setRollover(true);
@@ -85,8 +105,13 @@ public class Home extends javax.swing.JFrame {
 
         Cards.setLayout(new java.awt.CardLayout());
 
-        jButton4.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jButton4.setText("Log Out");
+        LO.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        LO.setText("Log Out");
+        LO.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                LOActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -102,7 +127,7 @@ public class Home extends javax.swing.JFrame {
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(Hello, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButton4)))
+                        .addComponent(LO)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -112,7 +137,7 @@ public class Home extends javax.swing.JFrame {
                 .addGap(8, 8, 8)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(Hello, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton4))
+                    .addComponent(LO))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -134,6 +159,18 @@ public class Home extends javax.swing.JFrame {
         // TODO add your handling code here:
         cl.show(Cards,"Search Criminal");
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void LOActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LOActionPerformed
+        // TODO add your handling code here:
+        int confirm = JOptionPane.showOptionDialog(Home.this,
+                        "Are You Sure to Log Off?",
+                        "Exit Confirmation", JOptionPane.YES_NO_OPTION,
+                        JOptionPane.QUESTION_MESSAGE, null, null, null);
+                if (confirm == JOptionPane.YES_OPTION) {
+                    dispose();
+                    new Login().setVisible(true);
+                } 
+    }//GEN-LAST:event_LOActionPerformed
 
     /**
      * @param args the command line arguments
@@ -173,10 +210,10 @@ public class Home extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel Cards;
     private javax.swing.JLabel Hello;
+    private javax.swing.JButton LO;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JToolBar jToolBar1;
     // End of variables declaration//GEN-END:variables
