@@ -6,10 +6,16 @@
 package crms;
 
 import java.awt.CardLayout;
+import java.awt.Component;
+import java.awt.Container;
+import java.awt.TextField;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import javax.swing.JOptionPane;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
+import javax.swing.text.JTextComponent;
 
 /**
  *
@@ -31,6 +37,7 @@ public class Home extends javax.swing.JFrame {
         
         
     }
+    
     WindowListener exitListener = new WindowAdapter() {
 
             @Override
@@ -73,6 +80,11 @@ public class Home extends javax.swing.JFrame {
         jButton3.setFocusable(false);
         jButton3.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton3.setMargin(new java.awt.Insets(5, 5, 5, 5));
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
         jToolBar1.add(jButton3);
 
         jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/res/Add.png"))); // NOI18N
@@ -171,6 +183,10 @@ public class Home extends javax.swing.JFrame {
                     new Login().setVisible(true);
                 } 
     }//GEN-LAST:event_LOActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton3ActionPerformed
 
     /**
      * @param args the command line arguments
