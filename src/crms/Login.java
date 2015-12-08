@@ -54,7 +54,6 @@ public class Login extends javax.swing.JFrame implements ActionListener, KeyList
     private void initComponents() {
 
         lLogo = new javax.swing.JLabel();
-        lValid = new javax.swing.JLabel();
         lCaps = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         bLogin = new javax.swing.JButton();
@@ -62,6 +61,7 @@ public class Login extends javax.swing.JFrame implements ActionListener, KeyList
         lUsername = new javax.swing.JLabel();
         lPassword = new javax.swing.JLabel();
         tfPassword = new javax.swing.JPasswordField();
+        lValid = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Login");
@@ -69,10 +69,6 @@ public class Login extends javax.swing.JFrame implements ActionListener, KeyList
         lLogo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lLogo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/res/insignia.alpha.png"))); // NOI18N
         lLogo.setToolTipText("");
-
-        lValid.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        lValid.setText(" ");
-        lValid.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
         lCaps.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         lCaps.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
@@ -111,6 +107,10 @@ public class Login extends javax.swing.JFrame implements ActionListener, KeyList
             }
         });
 
+        lValid.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lValid.setText(" ");
+        lValid.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -127,7 +127,8 @@ public class Login extends javax.swing.JFrame implements ActionListener, KeyList
                             .addComponent(tfUsername, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(tfPassword, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addGap(200, 200, 200)
+                        .addComponent(lValid, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(bLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
@@ -146,9 +147,14 @@ public class Login extends javax.swing.JFrame implements ActionListener, KeyList
                     .addComponent(lPassword)
                     .addComponent(tfPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(bLogin)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(bLogin)
+                    .addComponent(lValid))
                 .addGap(18, 18, 18))
         );
+
+        lValid.getAccessibleContext().setAccessibleName("jLabel4");
+        lValid.getAccessibleContext().setAccessibleDescription("");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -164,31 +170,19 @@ public class Login extends javax.swing.JFrame implements ActionListener, KeyList
                     .addGroup(layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(lCaps, javax.swing.GroupLayout.PREFERRED_SIZE, 308, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lValid, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addGap(30, 30, 30))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(layout.createSequentialGroup()
-                            .addGap(141, 141, 141)
-                            .addComponent(lValid))
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                            .addContainerGap()
-                            .addComponent(lLogo)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(lLogo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lCaps, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-
-        lValid.getAccessibleContext().setAccessibleName("jLabel4");
-        lValid.getAccessibleContext().setAccessibleDescription("");
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
