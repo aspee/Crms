@@ -12,6 +12,9 @@ import java.awt.TextField;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
@@ -27,16 +30,32 @@ public class Home extends javax.swing.JFrame {
      * Creates new form Home
      */
     CardLayout cl;
+    Setting setting;
+    Boolean clicked;
     public Home() {
+        //setUndecorated(true);
         initComponents();
-        Hello.setText("Hello, "+Database.getName());
+        //Hello.setText("Hello, "+Database.getName());
+        setName();
         Cards.add(new SearchC(),"Search Criminal");
         Cards.add(new AddC(),"Add Criminal");
         Cards.add(new AddU(),"Add User");
         cl = (CardLayout)(Cards.getLayout());
         addWindowListener(exitListener);
+        clicked=false;
+        setting=new Setting(Home.this,false);
+        LO.setIcon(new javax.swing.ImageIcon(getClass().getResource("/res/Options.png")));
+       // System.out.println(""+LO.getLocation().x);
+        //System.out.println(""+LO.getLocation().y);
         
-        
+    }
+    public void setName()
+    {
+        try {
+            Hello.setText("Hello, "+Database.getName());
+        } catch (SQLException ex) {
+            Logger.getLogger(Home.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
     WindowListener exitListener = new WindowAdapter() {
@@ -62,6 +81,7 @@ public class Home extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jMenu1 = new javax.swing.JMenu();
         jToolBar1 = new javax.swing.JToolBar();
         jButton3 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
@@ -71,6 +91,8 @@ public class Home extends javax.swing.JFrame {
         Cards = new javax.swing.JPanel();
         jSeparator2 = new javax.swing.JSeparator();
         LO = new javax.swing.JButton();
+
+        jMenu1.setText("jMenu1");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setPreferredSize(new java.awt.Dimension(900, 700));
@@ -134,7 +156,11 @@ public class Home extends javax.swing.JFrame {
         Cards.setLayout(new java.awt.CardLayout());
 
         LO.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        LO.setText("Log Out");
+        LO.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                LOFocusLost(evt);
+            }
+        });
         LO.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 LOActionPerformed(evt);
@@ -151,9 +177,9 @@ public class Home extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(Hello, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(29, 29, 29)
-                        .addComponent(LO)
-                        .addGap(25, 25, 25))
+                        .addGap(18, 18, 18)
+                        .addComponent(LO, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(39, 39, 39))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addComponent(jToolBar1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -166,16 +192,16 @@ public class Home extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(8, 8, 8)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(Hello, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(LO))
+                    .addComponent(LO, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(Cards, javax.swing.GroupLayout.DEFAULT_SIZE, 575, Short.MAX_VALUE)
+                        .addComponent(Cards, javax.swing.GroupLayout.DEFAULT_SIZE, 578, Short.MAX_VALUE)
                         .addContainerGap())))
         );
 
@@ -196,14 +222,18 @@ public class Home extends javax.swing.JFrame {
 
     private void LOActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LOActionPerformed
         // TODO add your handling code here:
-        int confirm = JOptionPane.showOptionDialog(Home.this,
-                        "Are You Sure to Log Off?",
-                        "Exit Confirmation", JOptionPane.YES_NO_OPTION,
-                        JOptionPane.QUESTION_MESSAGE, null, null, null);
-                if (confirm == JOptionPane.YES_OPTION) {
-                    dispose();
-                    new Login().setVisible(true);
-                } 
+        if(clicked)
+        {
+           setting.setVisible(false);
+           clicked=false;
+        }
+        else
+        {
+            setting.setVisible(true);
+            clicked=true;
+        }
+        
+        
     }//GEN-LAST:event_LOActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
@@ -214,6 +244,10 @@ public class Home extends javax.swing.JFrame {
         // TODO add your handling code here:
         cl.show(Cards,"Add User");
     }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void LOFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_LOFocusLost
+
+    }//GEN-LAST:event_LOFocusLost
 
     /**
      * @param args the command line arguments
@@ -258,6 +292,7 @@ public class Home extends javax.swing.JFrame {
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
+    private javax.swing.JMenu jMenu1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JToolBar jToolBar1;
     // End of variables declaration//GEN-END:variables

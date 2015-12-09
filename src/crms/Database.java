@@ -24,15 +24,43 @@ FOREIGN KEY(Role) REFERENCES mtblRoles(RID),
 CONSTRAINT chk_Mobile CHECK (Mobile NOT LIKE '%[^0-9]%')
 );
 insert into tblUsers values(null,'sushant','sushant',AES_ENCRYPT('mrrobot','rycbarm'),1,9892189354,'Vikhroli',now(),true);
+_____________
+create table mtblCriminals
+(
+cid bigint AUTO_INCREMENT,
+image longblob,
+image_size int(11), 
+ad date,
+fname varchar(20),
+mname varchar(20),
+lname varchar(20),
+dob date,
+state varchar(20),
+city varchar(20),
+address varchar(100),
+gender varchar(1),
+mstatus varchar(10),
+color varchar(20),
+hair varchar(20),
+bg varchar(20),
+height double,
+weight double,
+eyes varchar(20),
+facility varchar(20),
+section varchar(20),
+cell varchar(20),
+ai varchar(500),
+primary key(cid)
+);
 */
 
 import java.sql.*;
 public class Database 
 {
-    Connection con;
+    static Connection con;
     PreparedStatement pst;
-    ResultSet rs;
-    Statement st;
+    static ResultSet rs;
+    static Statement st;
     static int id=0;
     static String name=null;
     Database()
@@ -54,18 +82,22 @@ public class Database
     public static int getID()
     {   return id;
     }
-    public Statement getStatement()
+    public static Statement getStatement()
     {
         return st;
     }
-    public Connection getConnection()
+    public static Connection getConnection()
     {
+        
         return con;
     }
     
-    public static String getName()
-    {
-        return name;
+    public static String getName() throws SQLException
+    {   
+        rs=st.executeQuery("select * from tblUsers where id="+id);
+        rs.next();
+        return rs.getString(2);
+        
     }
     public int checkLogin(String uname,String pwd)
     {
