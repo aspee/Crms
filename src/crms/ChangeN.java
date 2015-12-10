@@ -152,11 +152,7 @@ public class ChangeN extends javax.swing.JDialog {
             Logger.getLogger(ChangeN.class.getName()).log(Level.SEVERE, null, ex);
         }
         Home h=(Home)parent;
-        try {
-            h.setName();
-        } catch (SQLException ex) {
-            Logger.getLogger(ChangeN.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        h.setName();
         dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
 
