@@ -8,32 +8,85 @@ package crms;
 import java.awt.Component;
 import java.awt.Container;
 import java.awt.Window;
+import java.io.File;
+import java.io.FileInputStream;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 import javax.swing.filechooser.FileNameExtensionFilter;
-import javax.swing.text.JTextComponent;
 
 /**
  *
  * @author Orlon
  */
 public class AddC extends javax.swing.JPanel {
+
     /**
      * Creates new form AddC
      */
+    JFileChooser chooser;
+    PreparedStatement pst;
+
     public AddC() {
         initComponents();
-        
-        
-        
+
+        try {
+            pst = Database.getConnection().prepareStatement("insert into mtblCriminals values(null,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+        } catch (SQLException ex) {
+            Logger.getLogger(AddC.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
     }
-    
-    
+
+    public void setAll() {
+        try {
+            Date dateFromDateChooser = tdob.getDate();
+            Date dateFromDateChooser1 = tArrestdate.getDate();
+            String dateString = String.format("%1$tY-%1$tm-%1$td", dateFromDateChooser);
+            String dateString1 = String.format("%1$tY-%1$tm-%1$td", dateFromDateChooser1);
+            //pst.setDate(4,Date);
+            // pst.setNull(1,);
+            //pst.setInt(2,);
+            //pst.setb;
+            storeImage();
+            // pst.setBinaryStream(2,);
+            pst.setString(3, dateString1);
+            pst.setString(4, dateString1);
+            pst.setString(4, tFirst.getText());
+            pst.setString(5, tMiddle.getText());
+            pst.setString(6, tLast.getText());
+            pst.setString(7, dateString);
+            pst.setString(8, cState.getSelectedItem().toString());
+            pst.setString(9, cCity.getSelectedItem().toString());
+            pst.setString(10, tAddress.getText());
+            pst.setString(11, rMale.isSelected() ? "M" : rFemale.isSelected() ? "F" : "U");
+            pst.setString(12, cMarital.getSelectedItem().toString());
+            pst.setString(13, tColor.getText());
+            pst.setString(14, cHair.getSelectedItem().toString());
+            pst.setString(15, cBloodgroup.getSelectedItem().toString());
+            Double Height =Double.parseDouble(tFoot.getText() + "." + tInch.getText());
+            pst.setDouble(16, Height);
+            pst.setDouble(17,Double.parseDouble(tWeight.getText()));
+            pst.setString(18, tEyes.getText());
+            pst.setString(19, tFacility.getText());
+            pst.setString(20, tSection.getText());
+            pst.setString(21, tCell.getText());
+            pst.setString(22, tAdditional.getText());
+            pst.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(AddC.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -324,6 +377,11 @@ public class AddC extends javax.swing.JPanel {
         jLayeredPane1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
         tFoot.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        tFoot.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tFootActionPerformed(evt);
+            }
+        });
 
         lInch.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         lInch.setText("inch");
@@ -696,14 +754,14 @@ public class AddC extends javax.swing.JPanel {
 
     private void bBrowseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bBrowseActionPerformed
         // TODO add your handling code here:
-       JFileChooser chooser = new JFileChooser();
-    FileNameExtensionFilter filter = new FileNameExtensionFilter(
-        "JPG & PNG Images", "jpg", "png");
-    chooser.setFileFilter(filter);
-    int returnVal = chooser.showOpenDialog(this);
-    if(returnVal == JFileChooser.APPROVE_OPTION) {
-       IMAGE.setIcon(new ImageIcon(""+chooser.getSelectedFile()));
-    }
+        chooser = new JFileChooser();
+        FileNameExtensionFilter filter = new FileNameExtensionFilter(
+                "JPG & PNG Images", "jpg", "png");
+        chooser.setFileFilter(filter);
+        int returnVal = chooser.showOpenDialog(this);
+        if (returnVal == JFileChooser.APPROVE_OPTION) {
+            IMAGE.setIcon(new ImageIcon("" + chooser.getSelectedFile()));
+        }
     }//GEN-LAST:event_bBrowseActionPerformed
 
     private void tMiddleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tMiddleActionPerformed
@@ -744,15 +802,16 @@ public class AddC extends javax.swing.JPanel {
     }//GEN-LAST:event_cMaritalActionPerformed
 
     private void bSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bSaveActionPerformed
-        // TODO add your handling code here:
-        Date dateFromDateChooser =tdob.getDate();
-        String dateString = String.format("%1$td-%1$tm-%1$tY", dateFromDateChooser);
-        
+        setAll();
     }//GEN-LAST:event_bSaveActionPerformed
 
     private void bCrimesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bCrimesActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_bCrimesActionPerformed
+
+    private void tFootActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tFootActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tFootActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -820,5 +879,32 @@ public class AddC extends javax.swing.JPanel {
     private javax.swing.JTextField tWeight;
     private com.toedter.calendar.JDateChooser tdob;
     // End of variables declaration//GEN-END:variables
-    
+
+    private void storeImage() {
+        try {
+            String filePath = null;
+            File file = chooser.getSelectedFile();
+            if (file != null) {
+                filePath = file.getPath();
+            }
+
+            if (filePath != null) {
+                //pst = .prepareStatement("insert into image values(?,?)");
+                FileInputStream fileInputStream = new FileInputStream(filePath);
+                byte b[] = new byte[fileInputStream.available()];
+                fileInputStream.read(b);
+                fileInputStream.close();
+                //pst.setObject(1, jTextField1.getText());
+                pst.setBytes(1, b);
+                pst.setInt(2,1);
+
+            }
+
+        } catch (Exception e) {
+
+            JOptionPane.showMessageDialog(this, e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
 }
