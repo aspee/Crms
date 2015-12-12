@@ -10,7 +10,9 @@ import java.awt.Container;
 import java.awt.Window;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Date;
 import java.util.logging.Level;
@@ -19,6 +21,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
@@ -35,11 +38,13 @@ public class AddC extends javax.swing.JPanel {
      */
     JFileChooser chooser;
     PreparedStatement pst;
+    private boolean blank=true;
 
     public AddC() {
         initComponents();
 
         try {
+            CID.setText("#" + currentID());
             pst = Database.getConnection().prepareStatement("insert into mtblCriminals values(null,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
         } catch (SQLException ex) {
             Logger.getLogger(AddC.class.getName()).log(Level.SEVERE, null, ex);
@@ -53,18 +58,13 @@ public class AddC extends javax.swing.JPanel {
             Date dateFromDateChooser1 = tArrestdate.getDate();
             String dateString = String.format("%1$tY-%1$tm-%1$td", dateFromDateChooser);
             String dateString1 = String.format("%1$tY-%1$tm-%1$td", dateFromDateChooser1);
-            //pst.setDate(4,Date);
-            // pst.setNull(1,);
-            //pst.setInt(2,);
-            //pst.setb;
             storeImage();
             // pst.setBinaryStream(2,);
-            pst.setString(3, dateString1);
-            pst.setString(4, dateString1);
+            pst.setString(3, dateString1==null?"9999-9-19":dateString1);
             pst.setString(4, tFirst.getText());
             pst.setString(5, tMiddle.getText());
             pst.setString(6, tLast.getText());
-            pst.setString(7, dateString);
+            pst.setString(7, dateString==null?"9999-9-19":dateString1);
             pst.setString(8, cState.getSelectedItem().toString());
             pst.setString(9, cCity.getSelectedItem().toString());
             pst.setString(10, tAddress.getText());
@@ -73,9 +73,9 @@ public class AddC extends javax.swing.JPanel {
             pst.setString(13, tColor.getText());
             pst.setString(14, cHair.getSelectedItem().toString());
             pst.setString(15, cBloodgroup.getSelectedItem().toString());
-            Double Height =Double.parseDouble(tFoot.getText() + "." + tInch.getText());
+            Double Height = Double.parseDouble(tFoot.getText() + "." + tInch.getText()+"0");
             pst.setDouble(16, Height);
-            pst.setDouble(17,Double.parseDouble(tWeight.getText()));
+            pst.setDouble(17, Double.parseDouble(tWeight.getText()+"0"));
             pst.setString(18, tEyes.getText());
             pst.setString(19, tFacility.getText());
             pst.setString(20, tSection.getText());
@@ -85,6 +85,8 @@ public class AddC extends javax.swing.JPanel {
         } catch (SQLException ex) {
             Logger.getLogger(AddC.class.getName()).log(Level.SEVERE, null, ex);
         }
+        clearAll();
+        CID.setText("#" + currentID());
     }
 
     /**
@@ -121,23 +123,7 @@ public class AddC extends javax.swing.JPanel {
         lCity = new javax.swing.JLabel();
         cCity = new javax.swing.JComboBox();
         tdob = new com.toedter.calendar.JDateChooser();
-        jLayeredPane1 = new javax.swing.JLayeredPane();
-        tFoot = new javax.swing.JTextField();
-        lInch = new javax.swing.JLabel();
-        tInch = new javax.swing.JTextField();
-        tColor = new javax.swing.JTextField();
-        lFoot = new javax.swing.JLabel();
-        cBloodgroup = new javax.swing.JComboBox();
-        lColor = new javax.swing.JLabel();
-        lKg = new javax.swing.JLabel();
-        lBloodgroup = new javax.swing.JLabel();
-        tWeight = new javax.swing.JTextField();
-        lHair = new javax.swing.JLabel();
-        cHair = new javax.swing.JComboBox();
-        tEyes = new javax.swing.JTextField();
-        lWeight = new javax.swing.JLabel();
-        lEyes = new javax.swing.JLabel();
-        lHeight = new javax.swing.JLabel();
+        jRadioButton1 = new javax.swing.JRadioButton();
         jPanel3 = new javax.swing.JPanel();
         tFacility = new javax.swing.JTextField();
         jScrollPane2 = new javax.swing.JScrollPane();
@@ -159,6 +145,23 @@ public class AddC extends javax.swing.JPanel {
         lArrest = new javax.swing.JLabel();
         CID = new javax.swing.JTextField();
         lId = new javax.swing.JLabel();
+        jPanel4 = new javax.swing.JPanel();
+        lColor = new javax.swing.JLabel();
+        tWeight = new javax.swing.JTextField();
+        lInch = new javax.swing.JLabel();
+        tInch = new javax.swing.JTextField();
+        lHeight = new javax.swing.JLabel();
+        tColor = new javax.swing.JTextField();
+        lFoot = new javax.swing.JLabel();
+        lHair = new javax.swing.JLabel();
+        tFoot = new javax.swing.JTextField();
+        tEyes = new javax.swing.JTextField();
+        cHair = new javax.swing.JComboBox();
+        lWeight = new javax.swing.JLabel();
+        lBloodgroup = new javax.swing.JLabel();
+        lKg = new javax.swing.JLabel();
+        cBloodgroup = new javax.swing.JComboBox();
+        lEyes = new javax.swing.JLabel();
 
         jPanel2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
@@ -287,6 +290,11 @@ public class AddC extends javax.swing.JPanel {
 
         tdob.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
+        buttonGroup1.add(jRadioButton1);
+        jRadioButton1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jRadioButton1.setSelected(true);
+        jRadioButton1.setText("Unknown");
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -309,22 +317,28 @@ public class AddC extends javax.swing.JPanel {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(lCity, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(lMiddle, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(tMiddle)
-                            .addComponent(lState, javax.swing.GroupLayout.DEFAULT_SIZE, 160, Short.MAX_VALUE)
-                            .addComponent(lGender, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(lMiddle, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 160, Short.MAX_VALUE)
+                            .addComponent(tMiddle))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(cState, javax.swing.GroupLayout.Alignment.LEADING, 0, 160, Short.MAX_VALUE)
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
-                                .addComponent(rMale)
-                                .addGap(18, 18, 18)
-                                .addComponent(rFemale))
                             .addComponent(tLast, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lLast, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(cCity, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(lLast, javax.swing.GroupLayout.DEFAULT_SIZE, 160, Short.MAX_VALUE)))
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(lGender, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 113, Short.MAX_VALUE)
+                            .addComponent(lState, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(lCity, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(cState, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(cCity, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(rMale)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(rFemale)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jRadioButton1)))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
@@ -362,7 +376,8 @@ public class AddC extends javax.swing.JPanel {
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(rMale)
                             .addComponent(rFemale)
-                            .addComponent(lGender)))
+                            .addComponent(lGender)
+                            .addComponent(jRadioButton1)))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lAddress))
                 .addGap(18, 18, 18)
@@ -373,162 +388,6 @@ public class AddC extends javax.swing.JPanel {
                         .addComponent(lMarital, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
-
-        jLayeredPane1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-
-        tFoot.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        tFoot.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                tFootActionPerformed(evt);
-            }
-        });
-
-        lInch.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        lInch.setText("inch");
-
-        tInch.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        tInch.setText("0");
-
-        tColor.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        tColor.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                tColorActionPerformed(evt);
-            }
-        });
-
-        lFoot.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        lFoot.setText("ft.");
-
-        cBloodgroup.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        cBloodgroup.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "A +ve", "A -ve", "B +ve", "B -ve", "O +ve", "O -ve", "AB +ve", "AB -ve" }));
-        cBloodgroup.setToolTipText("");
-        cBloodgroup.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cBloodgroupActionPerformed(evt);
-            }
-        });
-
-        lColor.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        lColor.setText("Color");
-
-        lKg.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        lKg.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lKg.setText("Kg.");
-
-        lBloodgroup.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        lBloodgroup.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        lBloodgroup.setText("Blood Group ");
-
-        tWeight.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-
-        lHair.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        lHair.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        lHair.setText("Hair");
-
-        cHair.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        cHair.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
-        tEyes.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-
-        lWeight.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        lWeight.setText("Weight");
-
-        lEyes.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        lEyes.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        lEyes.setText("Eyes ");
-
-        lHeight.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        lHeight.setText("Height");
-
-        javax.swing.GroupLayout jLayeredPane1Layout = new javax.swing.GroupLayout(jLayeredPane1);
-        jLayeredPane1.setLayout(jLayeredPane1Layout);
-        jLayeredPane1Layout.setHorizontalGroup(
-            jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jLayeredPane1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lColor)
-                    .addComponent(lHeight))
-                .addGap(18, 18, 18)
-                .addGroup(jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(jLayeredPane1Layout.createSequentialGroup()
-                        .addComponent(tFoot, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(lFoot)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(tInch, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(lInch))
-                    .addComponent(tColor))
-                .addGroup(jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jLayeredPane1Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(lHair, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(cHair, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(lBloodgroup, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jLayeredPane1Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(lWeight)
-                        .addGap(18, 18, 18)
-                        .addComponent(tWeight, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(lKg, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(lEyes, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(18, 18, 18)
-                .addGroup(jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(cBloodgroup, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(tEyes, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(24, 24, 24))
-        );
-        jLayeredPane1Layout.setVerticalGroup(
-            jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jLayeredPane1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(lColor)
-                        .addComponent(tColor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(lBloodgroup)
-                        .addComponent(cBloodgroup, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(cHair, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(lHair)))
-                .addGap(18, 18, 18)
-                .addGroup(jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(lHeight)
-                        .addComponent(tFoot, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(lFoot)
-                        .addComponent(tInch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(lInch))
-                    .addGroup(jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(tEyes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(lEyes)
-                        .addComponent(lKg))
-                    .addGroup(jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(lWeight)
-                        .addComponent(tWeight, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap())
-        );
-        jLayeredPane1.setLayer(tFoot, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jLayeredPane1.setLayer(lInch, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jLayeredPane1.setLayer(tInch, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jLayeredPane1.setLayer(tColor, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jLayeredPane1.setLayer(lFoot, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jLayeredPane1.setLayer(cBloodgroup, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jLayeredPane1.setLayer(lColor, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jLayeredPane1.setLayer(lKg, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jLayeredPane1.setLayer(lBloodgroup, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jLayeredPane1.setLayer(tWeight, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jLayeredPane1.setLayer(lHair, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jLayeredPane1.setLayer(cHair, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jLayeredPane1.setLayer(tEyes, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jLayeredPane1.setLayer(lWeight, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jLayeredPane1.setLayer(lEyes, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jLayeredPane1.setLayer(lHeight, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         jPanel3.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
@@ -566,7 +425,7 @@ public class AddC extends javax.swing.JPanel {
                     .addComponent(lFacility)
                     .addComponent(lSection, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(lCell, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 68, Short.MAX_VALUE)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(tCell, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -667,6 +526,12 @@ public class AddC extends javax.swing.JPanel {
 
         CID.setEditable(false);
         CID.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        CID.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        CID.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CIDActionPerformed(evt);
+            }
+        });
 
         lId.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         lId.setText("ID");
@@ -718,6 +583,146 @@ public class AddC extends javax.swing.JPanel {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        jPanel4.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+
+        lColor.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lColor.setText("Color");
+
+        tWeight.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+
+        lInch.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lInch.setText("inch");
+
+        tInch.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        tInch.setText("0");
+
+        lHeight.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lHeight.setText("Height");
+
+        tColor.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        tColor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tColorActionPerformed(evt);
+            }
+        });
+
+        lFoot.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lFoot.setText("ft.");
+
+        lHair.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lHair.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        lHair.setText("Hair");
+
+        tFoot.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        tFoot.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tFootActionPerformed(evt);
+            }
+        });
+
+        tEyes.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+
+        cHair.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        cHair.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        lWeight.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lWeight.setText("Weight");
+
+        lBloodgroup.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lBloodgroup.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        lBloodgroup.setText("Blood Group ");
+
+        lKg.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lKg.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lKg.setText("Kg.");
+
+        cBloodgroup.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        cBloodgroup.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "A +ve", "A -ve", "B +ve", "B -ve", "O +ve", "O -ve", "AB +ve", "AB -ve" }));
+        cBloodgroup.setToolTipText("");
+        cBloodgroup.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cBloodgroupActionPerformed(evt);
+            }
+        });
+
+        lEyes.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lEyes.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        lEyes.setText("Eyes ");
+
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lColor)
+                    .addComponent(lHeight))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addComponent(tFoot, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lFoot)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(tInch, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lInch))
+                    .addComponent(tColor, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(lHair, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(cHair, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(lBloodgroup, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(lWeight)
+                        .addGap(18, 18, 18)
+                        .addComponent(tWeight, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lKg, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(lEyes, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(cBloodgroup, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(tEyes, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
+        );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(lColor)
+                        .addComponent(tColor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(lBloodgroup)
+                        .addComponent(cBloodgroup, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(cHair, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(lHair)))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(lHeight)
+                        .addComponent(tFoot, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(lFoot)
+                        .addComponent(tInch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(lInch))
+                    .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(tEyes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(lEyes)
+                        .addComponent(lKg))
+                    .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(lWeight)
+                        .addComponent(tWeight, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -727,23 +732,27 @@ public class AddC extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jPanel6, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLayeredPane1)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(5, 5, 5))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(5, 5, 5))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addContainerGap())))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jLayeredPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -762,6 +771,8 @@ public class AddC extends javax.swing.JPanel {
         if (returnVal == JFileChooser.APPROVE_OPTION) {
             IMAGE.setIcon(new ImageIcon("" + chooser.getSelectedFile()));
         }
+        else
+        blank=false;
     }//GEN-LAST:event_bBrowseActionPerformed
 
     private void tMiddleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tMiddleActionPerformed
@@ -779,23 +790,17 @@ public class AddC extends javax.swing.JPanel {
     private void bRemoveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bRemoveActionPerformed
         // TODO add your handling code here:
         IMAGE.setIcon(new javax.swing.ImageIcon(getClass().getResource("/res/insignia.alpha.png")));
+        blank=true;
     }//GEN-LAST:event_bRemoveActionPerformed
 
     private void cStateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cStateActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_cStateActionPerformed
 
-    private void tColorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tColorActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_tColorActionPerformed
-
     private void bClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bClearActionPerformed
         // TODO add your handling code here
+        clearAll();
     }//GEN-LAST:event_bClearActionPerformed
-
-    private void cBloodgroupActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cBloodgroupActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_cBloodgroupActionPerformed
 
     private void cMaritalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cMaritalActionPerformed
         // TODO add your handling code here:
@@ -809,9 +814,21 @@ public class AddC extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_bCrimesActionPerformed
 
+    private void CIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CIDActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_CIDActionPerformed
+
+    private void tColorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tColorActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tColorActionPerformed
+
     private void tFootActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tFootActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_tFootActionPerformed
+
+    private void cBloodgroupActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cBloodgroupActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cBloodgroupActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -828,12 +845,13 @@ public class AddC extends javax.swing.JPanel {
     private javax.swing.JComboBox cHair;
     private javax.swing.JComboBox cMarital;
     private javax.swing.JComboBox cState;
-    private javax.swing.JLayeredPane jLayeredPane1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
+    private javax.swing.JRadioButton jRadioButton1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JLabel lAdditional;
@@ -880,31 +898,80 @@ public class AddC extends javax.swing.JPanel {
     private com.toedter.calendar.JDateChooser tdob;
     // End of variables declaration//GEN-END:variables
 
-    private void storeImage() {
-        try {
+    private void storeImage(){
+            File file;
+            String s="null";
+            byte[] absent = s.getBytes();
             String filePath = null;
-            File file = chooser.getSelectedFile();
+            try{
+            if (blank==true) {
+               pst.setBytes(1,absent);
+               pst.setInt(2, 1);
+            }
+            else{
+                file = chooser.getSelectedFile();
+            
             if (file != null) {
                 filePath = file.getPath();
             }
 
             if (filePath != null) {
-                //pst = .prepareStatement("insert into image values(?,?)");
-                FileInputStream fileInputStream = new FileInputStream(filePath);
-                byte b[] = new byte[fileInputStream.available()];
-                fileInputStream.read(b);
-                fileInputStream.close();
-                //pst.setObject(1, jTextField1.getText());
-                pst.setBytes(1, b);
-                pst.setInt(2,1);
-
+                    FileInputStream fileInputStream = new FileInputStream(filePath);
+                    byte b[] = new byte[fileInputStream.available()];
+                    fileInputStream.read(b);
+                    fileInputStream.close();
+                    //pst.setObject(1, jTextField1.getText());
+                
+                    pst.setBytes(1, b);
+                    pst.setInt(2, 1);
             }
+            }
+            }
+            catch(Exception e)
+            {
+                System.out.println(e.getMessage());
+            }
+    }
 
-        } catch (Exception e) {
-
-            JOptionPane.showMessageDialog(this, e.getMessage());
-            e.printStackTrace();
+    private int currentID() {
+        //To change body of generated methods, choose Tools | Templates.
+        int currentid = 0;
+        try {
+            ResultSet rs = Database.getStatement().executeQuery("Select count(cid) from mtblCriminals");
+            rs.next();
+            currentid = rs.getInt(1);
+        } catch (SQLException ex) {
+            Logger.getLogger(AddC.class.getName()).log(Level.SEVERE, null, ex);
         }
+        return (currentid + 1);
+    }
+
+    private void clearAll() {
+        JTextField tfield = null;
+        JPanel tJpanel = null;
+        for (Component c : this.getComponents()) {
+            //  System.out.println(c);
+            if (c.getClass().toString().contains("javax.swing.JPanel")) {
+                tJpanel = (JPanel) c;
+                for (Component d : tJpanel.getComponents()) {
+                    if (d.getClass().toString().contains("javax.swing.JTextField")) {
+                        tfield = (JTextField) d;
+                        tfield.setText("");
+                    }
+                }
+            }
+            tAddress.setText("");
+            tAdditional.setText("");
+            tdob.setDate(null);
+            tArrestdate.setDate(null);
+            cState.setSelectedIndex(0);
+            cCity.setSelectedIndex(0);
+            cMarital.setSelectedIndex(0);
+            cHair.setSelectedIndex(0);
+            cBloodgroup.setSelectedIndex(0);
+
+        }
+        CID.setText("#" + currentID());
     }
 
 }
