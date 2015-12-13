@@ -34,9 +34,10 @@ public class Home extends javax.swing.JFrame {
         initComponents();
         setName();
         Cards.add(new SearchC(),"Search Criminal");
-        Cards.add(new AddC(),"Add Criminal");
+        Cards.add(new AddC(this),"Add Criminal");
         Cards.add(new AddU(),"Add User");
         Cards.add(new Settings(this),"Settings");
+        Cards.add(new Crimes(this),"Crimes");
         cl = (CardLayout)(Cards.getLayout());
         addWindowListener(exitListener);
     }
@@ -47,6 +48,14 @@ public class Home extends javax.swing.JFrame {
         } catch (SQLException ex) {
             Logger.getLogger(Home.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+    public void showCrimes()
+    {
+        cl.show(Cards, "Crimes");
+    }
+    public void showAddCriminal()
+    {
+        cl.show(Cards, "Add Criminal");
     }
     
     WindowListener exitListener = new WindowAdapter() {
