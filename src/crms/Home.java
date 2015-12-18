@@ -30,48 +30,51 @@ public class Home extends javax.swing.JFrame {
      * Creates new form Home
      */
     CardLayout cl;
+
     public Home() {
         initComponents();
         setName();
-        Cards.add(new SearchC(),"Search Criminal");
-        Cards.add(new AddC(this),"Add Criminal");
-        Cards.add(new AddU(),"Add User");
-        Cards.add(new Settings(this),"Settings");
-        Cards.add(new Crimes(this),"Crimes");
-        cl = (CardLayout)(Cards.getLayout());
+        Permissions();
+        Cards.add(new SearchC(), "Search Criminal");
+        Cards.add(new AddC(this), "Add Criminal");
+        Cards.add(new AddU(), "Add User");
+        Cards.add(new Settings(this), "Settings");
+        Cards.add(new Crimes(this), "Crimes");
+        cl = (CardLayout) (Cards.getLayout());
         addWindowListener(exitListener);
     }
-    public void setName()
-    {
+
+    public void setName() {
         try {
-            Hello.setText("Hello, "+Database.getName());
+            Hello.setText("Hello, " + Database.getName());
         } catch (SQLException ex) {
             Logger.getLogger(Home.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    public void showCrimes()
-    {
+
+    public void showCrimes() {
         cl.show(Cards, "Crimes");
     }
-    public void showAddCriminal()
-    {
+
+    public void showAddCriminal() {
         cl.show(Cards, "Add Criminal");
     }
-    
+
     WindowListener exitListener = new WindowAdapter() {
 
-            @Override
-            public void windowClosing(WindowEvent e) {
-                int confirm = JOptionPane.showOptionDialog(Home.this,
-                        "Are You Sure to Log Off?",
-                        "Exit Confirmation", JOptionPane.YES_NO_OPTION,
-                        JOptionPane.QUESTION_MESSAGE, null, null, null);
-                if (confirm == JOptionPane.YES_OPTION) {
-                    dispose();
-                    new Login().setVisible(true);
-                }
+        @Override
+        public void windowClosing(WindowEvent e) {
+            int confirm = JOptionPane.showOptionDialog(Home.this,
+                    "Are You Sure to Log Off?",
+                    "Exit Confirmation", JOptionPane.YES_NO_OPTION,
+                    JOptionPane.QUESTION_MESSAGE, null, null, null);
+            if (confirm == JOptionPane.YES_OPTION) {
+                dispose();
+                new Login().setVisible(true);
             }
-        };
+        }
+    };
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -82,10 +85,10 @@ public class Home extends javax.swing.JFrame {
     private void initComponents() {
 
         jToolBar1 = new javax.swing.JToolBar();
-        jButton3 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
+        Settings = new javax.swing.JButton();
+        bAddc = new javax.swing.JButton();
+        bSearch = new javax.swing.JButton();
+        bAddu = new javax.swing.JButton();
         Hello = new javax.swing.JLabel();
         Cards = new javax.swing.JPanel();
         jSeparator2 = new javax.swing.JSeparator();
@@ -97,53 +100,53 @@ public class Home extends javax.swing.JFrame {
         jToolBar1.setFloatable(false);
         jToolBar1.setRollover(true);
 
-        jButton3.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/res/Settings.png"))); // NOI18N
-        jButton3.setFocusable(false);
-        jButton3.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton3.setMargin(new java.awt.Insets(5, 5, 5, 5));
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        Settings.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        Settings.setIcon(new javax.swing.ImageIcon(getClass().getResource("/res/Settings.png"))); // NOI18N
+        Settings.setFocusable(false);
+        Settings.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        Settings.setMargin(new java.awt.Insets(5, 5, 5, 5));
+        Settings.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                SettingsActionPerformed(evt);
             }
         });
-        jToolBar1.add(jButton3);
+        jToolBar1.add(Settings);
 
-        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/res/Criminal.png"))); // NOI18N
-        jButton2.setFocusable(false);
-        jButton2.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton2.setMargin(new java.awt.Insets(5, 5, 5, 5));
-        jButton2.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        bAddc.setIcon(new javax.swing.ImageIcon(getClass().getResource("/res/Criminal.png"))); // NOI18N
+        bAddc.setFocusable(false);
+        bAddc.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        bAddc.setMargin(new java.awt.Insets(5, 5, 5, 5));
+        bAddc.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        bAddc.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                bAddcActionPerformed(evt);
             }
         });
-        jToolBar1.add(jButton2);
+        jToolBar1.add(bAddc);
 
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/res/Search.png"))); // NOI18N
-        jButton1.setFocusable(false);
-        jButton1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton1.setMargin(new java.awt.Insets(5, 5, 5, 5));
-        jButton1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        bSearch.setIcon(new javax.swing.ImageIcon(getClass().getResource("/res/Search.png"))); // NOI18N
+        bSearch.setFocusable(false);
+        bSearch.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        bSearch.setMargin(new java.awt.Insets(5, 5, 5, 5));
+        bSearch.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        bSearch.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                bSearchActionPerformed(evt);
             }
         });
-        jToolBar1.add(jButton1);
+        jToolBar1.add(bSearch);
 
-        jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/res/Add.png"))); // NOI18N
-        jButton4.setFocusable(false);
-        jButton4.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton4.setMargin(new java.awt.Insets(5, 5, 5, 5));
-        jButton4.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
+        bAddu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/res/Add.png"))); // NOI18N
+        bAddu.setFocusable(false);
+        bAddu.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        bAddu.setMargin(new java.awt.Insets(5, 5, 5, 5));
+        bAddu.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        bAddu.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
+                bAdduActionPerformed(evt);
             }
         });
-        jToolBar1.add(jButton4);
+        jToolBar1.add(bAddu);
 
         Hello.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         Hello.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
@@ -208,37 +211,37 @@ public class Home extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+    private void bAdduActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bAdduActionPerformed
         // TODO add your handling code here:
-        cl.show(Cards,"Add User");
-    }//GEN-LAST:event_jButton4ActionPerformed
+        cl.show(Cards, "Add User");
+    }//GEN-LAST:event_bAdduActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void bSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bSearchActionPerformed
         // TODO add your handling code here:
-        cl.show(Cards,"Search Criminal");
-    }//GEN-LAST:event_jButton1ActionPerformed
+        cl.show(Cards, "Search Criminal");
+    }//GEN-LAST:event_bSearchActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void bAddcActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bAddcActionPerformed
         // TODO add your handling code here:
         cl.show(Cards, "Add Criminal");
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_bAddcActionPerformed
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+    private void SettingsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SettingsActionPerformed
         // TODO add your handling code here:
-        cl.show(Cards,"Settings");
-    }//GEN-LAST:event_jButton3ActionPerformed
+        cl.show(Cards, "Settings");
+    }//GEN-LAST:event_SettingsActionPerformed
 
     private void LOActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LOActionPerformed
         // TODO add your handling code here:
         int confirm = JOptionPane.showOptionDialog(this,
-                        "Are You Sure to Log Off?",
-                        "Exit Confirmation", JOptionPane.YES_NO_OPTION,
-                        JOptionPane.QUESTION_MESSAGE, null, null, null);
-                if (confirm == JOptionPane.YES_OPTION) {
-                           //System.exit(0);
-                    dispose();
-                    new Login().setVisible(true);
-                } 
+                "Are You Sure to Log Off?",
+                "Exit Confirmation", JOptionPane.YES_NO_OPTION,
+                JOptionPane.QUESTION_MESSAGE, null, null, null);
+        if (confirm == JOptionPane.YES_OPTION) {
+            //System.exit(0);
+            dispose();
+            new Login().setVisible(true);
+        }
 
     }//GEN-LAST:event_LOActionPerformed
 
@@ -285,11 +288,33 @@ public class Home extends javax.swing.JFrame {
     private javax.swing.JPanel Cards;
     private javax.swing.JLabel Hello;
     private javax.swing.JButton LO;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
+    private javax.swing.JButton Settings;
+    private javax.swing.JButton bAddc;
+    private javax.swing.JButton bAddu;
+    private javax.swing.JButton bSearch;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JToolBar jToolBar1;
     // End of variables declaration//GEN-END:variables
+
+    private void Permissions() {
+        String Role=Database.getRole();
+        if (Role.equals("Admin")) {
+            //No Admin Panel
+            //jToolBar1.remove(bAddu);
+            jToolBar1.remove(bAddc);
+            jToolBar1.remove(bSearch);
+            
+        }
+        else if(Role.equals("Jailer"))
+        {   jToolBar1.remove(bAddu);
+            
+        }
+        else if(Role.equals("CBI") || Role.equals("Police") || Role.equals("Judge"))
+        {
+            jToolBar1.remove(bAddu);
+            jToolBar1.remove(bAddc);
+        }
+        jToolBar1.revalidate();
+        jToolBar1.repaint();
+    }
 }
