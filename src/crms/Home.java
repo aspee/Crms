@@ -35,10 +35,10 @@ public class Home extends javax.swing.JFrame {
         initComponents();
         setName();
         Permissions();
+        Cards.add(new Settings(this), "Settings");
         Cards.add(new SearchC(), "Search Criminal");
         Cards.add(new AddC(this), "Add Criminal");
         Cards.add(new AddU(), "Add User");
-        Cards.add(new Settings(this), "Settings");
         Cards.add(new Crimes(this), "Crimes");
         cl = (CardLayout) (Cards.getLayout());
         addWindowListener(exitListener);

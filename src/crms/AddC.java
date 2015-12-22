@@ -984,7 +984,7 @@ public class AddC extends javax.swing.JPanel {
         //To change body of generated methods, choose Tools | Templates.
         int currentid = 0;
         try {
-            ResultSet rs = Database.getStatement().executeQuery("Select count(cid) from mtblCriminals");
+            ResultSet rs = Database.getStatement().executeQuery("Select Max(cid) from mtblCriminals");
             rs.next();
             currentid = rs.getInt(1);
         } catch (SQLException ex) {
@@ -1007,6 +1007,7 @@ public class AddC extends javax.swing.JPanel {
                     }
                 }
             }
+        }
             tAddress.setText("");
             tAdditional.setText("");
             tdob.setDate(null);
@@ -1017,7 +1018,6 @@ public class AddC extends javax.swing.JPanel {
             cHair.setSelectedIndex(0);
             cBloodgroup.setSelectedIndex(0);
 
-        }
         CID.setText("#" + currentID());
     }
 
@@ -1031,12 +1031,12 @@ public class AddC extends javax.swing.JPanel {
         }
         if("".equals(tSection.getText()))
         {
-            s+="Section, ";
+            s+="Section ";
             a=a&false;
         }
         if("".equals(tFacility.getText()))
         {
-            s+="Facility, ";
+            s+="Facility ";
             a=a&false;
         }
         if("".equals(tCell.getText()))

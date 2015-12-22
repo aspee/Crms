@@ -15,15 +15,14 @@ CREATE TABLE tblUsers (
 Name varchar(50) not null,
 UserName varchar(50) not null unique,
 Password BLOB not null,
-Role int not null,
+Role varchar(20) not null,
 Mobile varchar(12),
 Location varchar(20) not null,
 Last_Login datetime null,
 Active boolean not null,
-FOREIGN KEY(Role) REFERENCES mtblRoles(RID),
 CONSTRAINT chk_Mobile CHECK (Mobile NOT LIKE '%[^0-9]%')
 );
-insert into tblUsers values(null,'sushant','sushant',AES_ENCRYPT('mrrobot','rycbarm'),1,9892189354,'Vikhroli',now(),true);
+insert into tblUsers values(null,'sushant','sushant',AES_ENCRYPT('mrrobot','rycbarm'),'Admin',9892189354,'Vikhroli',now(),true);
 _____________
 create table mtblCriminals
 (
@@ -55,6 +54,8 @@ primary key(cid)
 */
 
 import java.sql.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 public class Database 
 {
     static Connection con;
@@ -97,6 +98,18 @@ public class Database
         rs=st.executeQuery("select * from tblUsers where id="+id);
         rs.next();
         return rs.getString(2);
+        
+    }
+     public static String getRole()
+    {   String r="";
+        try {
+            rs=st.executeQuery("select * from tblUsers where id="+id);
+            rs.next();
+            r= rs.getString(5);
+        } catch (SQLException ex) {
+            Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return r;
         
     }
     public int checkLogin(String uname,String pwd)
