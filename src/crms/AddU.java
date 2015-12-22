@@ -6,12 +6,16 @@
 package crms;
 
 import java.awt.Component;
+import java.security.NoSuchAlgorithmException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
+import java.util.Base64;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.crypto.Cipher;
+import javax.crypto.NoSuchPaddingException;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
@@ -28,28 +32,28 @@ public class AddU extends javax.swing.JPanel {
      */
     DefaultTableModel dtm;
     PreparedStatement pst;
-    Boolean edited=false;
+
+    Boolean edited = false;
 
     public AddU() {
-       
-        dtm = new DefaultTableModel(0, 0){
 
-    @Override
-    public boolean isCellEditable(int row, int column) {
-       //all cells false
-       return false;
-    }
-};
-        dtm.isCellEditable(0,0);
+        dtm = new DefaultTableModel(0, 0) {
+
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                //all cells false
+                return false;
+            }
+        };
+        dtm.isCellEditable(0, 0);
         fetchUsers();
         initComponents();
-        tID.setText("#"+currentID());
+        tID.setText("#" + currentID());
         try {
-            pst = Database.getConnection().prepareStatement("insert into tblUsers values(null,?,?,AES_ENCRYPT(?,'rycbarm'),?,?,?,null,true);");
+            pst = Database.getConnection().prepareStatement("insert into tblUsers values(null,?,?,AES_ENCRYPT(?,'rycbarm'),?,?,?,null);");
         } catch (SQLException ex) {
             Logger.getLogger(AddU.class.getName()).log(Level.SEVERE, null, ex);
         }
-
 
     }
 
@@ -80,12 +84,19 @@ public class AddU extends javax.swing.JPanel {
         jButton7 = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable2 = new javax.swing.JTable();
-        jButton1 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        bRefresh = new javax.swing.JButton();
+        bSave = new javax.swing.JButton();
         tPassword = new javax.swing.JPasswordField();
-        jButton2 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
+        bNew = new javax.swing.JButton();
+        bEdit = new javax.swing.JButton();
+        bDelete = new javax.swing.JButton();
+        jLabel10 = new javax.swing.JLabel();
+        jLabel11 = new javax.swing.JLabel();
+        jLabel12 = new javax.swing.JLabel();
+        jLabel13 = new javax.swing.JLabel();
+        jLabel14 = new javax.swing.JLabel();
+        jLabel15 = new javax.swing.JLabel();
+        jLabel16 = new javax.swing.JLabel();
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel2.setText("ID");
@@ -182,48 +193,70 @@ public class AddU extends javax.swing.JPanel {
         });
         jScrollPane2.setViewportView(jTable2);
 
-        jButton1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jButton1.setText("Refresh");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        bRefresh.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        bRefresh.setText("Refresh");
+        bRefresh.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                bRefreshActionPerformed(evt);
             }
         });
 
-        jButton3.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jButton3.setText("Save");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        bSave.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        bSave.setText("Save");
+        bSave.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                bSaveActionPerformed(evt);
             }
         });
 
         tPassword.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
-        jButton2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jButton2.setText("New");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        bNew.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        bNew.setText("New");
+        bNew.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                bNewActionPerformed(evt);
             }
         });
 
-        jButton4.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jButton4.setText("Edit");
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
+        bEdit.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        bEdit.setText("Edit");
+        bEdit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
+                bEditActionPerformed(evt);
             }
         });
 
-        jButton5.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jButton5.setText("Delete");
-        jButton5.setMinimumSize(new java.awt.Dimension(77, 25));
-        jButton5.addActionListener(new java.awt.event.ActionListener() {
+        bDelete.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        bDelete.setText("Delete");
+        bDelete.setMinimumSize(new java.awt.Dimension(77, 25));
+        bDelete.setPreferredSize(new java.awt.Dimension(77, 25));
+        bDelete.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton5ActionPerformed(evt);
+                bDeleteActionPerformed(evt);
             }
         });
+
+        jLabel10.setForeground(new java.awt.Color(255, 0, 0));
+        jLabel10.setText("*");
+
+        jLabel11.setForeground(new java.awt.Color(255, 0, 0));
+        jLabel11.setText("*");
+
+        jLabel12.setForeground(new java.awt.Color(255, 0, 0));
+        jLabel12.setText("*");
+
+        jLabel13.setForeground(new java.awt.Color(255, 0, 0));
+        jLabel13.setText("*");
+
+        jLabel14.setForeground(new java.awt.Color(255, 0, 0));
+        jLabel14.setText("*");
+
+        jLabel15.setForeground(new java.awt.Color(255, 0, 0));
+        jLabel15.setText("*");
+
+        jLabel16.setForeground(new java.awt.Color(255, 0, 0));
+        jLabel16.setText("*");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -239,12 +272,24 @@ public class AddU extends javax.swing.JPanel {
                             .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 85, Short.MAX_VALUE))
                         .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(tUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(cRole, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(tMobile, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(tID, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(29, 29, 29)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(cRole, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jLabel11))
+                                    .addComponent(tID, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(tUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jLabel10)))
+                                .addGap(19, 19, 19))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(tMobile, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jLabel12)
+                                .addGap(18, 18, 18)))
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -253,27 +298,39 @@ public class AddU extends javax.swing.JPanel {
                                     .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(4, 4, 4)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(tLastlogin, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGroup(layout.createSequentialGroup()
-                                        .addComponent(tPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addComponent(tLocation, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                        .addComponent(tLocation, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jLabel13))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addComponent(tPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                .addComponent(jLabel16))
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addComponent(tLastlogin, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(jLabel14)))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(tName, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addComponent(tName, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel15))))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(441, 441, 441)
-                        .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(bDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(bEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(bNew, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(bSave, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButton1))
+                        .addComponent(bRefresh))
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 874, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(0, 37, Short.MAX_VALUE))
         );
@@ -285,34 +342,41 @@ public class AddU extends javax.swing.JPanel {
                     .addComponent(jLabel2)
                     .addComponent(tID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3)
-                    .addComponent(tName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(tName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel4)
                         .addComponent(tUsername, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jLabel5)
-                        .addComponent(jButton7))
+                        .addComponent(jButton7)
+                        .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(tPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
                     .addComponent(cRole, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel9)
-                    .addComponent(tLastlogin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(tLastlogin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7)
                     .addComponent(tMobile, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel8)
-                    .addComponent(tLocation, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
+                    .addComponent(tLocation, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 16, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton3)
-                    .addComponent(jButton2)
-                    .addComponent(jButton4)
-                    .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(bRefresh)
+                    .addComponent(bSave)
+                    .addComponent(bNew)
+                    .addComponent(bEdit)
+                    .addComponent(bDelete, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 311, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(105, 105, 105))
@@ -346,91 +410,115 @@ public class AddU extends javax.swing.JPanel {
     private void cRoleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cRoleActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_cRoleActionPerformed
-        Boolean a=true;
+    Boolean a = true;
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
         // TODO add your handling code here:
-        if(a)
-        {
-        tPassword.setEchoChar((char)0);
-        a=false;
-        }
-        else
-        {
-        tPassword.setEchoChar('*');  
-        a=true;
+        if (a) {
+            tPassword.setEchoChar((char) 0);
+            a = false;
+        } else {
+            tPassword.setEchoChar('*');
+            a = true;
         }
     }//GEN-LAST:event_jButton7ActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void bRefreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bRefreshActionPerformed
         // TODO add your handling code here:
         fetchUsers();
-        if(!edited)
-         tID.setText("#"+currentID());
-    }//GEN-LAST:event_jButton1ActionPerformed
+        if (!edited) {
+            tID.setText("#" + currentID());
+        }
+    }//GEN-LAST:event_bRefreshActionPerformed
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+    private void bSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bSaveActionPerformed
         // TODO add your handling code here:
-        //if(!edited)
+        if (!edited) {
             addUsers();
-        //else 
-          //  updateUser();
+        } else {
+            updateUser();
+        }
         fetchUsers();
-    }//GEN-LAST:event_jButton3ActionPerformed
+    }//GEN-LAST:event_bSaveActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void bNewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bNewActionPerformed
         // TODO add your handling code here:
         JTextField tfield = null;
             //  System.out.println(c);
-            
-                for (Component d : this.getComponents()) {
-                    if (d.getClass().toString().contains("javax.swing.JTextField")) {
-                        tfield = (JTextField) d;
-                        tfield.setText("");
-                    }
-                }
-                tPassword.setText("");
-                tID.setText("#"+currentID());
-                edited=false;
-    }//GEN-LAST:event_jButton2ActionPerformed
 
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        for (Component d : this.getComponents()) {
+            if (d.getClass().toString().contains("javax.swing.JTextField")) {
+                tfield = (JTextField) d;
+                tfield.setText("");
+            }
+        }
+        tPassword.setText("");
+        tID.setText("#" + currentID());
+        edited = false;
+        bEdit.setEnabled(true);
+        bRefresh.setEnabled(true);
+        bDelete.setEnabled(true);
+        bNew.setText("New");
+        fetchUsers();
+        
+        
+    }//GEN-LAST:event_bNewActionPerformed
+
+    private void bEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bEditActionPerformed
         // TODO add your handling code here:
-       edit(Integer.parseInt(""+jTable2.getValueAt(jTable2.getSelectedRow(),0)));
-    }//GEN-LAST:event_jButton4ActionPerformed
+        try{
+        edit(Integer.parseInt("" + jTable2.getValueAt(jTable2.getSelectedRow(), 0)));
+        }
+        catch(Exception e)
+        {
+           JOptionPane.showMessageDialog(this, "No user Selected");
+        }
+      
+    }//GEN-LAST:event_bEditActionPerformed
 
     private void jTable2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable2MouseClicked
         // TODO add your handling code here:
         if (evt.getClickCount() == 2 && !evt.isConsumed()) {
             evt.consume();
-       edit(Integer.parseInt(""+jTable2.getValueAt(jTable2.getSelectedRow(),0)));
-            
-     //handle double click event.
-            }
+            edit(Integer.parseInt("" + jTable2.getValueAt(jTable2.getSelectedRow(), 0)));
+
+            //handle double click event.
+        }
     }//GEN-LAST:event_jTable2MouseClicked
 
-    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+    private void bDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bDeleteActionPerformed
         // TODO add your handling code here:
-        int temp=Integer.parseInt(""+jTable2.getValueAt(jTable2.getSelectedRow(),0));
-        int result=JOptionPane.showConfirmDialog(null, "Are you sure you want to Delete?\nID:"+temp+"\nName:"+jTable2.getValueAt(jTable2.getSelectedRow(),1)+"\nUsername:"+jTable2.getValueAt(jTable2.getSelectedRow(),1));
-        if(result == JOptionPane.YES_OPTION){
+        int temp = Integer.parseInt("" + jTable2.getValueAt(jTable2.getSelectedRow(), 0));
+        int result = JOptionPane.showOptionDialog(this,
+                "Are you sure you want to Delete?\nID:" + temp + "\nName:" + jTable2.getValueAt(jTable2.getSelectedRow(), 1) + "\nUsername:" + jTable2.getValueAt(jTable2.getSelectedRow(), 1),
+                "Exit Confirmation", JOptionPane.YES_NO_OPTION,
+                JOptionPane.QUESTION_MESSAGE, null, null, null);
+        if (result == JOptionPane.YES_OPTION) {
             try {
-                Database.getStatement().execute("update tblUsers set Active=false where id="+temp);
+                Database.getStatement().execute("delete from tblUsers where id=" + temp);
             } catch (SQLException ex) {
                 Logger.getLogger(AddU.class.getName()).log(Level.SEVERE, null, ex);
             }
-           fetchUsers();
+            fetchUsers();
+            bNewActionPerformed(evt);
         }
-    }//GEN-LAST:event_jButton5ActionPerformed
+    }//GEN-LAST:event_bDeleteActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton bDelete;
+    private javax.swing.JButton bEdit;
+    private javax.swing.JButton bNew;
+    private javax.swing.JButton bRefresh;
+    private javax.swing.JButton bSave;
     private javax.swing.JComboBox cRole;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton7;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -451,30 +539,29 @@ public class AddU extends javax.swing.JPanel {
     // End of variables declaration//GEN-END:variables
 
     private void fetchUsers() {
-        try{
-        dtm.setRowCount(0);
-        ResultSet rs = Database.getStatement().executeQuery("Select id,Name,Username,Role,Mobile,Location,Last_Login from tblUsers where active=true and id<>1");
-        ResultSetMetaData rsmd = rs.getMetaData();
-        int num = rsmd.getColumnCount();
-        String[] name = new String[num];
-        for (int i = 0; i < num; i++) {
-            name[i] = rsmd.getColumnName(i + 1);
-        }
-        dtm.setColumnIdentifiers(name);
-        while (rs.next()) {
-            String rowdata[] = new String[num];
+        try {
+            dtm.setRowCount(0);
+            ResultSet rs = Database.getStatement().executeQuery("Select id,Name,Username,Role,Mobile,Location,Last_Login from tblUsers where Role<>'admin'");
+            ResultSetMetaData rsmd = rs.getMetaData();
+            int num = rsmd.getColumnCount();
+            String[] name = new String[num];
             for (int i = 0; i < num; i++) {
-                rowdata[i] = rs.getString(i + 1);
+                name[i] = rsmd.getColumnName(i + 1);
             }
-            dtm.addRow(rowdata);
-        }
-        }
-        catch(Exception e)
-        {
+            dtm.setColumnIdentifiers(name);
+            while (rs.next()) {
+                String rowdata[] = new String[num];
+                for (int i = 0; i < num; i++) {
+                    rowdata[i] = rs.getString(i + 1);
+                }
+                dtm.addRow(rowdata);
+            }
+        } catch (Exception e) {
             System.out.println(e.getMessage());
         }
 
     }
+
     private int currentID() {
         //To change body of generated methods, choose Tools | Templates.
         int currentid = 0;
@@ -491,17 +578,17 @@ public class AddU extends javax.swing.JPanel {
 
     private void addUsers() {
         try {
-    pst = Database.getConnection().prepareStatement("insert into tblUsers values(null,?,?,AES_ENCRYPT(?,'rycbarm'),?,?,?,null,true);");
+            pst = Database.getConnection().prepareStatement("insert into tblUsers values(null,?,?,AES_ENCRYPT(?,'rycbarm'),?,?,?,null);");
 
-            pst.setString(1,""+tName.getText());
-            pst.setString(2,""+tUsername.getText());
-            pst.setString(3,""+tPassword.getText());
-           // pst.setString(4,""+tUsername.getText());
-            pst.setString(4,""+cRole.getSelectedItem());
-            pst.setString(5,""+tMobile.getText());
-            pst.setString(6,""+tLocation.getText());
+            pst.setString(1, "" + tName.getText());
+            pst.setString(2, "" + tUsername.getText());
+            pst.setString(3, "" + tPassword.getText());
+            // pst.setString(4,""+tUsername.getText());
+            pst.setString(4, "" + cRole.getSelectedItem());
+            pst.setString(5, "" + tMobile.getText());
+            pst.setString(6, "" + tLocation.getText());
             pst.executeUpdate();
-            
+
         } catch (SQLException ex) {
             Logger.getLogger(AddU.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -509,17 +596,24 @@ public class AddU extends javax.swing.JPanel {
 
     private void edit(int id) {
         try {
-            ResultSet rs=Database.getStatement().executeQuery("select * from tblUsers where id="+id);
-            if(rs.next())
-            {    
-            tID.setText("#"+rs.getInt(1));
-            tName.setText(""+rs.getString(2));
-            tUsername.setText(""+rs.getString(3));
-            cRole.setSelectedItem(""+rs.getString(5));
-            tMobile.setText(""+rs.getString(6));
-            tLocation.setText(""+rs.getString(7));
-            tLastlogin.setText(""+rs.getString(8));
-            edited=true;
+            ResultSet rs = Database.getStatement().executeQuery("select * from tblUsers where id=" + id);
+            if (rs.next()) {
+                tID.setText("#" + rs.getInt(1));
+                tName.setText("" + rs.getString(2));
+                tUsername.setText("" + rs.getString(3));
+                cRole.setSelectedItem("" + rs.getString(5));
+                tMobile.setText("" + rs.getString(6));
+                tLocation.setText("" + rs.getString(7));
+                tLastlogin.setText("" + rs.getString(8));
+                rs = Database.getStatement().executeQuery("select AES_DECRYPT(password,'rycbarm') from tblUsers where id=" + id);
+                rs.next();
+                tPassword.setText("" + rs.getString(1));
+                edited = true;
+                bEdit.setEnabled(false);
+                bRefresh.setEnabled(false);
+                bDelete.setEnabled(false);
+                bNew.setText("Cancel");
+                dtm.setRowCount(0);
             }
         } catch (SQLException ex) {
             Logger.getLogger(AddU.class.getName()).log(Level.SEVERE, null, ex);
@@ -528,16 +622,20 @@ public class AddU extends javax.swing.JPanel {
 
     private void updateUser() {
         try {
-            PreparedStatement pst=Database.getConnection().prepareStatement("update tblUsers set Name=?,UserName=?,Password=AES_ENCRYPT(?,'rycbarm'),Role=?,Mobile=?,Location=? where id=?");
-            pst.setString(1,tName.getText());
-            pst.setString(2,tUsername.getText());
-            pst.setString(3,tPassword.getText());
-            pst.setString(4,""+cRole.getSelectedItem());
-            pst.setString(5,""+tMobile.getText());
-            pst.setString(6,""+tLocation.getText());
-            pst.setInt(7,Integer.parseInt((tID.getText()).replaceAll("[^\\d.]", "")));
+            PreparedStatement pst = Database.getConnection().prepareStatement("update tblUsers set Name=?,UserName=?,Password=AES_ENCRYPT(?,'rycbarm'),Role=?,Mobile=?,Location=? where id=?");
+            pst.setString(1, tName.getText());
+            pst.setString(2, tUsername.getText());
+            pst.setString(3, tPassword.getText());
+            pst.setString(4, "" + cRole.getSelectedItem());
+            pst.setString(5, "" + tMobile.getText());
+            pst.setString(6, "" + tLocation.getText());
+            pst.setInt(7, Integer.parseInt((tID.getText()).replaceAll("[^\\d.]", "")));
             pst.execute();
-            edited=false;
+            edited = false;
+            bEdit.setEnabled(true);
+            bRefresh.setEnabled(true);
+            bDelete.setEnabled(true);
+            bNew.setText("New");
         } catch (SQLException ex) {
             Logger.getLogger(AddU.class.getName()).log(Level.SEVERE, null, ex);
         }
