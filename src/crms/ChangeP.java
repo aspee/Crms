@@ -78,12 +78,22 @@ public class ChangeP extends javax.swing.JDialog {
                 npassActionPerformed(evt);
             }
         });
+        npass.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                npassKeyTyped(evt);
+            }
+        });
 
         cpass.setColumns(5);
         cpass.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         cpass.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cpassActionPerformed(evt);
+            }
+        });
+        cpass.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                cpassKeyTyped(evt);
             }
         });
 
@@ -133,10 +143,11 @@ public class ChangeP extends javax.swing.JDialog {
                             .addComponent(npass, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton3)
-                    .addComponent(Valid, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(Valid, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jButton3)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -178,6 +189,20 @@ public class ChangeP extends javax.swing.JDialog {
     private void npassActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_npassActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_npassActionPerformed
+
+    private void cpassKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cpassKeyTyped
+        // TODO add your handling code here:
+        if (cpass.getText().length() >= 10) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_cpassKeyTyped
+
+    private void npassKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_npassKeyTyped
+        // TODO add your handling code here:
+        if (npass.getText().length() >= 10) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_npassKeyTyped
 
     /**
      * @param args the command line arguments

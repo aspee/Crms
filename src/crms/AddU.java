@@ -48,6 +48,12 @@ public class AddU extends javax.swing.JPanel {
         dtm.isCellEditable(0, 0);
         fetchUsers();
         initComponents();
+        tName.setTransferHandler(null);
+        tUsername.setTransferHandler(null);
+        tPassword.setTransferHandler(null);
+        tMobile.setTransferHandler(null);
+        tLocation.setTransferHandler(null);
+
         tID.setText("#" + currentID());
         try {
             pst = Database.getConnection().prepareStatement("insert into tblUsers values(null,?,?,AES_ENCRYPT(?,'rycbarm'),?,?,?,null);");
@@ -82,14 +88,11 @@ public class AddU extends javax.swing.JPanel {
         tID = new javax.swing.JTextField();
         cRole = new javax.swing.JComboBox();
         jButton7 = new javax.swing.JButton();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        jTable2 = new javax.swing.JTable();
         bRefresh = new javax.swing.JButton();
         bSave = new javax.swing.JButton();
         tPassword = new javax.swing.JPasswordField();
         bNew = new javax.swing.JButton();
         bEdit = new javax.swing.JButton();
-        bDelete = new javax.swing.JButton();
         jLabel10 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
@@ -97,6 +100,11 @@ public class AddU extends javax.swing.JPanel {
         jLabel14 = new javax.swing.JLabel();
         jLabel15 = new javax.swing.JLabel();
         jLabel16 = new javax.swing.JLabel();
+        Panel = new javax.swing.JPanel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jTable2 = new javax.swing.JTable();
+        bSearch = new javax.swing.JButton();
+        bDelete = new javax.swing.JButton();
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel2.setText("ID");
@@ -136,11 +144,21 @@ public class AddU extends javax.swing.JPanel {
                 tLocationActionPerformed(evt);
             }
         });
+        tLocation.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                tLocationKeyTyped(evt);
+            }
+        });
 
         tName.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         tName.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 tNameActionPerformed(evt);
+            }
+        });
+        tName.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                tNameKeyTyped(evt);
             }
         });
 
@@ -150,11 +168,21 @@ public class AddU extends javax.swing.JPanel {
                 tMobileActionPerformed(evt);
             }
         });
+        tMobile.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                tMobileKeyTyped(evt);
+            }
+        });
 
         tUsername.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         tUsername.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 tUsernameActionPerformed(evt);
+            }
+        });
+        tUsername.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                tUsernameKeyTyped(evt);
             }
         });
 
@@ -184,15 +212,6 @@ public class AddU extends javax.swing.JPanel {
             }
         });
 
-        jTable2.setModel(dtm);
-        jTable2.getTableHeader().setReorderingAllowed(false);
-        jTable2.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jTable2MouseClicked(evt);
-            }
-        });
-        jScrollPane2.setViewportView(jTable2);
-
         bRefresh.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         bRefresh.setText("Refresh");
         bRefresh.addActionListener(new java.awt.event.ActionListener() {
@@ -210,6 +229,11 @@ public class AddU extends javax.swing.JPanel {
         });
 
         tPassword.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        tPassword.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                tPasswordKeyTyped(evt);
+            }
+        });
 
         bNew.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         bNew.setText("New");
@@ -224,16 +248,6 @@ public class AddU extends javax.swing.JPanel {
         bEdit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 bEditActionPerformed(evt);
-            }
-        });
-
-        bDelete.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        bDelete.setText("Delete");
-        bDelete.setMinimumSize(new java.awt.Dimension(77, 25));
-        bDelete.setPreferredSize(new java.awt.Dimension(77, 25));
-        bDelete.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                bDeleteActionPerformed(evt);
             }
         });
 
@@ -257,6 +271,43 @@ public class AddU extends javax.swing.JPanel {
 
         jLabel16.setForeground(new java.awt.Color(255, 0, 0));
         jLabel16.setText("*");
+
+        jTable2.setModel(dtm);
+        jTable2.getTableHeader().setReorderingAllowed(false);
+        jTable2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable2MouseClicked(evt);
+            }
+        });
+        jScrollPane2.setViewportView(jTable2);
+
+        javax.swing.GroupLayout PanelLayout = new javax.swing.GroupLayout(Panel);
+        Panel.setLayout(PanelLayout);
+        PanelLayout.setHorizontalGroup(
+            PanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(PanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 874, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+        PanelLayout.setVerticalGroup(
+            PanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(PanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 311, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+
+        bSearch.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        bSearch.setText("Search");
+
+        bDelete.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        bDelete.setText("Delete");
+        bDelete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bDeleteActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -321,9 +372,11 @@ public class AddU extends javax.swing.JPanel {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jLabel15))))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(441, 441, 441)
-                        .addComponent(bDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(358, 358, 358)
+                        .addComponent(bSearch)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(bDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(14, 14, 14)
                         .addComponent(bEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(bNew, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -331,8 +384,8 @@ public class AddU extends javax.swing.JPanel {
                         .addComponent(bSave, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(bRefresh))
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 874, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 37, Short.MAX_VALUE))
+                    .addComponent(Panel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(0, 17, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -370,15 +423,19 @@ public class AddU extends javax.swing.JPanel {
                     .addComponent(tLocation, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 16, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(bRefresh)
-                    .addComponent(bSave)
-                    .addComponent(bNew)
-                    .addComponent(bEdit)
-                    .addComponent(bDelete, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 311, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(bRefresh)
+                        .addComponent(bSave)
+                        .addComponent(bNew)
+                        .addComponent(bEdit)
+                        .addComponent(bSearch, javax.swing.GroupLayout.DEFAULT_SIZE, 26, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(bDelete)
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(Panel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(105, 105, 105))
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -432,18 +489,22 @@ public class AddU extends javax.swing.JPanel {
 
     private void bSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bSaveActionPerformed
         // TODO add your handling code here:
-        if (!edited) {
-            addUsers();
-        } else {
-            updateUser();
+        if (verify()) {
+            if (!edited) {
+                addUsers();
+                
+            } else {
+                updateUser();
+                
+            }
+
         }
-        fetchUsers();
     }//GEN-LAST:event_bSaveActionPerformed
 
     private void bNewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bNewActionPerformed
         // TODO add your handling code here:
         JTextField tfield = null;
-            //  System.out.println(c);
+        //  System.out.println(c);
 
         for (Component d : this.getComponents()) {
             if (d.getClass().toString().contains("javax.swing.JTextField")) {
@@ -452,6 +513,7 @@ public class AddU extends javax.swing.JPanel {
             }
         }
         tPassword.setText("");
+        cRole.setSelectedItem("Jailer");
         tID.setText("#" + currentID());
         edited = false;
         bEdit.setEnabled(true);
@@ -459,20 +521,18 @@ public class AddU extends javax.swing.JPanel {
         bDelete.setEnabled(true);
         bNew.setText("New");
         fetchUsers();
-        
-        
+
+
     }//GEN-LAST:event_bNewActionPerformed
 
     private void bEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bEditActionPerformed
         // TODO add your handling code here:
-        try{
-        edit(Integer.parseInt("" + jTable2.getValueAt(jTable2.getSelectedRow(), 0)));
+        try {
+            edit(Integer.parseInt("" + jTable2.getValueAt(jTable2.getSelectedRow(), 0)));
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "No user Selected");
         }
-        catch(Exception e)
-        {
-           JOptionPane.showMessageDialog(this, "No user Selected");
-        }
-      
+
     }//GEN-LAST:event_bEditActionPerformed
 
     private void jTable2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable2MouseClicked
@@ -499,17 +559,56 @@ public class AddU extends javax.swing.JPanel {
                 Logger.getLogger(AddU.class.getName()).log(Level.SEVERE, null, ex);
             }
             fetchUsers();
-            bNewActionPerformed(evt);
+            clearAll();
         }
     }//GEN-LAST:event_bDeleteActionPerformed
 
+    private void tUsernameKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tUsernameKeyTyped
+        // TODO add your handling code here:
+        if (tUsername.getText().length() >= 20) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_tUsernameKeyTyped
+
+    private void tPasswordKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tPasswordKeyTyped
+        // TODO add your handling code here
+        if (tPassword.getText().length() >= 10) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_tPasswordKeyTyped
+
+    private void tMobileKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tMobileKeyTyped
+        // TODO add your handling code here:
+        char caracter = evt.getKeyChar();
+        if (((caracter < '0') || (caracter > '9')) || tMobile.getText().length() >= 11 && (caracter != '\b')) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_tMobileKeyTyped
+
+    private void tLocationKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tLocationKeyTyped
+        // TODO add your handling code here:
+        char caracter = evt.getKeyChar();
+        if (!((caracter < '0') || (caracter > '9')) || tLocation.getText().length() >= 20 && (caracter != '\b')) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_tLocationKeyTyped
+
+    private void tNameKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tNameKeyTyped
+        // TODO add your handling code here:
+        if (tName.getText().length() >= 20) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_tNameKeyTyped
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel Panel;
     private javax.swing.JButton bDelete;
     private javax.swing.JButton bEdit;
     private javax.swing.JButton bNew;
     private javax.swing.JButton bRefresh;
     private javax.swing.JButton bSave;
+    private javax.swing.JButton bSearch;
     private javax.swing.JComboBox cRole;
     private javax.swing.JButton jButton7;
     private javax.swing.JLabel jLabel10;
@@ -566,14 +665,13 @@ public class AddU extends javax.swing.JPanel {
         //To change body of generated methods, choose Tools | Templates.
         int currentid = 0;
         try {
-            ResultSet rs = Database.getStatement().executeQuery("Select Max(id) from tblUsers");
+            ResultSet rs = Database.getStatement().executeQuery("SELECT `AUTO_INCREMENT` FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = 'crms' AND TABLE_NAME = 'tblUsers';");
             rs.next();
             currentid = rs.getInt(1);
-            System.out.println(currentid);
         } catch (SQLException ex) {
             Logger.getLogger(AddC.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return (currentid + 1);
+        return currentid;
     }
 
     private void addUsers() {
@@ -588,10 +686,13 @@ public class AddU extends javax.swing.JPanel {
             pst.setString(5, "" + tMobile.getText());
             pst.setString(6, "" + tLocation.getText());
             pst.executeUpdate();
+            clearAll();
+            fetchUsers();
 
         } catch (SQLException ex) {
             Logger.getLogger(AddU.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
     }
 
     private void edit(int id) {
@@ -614,10 +715,12 @@ public class AddU extends javax.swing.JPanel {
                 bDelete.setEnabled(false);
                 bNew.setText("Cancel");
                 dtm.setRowCount(0);
+
             }
         } catch (SQLException ex) {
             Logger.getLogger(AddU.class.getName()).log(Level.SEVERE, null, ex);
         }
+        //clearAll();
     }
 
     private void updateUser() {
@@ -636,8 +739,83 @@ public class AddU extends javax.swing.JPanel {
             bRefresh.setEnabled(true);
             bDelete.setEnabled(true);
             bNew.setText("New");
+            clearAll();
+            fetchUsers();
+        } catch (SQLException ex) {
+            if (ex.getMessage().contains("Duplicate entry")) {
+                JOptionPane.showMessageDialog(this, "Username already exist");
+            }
+        }
+        
+    }
+
+    private Boolean verify() {
+        String s = "";
+        Boolean a = true;
+        if ("".equals(tName.getText())) {
+            s += "Name Required.\n";
+            a = a & false;
+        }
+
+        if ("".equals(tUsername.getText())) {
+            s += "Username Required.\n";
+            a = a & false;
+        }
+        if (!edited && !unique(tUsername.getText())) {
+
+            s += "Username is not unique.\n";
+            a = a & false;
+        }
+        if ("".equals(tPassword.getText())) {
+            s += "Password Required\n";
+            a = a & false;
+        }
+        if ("".equals(tMobile.getText())) {
+            s += "Mobile number Required\n";
+            a = a & false;
+        }
+        if ("".equals(tLocation.getText())) {
+            s += "Location Required.\n";
+            a = a & false;
+        }
+        if (!a) {
+            JOptionPane.showMessageDialog(null, s, "Mandatory Fields", JOptionPane.ERROR_MESSAGE);
+        }
+        return a;
+    }
+
+    private boolean unique(String text) {
+        Boolean u = true;
+        try {
+            ResultSet rs = Database.getStatement().executeQuery("Select * from tblUsers where UserName='" + text + "'");
+            if (rs.next()) {
+                u = false;
+            }
         } catch (SQLException ex) {
             Logger.getLogger(AddU.class.getName()).log(Level.SEVERE, null, ex);
         }
+        return u;
+
+    }
+
+    void clearAll() {
+        JTextField tfield = null;
+        //  System.out.println(c);
+
+        for (Component d : this.getComponents()) {
+            if (d.getClass().toString().contains("javax.swing.JTextField")) {
+                tfield = (JTextField) d;
+                tfield.setText("");
+            }
+        }
+        tPassword.setText("");
+        cRole.setSelectedItem("Jailer");
+        tID.setText("#" + currentID());
+        edited = false;
+        bEdit.setEnabled(true);
+        bRefresh.setEnabled(true);
+        bDelete.setEnabled(true);
+        bNew.setText("New");
+       // fetchUsers();
     }
 }

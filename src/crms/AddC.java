@@ -984,7 +984,7 @@ public class AddC extends javax.swing.JPanel {
         //To change body of generated methods, choose Tools | Templates.
         int currentid = 0;
         try {
-            ResultSet rs = Database.getStatement().executeQuery("Select Max(cid) from mtblCriminals");
+            ResultSet rs = Database.getStatement().executeQuery("SELECT `AUTO_INCREMENT` FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = 'crms' AND TABLE_NAME = 'mtblCriminals';");
             rs.next();
             currentid = rs.getInt(1);
         } catch (SQLException ex) {
