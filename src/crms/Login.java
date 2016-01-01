@@ -94,6 +94,7 @@ public class Login extends javax.swing.JFrame implements ActionListener, KeyList
         });
 
         tfUsername.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        tfUsername.setText("peter");
         tfUsername.setMaximumSize(new java.awt.Dimension(10, 10));
         tfUsername.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -113,6 +114,7 @@ public class Login extends javax.swing.JFrame implements ActionListener, KeyList
         lPassword.setText("Password:");
 
         tfPassword.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        tfPassword.setText("peter");
         tfPassword.setMaximumSize(new java.awt.Dimension(10, 10));
         tfPassword.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -120,9 +122,8 @@ public class Login extends javax.swing.JFrame implements ActionListener, KeyList
             }
         });
 
-        lValid.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        lValid.setForeground(new java.awt.Color(255, 255, 255));
-        lValid.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        lValid.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        lValid.setForeground(new java.awt.Color(255, 0, 0));
         lValid.setText(" ");
         lValid.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
@@ -142,8 +143,8 @@ public class Login extends javax.swing.JFrame implements ActionListener, KeyList
                             .addComponent(tfUsername, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(tfPassword, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(lValid, javax.swing.GroupLayout.DEFAULT_SIZE, 202, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(lValid, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
                         .addComponent(bLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
@@ -300,7 +301,7 @@ public class Login extends javax.swing.JFrame implements ActionListener, KeyList
             home.setLocationRelativeTo(null);
 
         } else {
-            lValid.setForeground(Color.red);
+            //lValid.setForeground(Color.red);
             lValid.setText("Invalid Credentials");
             java.awt.Toolkit.getDefaultToolkit().beep();
             tfUsername.setText("");
