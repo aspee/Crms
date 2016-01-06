@@ -7,7 +7,13 @@ package crms;
 
 import java.awt.Component;
 import java.awt.Container;
+import java.awt.Frame;
+import java.awt.Graphics;
 import java.awt.Window;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -19,6 +25,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
+import javax.swing.JDialog;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -26,6 +33,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
+import javax.swing.Timer;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
@@ -41,14 +49,15 @@ public class AddC extends javax.swing.JPanel {
     DefaultComboBoxModel mState, mCity;
     PreparedStatement pst;
     boolean imagePresent = false;
-    javax.swing.JFrame parent;
+    Home parent;
 
     public AddC(javax.swing.JFrame parent) {
+
         mState = new DefaultComboBoxModel();
         mCity = new DefaultComboBoxModel();
         allStates();
         initComponents();
-        this.parent = parent;
+        this.parent = (Home) parent;
         try {
             CID.setText("#" + currentID());
             pst = Database.getConnection().prepareStatement("insert into mtblCriminals values(null,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
@@ -74,8 +83,8 @@ public class AddC extends javax.swing.JPanel {
             pst.setString(5, tMiddle.getText());
             pst.setString(6, tLast.getText());
             pst.setString(7, dateString);
-            pst.setString(8, cState.getSelectedItem().toString());
-            pst.setString(9, cCity.getSelectedItem().toString());
+            pst.setString(8, mState.getSelectedItem().toString());
+            pst.setString(9, mCity.getSelectedItem().toString());
             pst.setString(10, tAddress.getText());
             pst.setString(11, rMale.isSelected() ? "M" : rFemale.isSelected() ? "F" : "U");
             pst.setString(12, cMarital.getSelectedItem().toString());
@@ -91,6 +100,8 @@ public class AddC extends javax.swing.JPanel {
             pst.setString(21, tCell.getText());
             pst.setString(22, tAdditional.getText());
             pst.executeUpdate();
+            parent.ipc(currentID() - 1);
+
         } catch (SQLException ex) {
             Logger.getLogger(AddC.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -134,18 +145,18 @@ public class AddC extends javax.swing.JPanel {
         jLabel5 = new javax.swing.JLabel();
         tdob = new com.toedter.calendar.JDateChooser();
         jPanel3 = new javax.swing.JPanel();
-        tFacility = new javax.swing.JTextField();
         jScrollPane2 = new javax.swing.JScrollPane();
         tAdditional = new javax.swing.JTextArea();
-        lSection = new javax.swing.JLabel();
-        lFacility = new javax.swing.JLabel();
         lAdditional = new javax.swing.JLabel();
-        tCell = new javax.swing.JTextField();
-        tSection = new javax.swing.JTextField();
-        lCell = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
+        lSection = new javax.swing.JLabel();
+        tCell = new javax.swing.JTextField();
+        lCell = new javax.swing.JLabel();
+        lFacility = new javax.swing.JLabel();
+        tSection = new javax.swing.JTextField();
+        tFacility = new javax.swing.JTextField();
         jPanel5 = new javax.swing.JPanel();
         bClear = new javax.swing.JButton();
         bSave = new javax.swing.JButton();
@@ -177,6 +188,7 @@ public class AddC extends javax.swing.JPanel {
         tColor = new javax.swing.JComboBox();
 
         jPanel2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jPanel2.setOpaque(false);
 
         lMiddle.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         lMiddle.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -395,8 +407,7 @@ public class AddC extends javax.swing.JPanel {
         );
 
         jPanel3.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-
-        tFacility.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jPanel3.setOpaque(false);
 
         tAdditional.setColumns(20);
         tAdditional.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
@@ -404,26 +415,8 @@ public class AddC extends javax.swing.JPanel {
         tAdditional.setRows(5);
         jScrollPane2.setViewportView(tAdditional);
 
-        lSection.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        lSection.setText("Section");
-
-        lFacility.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        lFacility.setText("Facility");
-
         lAdditional.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         lAdditional.setText("Additional Information");
-
-        tCell.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        tCell.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                tCellKeyTyped(evt);
-            }
-        });
-
-        tSection.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-
-        lCell.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        lCell.setText("Cell");
 
         jLabel2.setForeground(new java.awt.Color(255, 0, 0));
         jLabel2.setText("*");
@@ -433,6 +426,26 @@ public class AddC extends javax.swing.JPanel {
 
         jLabel4.setForeground(new java.awt.Color(255, 0, 0));
         jLabel4.setText("*");
+
+        lSection.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lSection.setText("Section");
+
+        tCell.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        tCell.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                tCellKeyTyped(evt);
+            }
+        });
+
+        lCell.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lCell.setText("Cell");
+
+        lFacility.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lFacility.setText("Facility");
+
+        tSection.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+
+        tFacility.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -444,13 +457,13 @@ public class AddC extends javax.swing.JPanel {
                     .addComponent(lFacility)
                     .addComponent(lSection, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(lCell, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 69, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 54, Short.MAX_VALUE)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(tCell, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                         .addComponent(tSection, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(tFacility, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(30, 30, 30)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel2)
                     .addComponent(jLabel3)
@@ -463,33 +476,38 @@ public class AddC extends javax.swing.JPanel {
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(tFacility, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lFacility)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lSection)
-                    .addComponent(tSection, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(lCell)
-                        .addComponent(tCell, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(lAdditional)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(23, 23, 23))
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(tFacility, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lFacility))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lSection)
+                            .addComponent(tSection, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lCell)
+                            .addComponent(tCell, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jPanel5.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
+        jPanel5.setOpaque(false);
 
         bClear.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         bClear.setText("Clear");
@@ -513,8 +531,8 @@ public class AddC extends javax.swing.JPanel {
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(bSave, javax.swing.GroupLayout.DEFAULT_SIZE, 74, Short.MAX_VALUE)
-                .addGap(27, 27, 27)
+                .addComponent(bSave, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(bClear, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -529,6 +547,7 @@ public class AddC extends javax.swing.JPanel {
         );
 
         jPanel6.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jPanel6.setOpaque(false);
 
         bBrowse.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         bBrowse.setText("Browse");
@@ -587,18 +606,18 @@ public class AddC extends javax.swing.JPanel {
                         .addComponent(CID, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(IMAGE, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel6Layout.createSequentialGroup()
                                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addGroup(jPanel6Layout.createSequentialGroup()
-                                        .addComponent(bBrowse)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(bRemove))
                                     .addComponent(lArrest, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(tArrestdate, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 8, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 8, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel6Layout.createSequentialGroup()
+                                .addComponent(bBrowse)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(bRemove)))))
                 .addContainerGap())
         );
         jPanel6Layout.setVerticalGroup(
@@ -610,11 +629,11 @@ public class AddC extends javax.swing.JPanel {
                     .addComponent(lId))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(IMAGE, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(bBrowse)
                     .addComponent(bRemove))
-                .addGap(42, 42, 42)
+                .addGap(46, 46, 46)
                 .addComponent(lArrest)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -624,6 +643,7 @@ public class AddC extends javax.swing.JPanel {
         );
 
         jPanel4.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jPanel4.setOpaque(false);
 
         lColor.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         lColor.setText("Color");
@@ -787,31 +807,31 @@ public class AddC extends javax.swing.JPanel {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(5, 5, 5)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel6, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(jPanel4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(19, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(33, Short.MAX_VALUE)
+                .addContainerGap(22, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGap(18, 18, 18)
                         .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, 17, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(82, Short.MAX_VALUE))
+                .addContainerGap(79, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -825,7 +845,7 @@ public class AddC extends javax.swing.JPanel {
         int returnVal = chooser.showOpenDialog(this);
         if (returnVal == JFileChooser.APPROVE_OPTION) {
             IMAGE.setIcon(new ImageIcon(((new ImageIcon("" + chooser.getSelectedFile())).getImage()).getScaledInstance(192, 192, java.awt.Image.SCALE_SMOOTH)));
-            imagePresent=true;
+            imagePresent = true;
         }
     }//GEN-LAST:event_bBrowseActionPerformed
 
@@ -864,6 +884,7 @@ public class AddC extends javax.swing.JPanel {
     private void bSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bSaveActionPerformed
         if (verify()) {
             setAll();
+            Saved();
         }
     }//GEN-LAST:event_bSaveActionPerformed
 
@@ -890,18 +911,22 @@ public class AddC extends javax.swing.JPanel {
         try {
             // TODO add your handling code here:
             //cCity.removeAllItems();
-          //  mState.removeElement("");
+            //  mState.removeElement("");
             mCity.removeAllElements();
-            
+
             ResultSet rs = Database.getStatement().executeQuery("select location_id from location where name='" + mState.getSelectedItem() + "'");
             int lid = 100;
             while (rs.next()) {
                 lid = rs.getInt(1);
             }
             ResultSet rs1 = Database.getStatement().executeQuery("select name from location where parent_id=" + lid);
-
+            Boolean empty = true;
             while (rs1.next()) {
                 mCity.addElement(rs1.getString(1));
+                empty = false;
+            }
+            if (empty == true) {
+                mCity.addElement("");
             }
 
         } catch (SQLException ex) {
@@ -911,15 +936,15 @@ public class AddC extends javax.swing.JPanel {
 
     private void tFootKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tFootKeyTyped
         // TODO add your handling code here:
-         char caracter = evt.getKeyChar();
-        if (((caracter < '0') || (caracter > '9')) || tFoot.getText().length() >=2 && (caracter != '\b')) {
+        char caracter = evt.getKeyChar();
+        if (((caracter < '0') || (caracter > '9')) || tFoot.getText().length() >= 2 && (caracter != '\b')) {
             evt.consume();
         }
     }//GEN-LAST:event_tFootKeyTyped
 
     private void tInchKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tInchKeyTyped
         // TODO add your handling code here:
-         char caracter = evt.getKeyChar();
+        char caracter = evt.getKeyChar();
         if (((caracter < '0') || (caracter > '9')) || tInch.getText().length() >= 1 && (caracter != '\b')) {
             evt.consume();
         }
@@ -927,7 +952,7 @@ public class AddC extends javax.swing.JPanel {
 
     private void tWeightKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tWeightKeyTyped
         // TODO add your handling code here:
-         char caracter = evt.getKeyChar();
+        char caracter = evt.getKeyChar();
         if (((caracter < '0') || (caracter > '9')) || tWeight.getText().length() >= 3 && (caracter != '\b')) {
             evt.consume();
         }
@@ -935,7 +960,7 @@ public class AddC extends javax.swing.JPanel {
 
     private void tCellKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tCellKeyTyped
         // TODO add your handling code here:
-         char caracter = evt.getKeyChar();
+        char caracter = evt.getKeyChar();
         if (((caracter < '0') || (caracter > '9')) || tCell.getText().length() >= 11 && (caracter != '\b')) {
             evt.consume();
         }
@@ -1031,8 +1056,7 @@ public class AddC extends javax.swing.JPanel {
                 pst.setBytes(1, absent);
                 pst.setInt(2, 1);
                 System.out.println("yoga");
-            } else if(imagePresent==true)
-            {
+            } else if (imagePresent == true) {
                 file = chooser.getSelectedFile();
 
                 if (file != null) {
@@ -1045,7 +1069,7 @@ public class AddC extends javax.swing.JPanel {
                     fileInputStream.read(b);
                     fileInputStream.close();
                     //pst.setObject(1, jTextField1.getText());
-                      System.out.println("waht the hell");
+                    System.out.println("waht the hell");
                     pst.setBytes(1, b);
                     pst.setInt(2, 1);
                 }
@@ -1094,8 +1118,9 @@ public class AddC extends javax.swing.JPanel {
         cMarital.setSelectedIndex(0);
         cHair.setSelectedIndex(0);
         cBloodgroup.setSelectedIndex(0);
-
         CID.setText("#" + currentID());
+        parent.ipcClear();
+
     }
 
     private Boolean verify() {
@@ -1125,16 +1150,39 @@ public class AddC extends javax.swing.JPanel {
 
     private void allStates() {
         try {
+
             //cState.removeAllItems();
             ResultSet rs2 = Database.getStatement().executeQuery("select name from location where parent_id=100");
             //rs2.next();
             mState.addElement("");
+            mCity.addElement("");
             while (rs2.next()) {
                 mState.addElement("" + rs2.getString(1));
             }
         } catch (SQLException ex) {
             Logger.getLogger(AddC.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+
+    private void Saved() {
+
+        final JDialog dlg = new dSave(null, true);
+        dlg.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
+        dlg.addComponentListener(new ComponentAdapter() {
+            @Override
+            public void componentShown(ComponentEvent e) {
+                super.componentShown(e);
+                final Timer t = new Timer(3000, new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        dlg.dispose();
+                    }
+                });
+                t.start();
+            }
+        });
+        dlg.setVisible(true);
+
     }
 
 }

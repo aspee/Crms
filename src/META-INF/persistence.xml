@@ -4,6 +4,7 @@
     <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
     <class>crms.Location</class>
     <class>crms.Mtblcriminals</class>
+    <class>crms.Contents</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:6666/crms?zeroDateTimeBehavior=convertToNull"/>
       <property name="javax.persistence.jdbc.user" value="root"/>

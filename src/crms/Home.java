@@ -30,7 +30,7 @@ public class Home extends javax.swing.JFrame {
      * Creates new form Home
      */
     CardLayout cl;
-
+    Crimes c;
     public Home() {
         initComponents();
         setName();
@@ -39,7 +39,8 @@ public class Home extends javax.swing.JFrame {
         Cards.add(new SearchC(), "Search Criminal");
         Cards.add(new AddC(this), "Add Criminal");
         Cards.add(new AddU(), "Add User");
-        Cards.add(new Crimes(this), "Crimes");
+        c=new Crimes(this);
+        Cards.add(c, "Crimes");
         cl = (CardLayout) (Cards.getLayout());
         addWindowListener(exitListener);
     }
@@ -59,7 +60,14 @@ public class Home extends javax.swing.JFrame {
     public void showAddCriminal() {
         cl.show(Cards, "Add Criminal");
     }
-
+    public void ipc(int id)
+    {
+        c.setIPC(id);
+    }
+    public void ipcClear()
+    {
+        c.removeAll();
+    }
     WindowListener exitListener = new WindowAdapter() {
 
         @Override
@@ -91,15 +99,17 @@ public class Home extends javax.swing.JFrame {
         bAddu = new javax.swing.JButton();
         Hello = new javax.swing.JLabel();
         Cards = new javax.swing.JPanel();
-        jSeparator2 = new javax.swing.JSeparator();
         LO = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
+        setBackground(new java.awt.Color(121, 134, 203));
         setResizable(false);
 
+        jToolBar1.setBackground(java.awt.Color.lightGray);
         jToolBar1.setFloatable(false);
         jToolBar1.setRollover(true);
 
+        Settings.setBackground(java.awt.Color.lightGray);
         Settings.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         Settings.setIcon(new javax.swing.ImageIcon(getClass().getResource("/res/Settings.png"))); // NOI18N
         Settings.setFocusable(false);
@@ -112,6 +122,7 @@ public class Home extends javax.swing.JFrame {
         });
         jToolBar1.add(Settings);
 
+        bAddc.setBackground(java.awt.Color.lightGray);
         bAddc.setIcon(new javax.swing.ImageIcon(getClass().getResource("/res/Criminal.png"))); // NOI18N
         bAddc.setFocusable(false);
         bAddc.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -124,6 +135,7 @@ public class Home extends javax.swing.JFrame {
         });
         jToolBar1.add(bAddc);
 
+        bSearch.setBackground(java.awt.Color.lightGray);
         bSearch.setIcon(new javax.swing.ImageIcon(getClass().getResource("/res/Search.png"))); // NOI18N
         bSearch.setFocusable(false);
         bSearch.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -136,6 +148,7 @@ public class Home extends javax.swing.JFrame {
         });
         jToolBar1.add(bSearch);
 
+        bAddu.setBackground(java.awt.Color.lightGray);
         bAddu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/res/Add.png"))); // NOI18N
         bAddu.setFocusable(false);
         bAddu.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -182,11 +195,8 @@ public class Home extends javax.swing.JFrame {
                         .addGap(30, 30, 30))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(Cards, javax.swing.GroupLayout.PREFERRED_SIZE, 900, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jSeparator2, javax.swing.GroupLayout.DEFAULT_SIZE, 4, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 900, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))))
+                        .addGap(0, 10, Short.MAX_VALUE))))
+            .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -197,13 +207,8 @@ public class Home extends javax.swing.JFrame {
                     .addComponent(LO, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(Hello, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(Cards, javax.swing.GroupLayout.DEFAULT_SIZE, 575, Short.MAX_VALUE)
-                        .addContainerGap())))
+                .addComponent(Cards, javax.swing.GroupLayout.DEFAULT_SIZE, 575, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         Cards.getAccessibleContext().setAccessibleName("");
@@ -292,7 +297,6 @@ public class Home extends javax.swing.JFrame {
     private javax.swing.JButton bAddc;
     private javax.swing.JButton bAddu;
     private javax.swing.JButton bSearch;
-    private javax.swing.JSeparator jSeparator2;
     private javax.swing.JToolBar jToolBar1;
     // End of variables declaration//GEN-END:variables
 

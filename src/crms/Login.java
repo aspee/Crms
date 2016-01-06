@@ -11,7 +11,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.TimerTask;
 import javax.swing.JLabel;
+import javax.swing.Timer;
+import javax.swing.UIManager;
 
 /**
  *
@@ -27,10 +30,10 @@ public class Login extends javax.swing.JFrame implements ActionListener, KeyList
     int tmp;
 
     public Login() {
-	setContentPane(new JLabel(new javax.swing.ImageIcon(getClass().getResource("/res/background.jpg"))));
+        setContentPane(new JLabel(new javax.swing.ImageIcon(getClass().getResource("/res/background.jpg"))));
         initComponents();
-        setSize(534,243);
-        tfUsername.requestFocus(); 
+        setSize(534, 243);
+        tfUsername.requestFocus();
         setResizable(false);
         setLocationRelativeTo(null);
         database = new Database();
@@ -246,28 +249,30 @@ public class Login extends javax.swing.JFrame implements ActionListener, KeyList
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
          */
-        
-        try {
-            javax.swing.UIManager.put("control", new Color(0xbed3e6));
-            javax.swing.UIManager.put("nimbusBase", new Color(0x878c96));
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Login.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Login.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Login.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Login.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
 
-        /* Create and display the form */
+
+
+         try {
+         //javax.swing.UIManager.put("control", new Color(0xbed3e6));
+         javax.swing.UIManager.put("nimbusBase", new Color(0x878c96));
+         for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+         if ("Windows".equals(info.getName())) {
+         javax.swing.UIManager.setLookAndFeel(info.getClassName());
+         break;
+         }
+         }
+         } catch (ClassNotFoundException ex) {
+         java.util.logging.Logger.getLogger(Login.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+         } catch (InstantiationException ex) {
+         java.util.logging.Logger.getLogger(Login.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+         } catch (IllegalAccessException ex) {
+         java.util.logging.Logger.getLogger(Login.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+         java.util.logging.Logger.getLogger(Login.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+         }
+         //</editor-fold>*
+
+         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new Login().setVisible(true);
@@ -293,13 +298,12 @@ public class Login extends javax.swing.JFrame implements ActionListener, KeyList
     public void actionPerformed(ActionEvent e) {
         String pass = new String(tfPassword.getPassword());
         String user = tfUsername.getText();
-       
-        if (user.length()!=0 && pass.length()!=0 && (tmp = database.checkLogin(user, pass))!= 0) {
+
+        if (user.length() != 0 && pass.length() != 0 && (tmp = database.checkLogin(user, pass)) != 0) {
             dispose();
             Home home = new Home();
             home.setVisible(true);
             home.setLocationRelativeTo(null);
-
         } else {
             //lValid.setForeground(Color.red);
             lValid.setText("Invalid Credentials");

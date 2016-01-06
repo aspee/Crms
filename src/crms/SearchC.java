@@ -12,11 +12,15 @@ import java.io.File;
 import java.io.InputStream;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.regex.Pattern;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
@@ -61,7 +65,6 @@ public class SearchC extends javax.swing.JPanel {
         dtm.isCellEditable(0, 0);
         initComponents();
         fetchCriminals();
-        
 
         //jTable3.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
     }
@@ -77,9 +80,11 @@ public class SearchC extends javax.swing.JPanel {
 
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable3 = new javax.swing.JTable(dtm);
-        bSearch1 = new javax.swing.JButton();
-        jXSearchPanel1 = new org.jdesktop.swingx.JXSearchPanel();
-        jXButton1 = new org.jdesktop.swingx.JXButton();
+        bDelete = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        isp = new org.jdesktop.swingx.JXTable();
+        jScrollPane5 = new javax.swing.JScrollPane();
+        jTable4 = new javax.swing.JTable();
 
         jScrollPane1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jScrollPane1.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -95,57 +100,69 @@ public class SearchC extends javax.swing.JPanel {
         });
         jScrollPane1.setViewportView(jTable3);
 
-        bSearch1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        bSearch1.setText("Delete");
-        bSearch1.addActionListener(new java.awt.event.ActionListener() {
+        bDelete.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        bDelete.setText("Delete");
+        bDelete.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                bSearch1ActionPerformed(evt);
+                bDeleteActionPerformed(evt);
             }
         });
 
-        jXSearchPanel1.addVetoableChangeListener(new java.beans.VetoableChangeListener() {
-            public void vetoableChange(java.beans.PropertyChangeEvent evt)throws java.beans.PropertyVetoException {
-                jXSearchPanel1VetoableChange(evt);
+        isp.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
             }
-        });
+        ));
+        jScrollPane2.setViewportView(isp);
 
-        jXButton1.setText("jXButton1");
-        jXButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jXButton1ActionPerformed(evt);
+        jTable4.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2"
             }
-        });
+        ));
+        jScrollPane5.setViewportView(jTable4);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 921, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(bSearch1))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(183, 183, 183)
-                        .addComponent(jXSearchPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jXButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(bDelete)
                 .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
+                .addGap(10, 10, 10)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 337, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane2)
+                    .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 402, Short.MAX_VALUE))
+                .addGap(154, 154, 154))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(84, 84, 84)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jXButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jXSearchPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(276, 276, 276)
-                .addComponent(bSearch1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 11, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addGap(310, 310, 310)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                        .addComponent(jScrollPane5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 169, Short.MAX_VALUE)))
+                .addGap(103, 103, 103)
+                .addComponent(bDelete)
+                .addContainerGap(147, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -163,30 +180,33 @@ public class SearchC extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_jTable3MouseClicked
 
-    private void bSearch1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bSearch1ActionPerformed
-
-    }//GEN-LAST:event_bSearch1ActionPerformed
-
-    private void jXButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jXButton1ActionPerformed
-        // TODO add your handling code here:
-        TableRowSorter<TableModel> sorter = new TableRowSorter<TableModel>(dtm);
-        jTable3.setRowSorter(sorter);
-        Pattern pattern = jXSearchPanel1.getPattern();
-        sorter.setRowFilter(RowFilters.regexFilter(pattern, 7));
-    }//GEN-LAST:event_jXButton1ActionPerformed
-
-    private void jXSearchPanel1VetoableChange(java.beans.PropertyChangeEvent evt)throws java.beans.PropertyVetoException {//GEN-FIRST:event_jXSearchPanel1VetoableChange
-        // TODO add your handling code here:
-        
-    }//GEN-LAST:event_jXSearchPanel1VetoableChange
+    private void bDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bDeleteActionPerformed
+        int temp = Integer.parseInt("" + jTable3.getValueAt(jTable3.getSelectedRow(), 0));
+        int result = JOptionPane.showOptionDialog(this,
+                "Are you sure you want to Delete?\nID:" + temp + "\nName:" + jTable3.getValueAt(jTable3.getSelectedRow(), 1),
+                "Password Confirmation Required", JOptionPane.YES_NO_OPTION,
+                JOptionPane.QUESTION_MESSAGE, null, null, null);
+        if (result == JOptionPane.YES_OPTION) {
+            try {
+                
+                Database.getStatement().execute("delete from mtblCriminals where id=" + temp);
+            } catch (SQLException ex) {
+                Logger.getLogger(AddU.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            fetchCriminals();
+          // clearAll();
+        }
+    }//GEN-LAST:event_bDeleteActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton bSearch1;
+    private javax.swing.JButton bDelete;
+    private org.jdesktop.swingx.JXTable isp;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JTable jTable3;
-    private org.jdesktop.swingx.JXButton jXButton1;
-    private org.jdesktop.swingx.JXSearchPanel jXSearchPanel1;
+    private javax.swing.JTable jTable4;
     // End of variables declaration//GEN-END:variables
 
     private void fetchCriminals() {
@@ -215,7 +235,7 @@ public class SearchC extends javax.swing.JPanel {
                 }
                 dtm.addRow(rowdata);
             }
-           //ImageIcon icon = new ImageIcon(b);
+            //ImageIcon icon = new ImageIcon(b);
             // System.out.println("lol"+b);
             // jLabel1.setIcon(new ImageIcon (Toolkit.getDefaultToolkit().createImage(b)));
             //  dtm.setValueAt(icon, 0, 1);

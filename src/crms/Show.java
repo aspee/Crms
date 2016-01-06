@@ -45,15 +45,6 @@ public class Show extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        lSection = new javax.swing.JLabel();
-        lFacility = new javax.swing.JLabel();
-        lAdditional = new javax.swing.JLabel();
-        lCell = new javax.swing.JLabel();
-        lName15 = new javax.swing.JLabel();
-        lName16 = new javax.swing.JLabel();
-        lName17 = new javax.swing.JLabel();
-        lName18 = new javax.swing.JLabel();
-        bSearch = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         lState = new javax.swing.JLabel();
         lName = new javax.swing.JLabel();
@@ -97,34 +88,7 @@ public class Show extends javax.swing.JFrame {
         tAdditional = new javax.swing.JTextArea();
         jScrollPane2 = new javax.swing.JScrollPane();
         tAddress = new javax.swing.JTextArea();
-        bSearch1 = new javax.swing.JButton();
-
-        lSection.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        lSection.setText("Section");
-
-        lFacility.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        lFacility.setText("Facility");
-
-        lAdditional.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        lAdditional.setText("Additional Information");
-
-        lCell.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        lCell.setText("Cell");
-
-        lName15.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        lName15.setText("Name");
-
-        lName16.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        lName16.setText("Name");
-
-        lName17.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        lName17.setText("Name");
-
-        lName18.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        lName18.setText("Name");
-
-        bSearch.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        bSearch.setText("Search");
+        bPrint = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Criminal Information");
@@ -132,161 +96,155 @@ public class Show extends javax.swing.JFrame {
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
-        lState.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lState.setFont(new java.awt.Font("Arial Narrow", 0, 14)); // NOI18N
         lState.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         lState.setText("State ");
         lState.setToolTipText("");
 
-        lName.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lName.setFont(new java.awt.Font("Arial Narrow", 0, 14)); // NOI18N
         lName.setText("Name");
         lName.setToolTipText("");
 
-        ldob.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        ldob.setFont(new java.awt.Font("Arial Narrow", 0, 14)); // NOI18N
         ldob.setText("Date of Birth");
         ldob.setToolTipText("");
 
-        lMarital.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lMarital.setFont(new java.awt.Font("Arial Narrow", 0, 14)); // NOI18N
         lMarital.setText("Marital Status ");
         lMarital.setToolTipText("");
 
-        lGender.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lGender.setFont(new java.awt.Font("Arial Narrow", 0, 14)); // NOI18N
         lGender.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         lGender.setText("Gender ");
         lGender.setToolTipText("");
 
-        lAddress.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lAddress.setFont(new java.awt.Font("Arial Narrow", 0, 14)); // NOI18N
         lAddress.setText("Address ");
         lAddress.setToolTipText("");
 
-        lCity.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lCity.setFont(new java.awt.Font("Arial Narrow", 0, 14)); // NOI18N
         lCity.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         lCity.setText("City ");
         lCity.setToolTipText("");
 
-        tMiddle.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        tMiddle.setFont(new java.awt.Font("Arial Narrow", 0, 14)); // NOI18N
         tMiddle.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         tMiddle.setText("Ramesh");
         tMiddle.setToolTipText("");
 
-        tLast.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        tLast.setFont(new java.awt.Font("Arial Narrow", 0, 14)); // NOI18N
         tLast.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         tLast.setText("Parab");
         tLast.setToolTipText("");
 
-        tDob.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        tDob.setFont(new java.awt.Font("Arial Narrow", 0, 14)); // NOI18N
         tDob.setText("1-12-1995");
         tDob.setToolTipText("");
 
-        tCity.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        tCity.setFont(new java.awt.Font("Arial Narrow", 0, 14)); // NOI18N
         tCity.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         tCity.setText("Mumbai");
         tCity.setToolTipText("");
 
-        tState.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        tState.setFont(new java.awt.Font("Arial Narrow", 0, 14)); // NOI18N
         tState.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         tState.setText("Maharashtra");
         tState.setToolTipText("");
 
-        tMarital.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        tMarital.setFont(new java.awt.Font("Arial Narrow", 0, 14)); // NOI18N
         tMarital.setText("Single");
         tMarital.setToolTipText("");
 
-        tGender.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        tGender.setFont(new java.awt.Font("Arial Narrow", 0, 14)); // NOI18N
         tGender.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         tGender.setText("Male");
         tGender.setToolTipText("");
 
-        tFirst.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        tFirst.setFont(new java.awt.Font("Arial Narrow", 0, 14)); // NOI18N
         tFirst.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         tFirst.setText("Sushant");
         tFirst.setToolTipText("");
 
-        lEyes.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        lEyes.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        lEyes.setFont(new java.awt.Font("Arial Narrow", 0, 14)); // NOI18N
+        lEyes.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         lEyes.setText("Eyes ");
         lEyes.setToolTipText("");
 
-        tColor.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        tColor.setFont(new java.awt.Font("Arial Narrow", 0, 14)); // NOI18N
         tColor.setText("Brown");
         tColor.setToolTipText("");
 
-        tHair.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        tHair.setFont(new java.awt.Font("Arial Narrow", 0, 14)); // NOI18N
         tHair.setText("Straight");
         tHair.setToolTipText("");
 
-        tBlood.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        tBlood.setFont(new java.awt.Font("Arial Narrow", 0, 14)); // NOI18N
         tBlood.setText("A+");
         tBlood.setToolTipText("");
 
-        tHeight.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        tHeight.setFont(new java.awt.Font("Arial Narrow", 0, 14)); // NOI18N
         tHeight.setText("5'9");
         tHeight.setToolTipText("");
 
-        lColor.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lColor.setFont(new java.awt.Font("Arial Narrow", 0, 14)); // NOI18N
         lColor.setText("Color");
         lColor.setToolTipText("");
 
-        tWeight.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        tWeight.setForeground(new java.awt.Color(0, 51, 153));
+        tWeight.setFont(new java.awt.Font("Arial Narrow", 0, 14)); // NOI18N
         tWeight.setText("60");
         tWeight.setToolTipText("");
 
-        lHeight.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lHeight.setFont(new java.awt.Font("Arial Narrow", 0, 14)); // NOI18N
         lHeight.setText("Height");
         lHeight.setToolTipText("");
 
-        tEyes.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        tEyes.setFont(new java.awt.Font("Arial Narrow", 0, 14)); // NOI18N
         tEyes.setText("Black");
         tEyes.setToolTipText("");
 
-        lHair.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        lHair.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        lHair.setFont(new java.awt.Font("Arial Narrow", 0, 14)); // NOI18N
+        lHair.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         lHair.setText("Hair");
         lHair.setToolTipText("");
 
-        lWeight.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lWeight.setFont(new java.awt.Font("Arial Narrow", 0, 14)); // NOI18N
         lWeight.setText("Weight");
         lWeight.setToolTipText("");
 
-        lBloodgroup.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lBloodgroup.setFont(new java.awt.Font("Arial Narrow", 0, 14)); // NOI18N
         lBloodgroup.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         lBloodgroup.setText("Blood Group ");
         lBloodgroup.setToolTipText("");
 
-        lKg.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lKg.setFont(new java.awt.Font("Arial Narrow", 0, 14)); // NOI18N
         lKg.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lKg.setText("Kg.");
         lKg.setToolTipText("");
 
-        lSection1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lSection1.setFont(new java.awt.Font("Arial Narrow", 0, 14)); // NOI18N
         lSection1.setText("Section");
-        lSection1.setToolTipText("");
 
-        lFacility1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lFacility1.setFont(new java.awt.Font("Arial Narrow", 0, 14)); // NOI18N
         lFacility1.setText("Facility");
-        lFacility1.setToolTipText("");
 
-        lAdditional1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lAdditional1.setFont(new java.awt.Font("Arial Narrow", 0, 14)); // NOI18N
         lAdditional1.setText("Additional Information");
         lAdditional1.setToolTipText("");
 
-        lCell1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lCell1.setFont(new java.awt.Font("Arial Narrow", 0, 14)); // NOI18N
         lCell1.setText("Cell");
-        lCell1.setToolTipText("");
 
-        tFacility.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        tFacility.setFont(new java.awt.Font("Arial Narrow", 0, 14)); // NOI18N
         tFacility.setText("Prison ");
         tFacility.setToolTipText("");
 
-        tCell.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        tCell.setFont(new java.awt.Font("Arial Narrow", 0, 14)); // NOI18N
         tCell.setText("323");
-        tCell.setToolTipText("");
 
-        tSection.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        tSection.setFont(new java.awt.Font("Arial Narrow", 0, 14)); // NOI18N
         tSection.setText("A");
-        tSection.setToolTipText("");
 
-        lId.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lId.setFont(new java.awt.Font("Arial Narrow", 1, 14)); // NOI18N
         lId.setText("ID");
         lId.setToolTipText("");
         lId.setVerticalAlignment(javax.swing.SwingConstants.TOP);
@@ -295,12 +253,15 @@ public class Show extends javax.swing.JFrame {
         tImage.setForeground(new java.awt.Color(0, 51, 153));
         tImage.setIcon(new javax.swing.ImageIcon(getClass().getResource("/res/Settings.png"))); // NOI18N
         tImage.setToolTipText("");
+        tImage.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        tImage.setPreferredSize(new java.awt.Dimension(192, 192));
 
-        tId.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        tId.setFont(new java.awt.Font("Arial Narrow", 1, 14)); // NOI18N
         tId.setText("#1");
         tId.setToolTipText("");
 
-        jScrollPane1.setForeground(new java.awt.Color(0, 51, 153));
+        jScrollPane1.setBorder(null);
+        jScrollPane1.setForeground(new java.awt.Color(255, 255, 255));
         jScrollPane1.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         jScrollPane1.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
         jScrollPane1.setEnabled(false);
@@ -308,12 +269,15 @@ public class Show extends javax.swing.JFrame {
 
         tAdditional.setEditable(false);
         tAdditional.setColumns(20);
+        tAdditional.setFont(new java.awt.Font("Arial Narrow", 0, 14)); // NOI18N
         tAdditional.setLineWrap(true);
         tAdditional.setRows(5);
         tAdditional.setText("dkflmdsklfmkldsmfkldmslfmkdsmfkmdsklfmkldsfmkldsmklfmdsklmfkldsmfklmdsklfmdsklmflkdsmfklmdsklfmds");
+        tAdditional.setWrapStyleWord(true);
         tAdditional.setBorder(null);
         jScrollPane1.setViewportView(tAdditional);
 
+        jScrollPane2.setBorder(null);
         jScrollPane2.setForeground(new java.awt.Color(0, 51, 153));
         jScrollPane2.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         jScrollPane2.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
@@ -322,9 +286,10 @@ public class Show extends javax.swing.JFrame {
 
         tAddress.setEditable(false);
         tAddress.setColumns(20);
-        tAddress.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        tAddress.setFont(new java.awt.Font("Arial Narrow", 0, 14)); // NOI18N
         tAddress.setLineWrap(true);
         tAddress.setRows(5);
+        tAddress.setWrapStyleWord(true);
         tAddress.setBorder(null);
         jScrollPane2.setViewportView(tAddress);
 
@@ -336,43 +301,36 @@ public class Show extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lSection1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                 .addComponent(lCell1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(lFacility1, javax.swing.GroupLayout.DEFAULT_SIZE, 45, Short.MAX_VALUE))
-                            .addComponent(lSection1, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(182, 182, 182)
-                                .addComponent(lKg, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(lEyes, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(tEyes, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(16, 16, 16))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(97, 97, 97)
-                                .addComponent(jScrollPane1)
-                                .addContainerGap())))
+                                .addComponent(lFacility1, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(tEyes, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(16, 16, 16))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lHeight)
                             .addComponent(lColor))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(tHeight, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(tColor, javax.swing.GroupLayout.DEFAULT_SIZE, 80, Short.MAX_VALUE))
+                            .addComponent(tFacility, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(tCell, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(tSection, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lAdditional1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addComponent(tHeight, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(tColor, javax.swing.GroupLayout.DEFAULT_SIZE, 80, Short.MAX_VALUE))
-                                    .addComponent(tFacility, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 286, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGroup(jPanel1Layout.createSequentialGroup()
                                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addComponent(lHair, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(lWeight))
+                                            .addComponent(lWeight, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
                                         .addGap(21, 21, 21)
                                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addGroup(jPanel1Layout.createSequentialGroup()
@@ -381,12 +339,12 @@ public class Show extends javax.swing.JFrame {
                                                 .addComponent(lBloodgroup, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                 .addGap(18, 18, 18)
                                                 .addComponent(tBlood, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                            .addComponent(tWeight, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                    .addComponent(lAdditional1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(tSection, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(tCell, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                                .addComponent(tWeight, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(lKg, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGap(27, 27, 27)
+                                                .addComponent(lEyes, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                                 .addGap(0, 0, Short.MAX_VALUE))))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -432,7 +390,7 @@ public class Show extends javax.swing.JFrame {
                                             .addComponent(tCity, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
                                             .addComponent(tState, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                             .addComponent(tImage, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addContainerGap(30, Short.MAX_VALUE))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -471,7 +429,7 @@ public class Show extends javax.swing.JFrame {
                                     .addComponent(lGender)
                                     .addComponent(tGender))
                                 .addGap(0, 0, Short.MAX_VALUE))
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 91, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(lMarital, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -502,26 +460,26 @@ public class Show extends javax.swing.JFrame {
                             .addComponent(tFacility)
                             .addComponent(lAdditional1))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(tSection)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(tCell))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(tSection)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(tCell))
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(lFacility1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(lSection1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(lCell1))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(28, 28, 28)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(lCell1)))
+                .addContainerGap(40, Short.MAX_VALUE))
         );
 
-        bSearch1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        bSearch1.setText("Print");
-        bSearch1.addActionListener(new java.awt.event.ActionListener() {
+        bPrint.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        bPrint.setText("Print");
+        bPrint.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                bSearch1ActionPerformed(evt);
+                bPrintActionPerformed(evt);
             }
         });
 
@@ -531,16 +489,18 @@ public class Show extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(bSearch1, javax.swing.GroupLayout.Alignment.TRAILING))
+                .addComponent(bPrint)
                 .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(4, 4, 4)
-                .addComponent(bSearch1)
+                .addComponent(bPrint)
                 .addGap(18, 18, 18)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -549,28 +509,23 @@ public class Show extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void bSearch1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bSearch1ActionPerformed
-       // PrinterJob pj = PrinterJob.getPrinterJob();
+    private void bPrintActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bPrintActionPerformed
         PrintUtilities p=new PrintUtilities(jPanel1);
         p.print();
-    }//GEN-LAST:event_bSearch1ActionPerformed
+    }//GEN-LAST:event_bPrintActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton bSearch;
-    private javax.swing.JButton bSearch1;
+    private javax.swing.JButton bPrint;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JLabel lAdditional;
     private javax.swing.JLabel lAdditional1;
     private javax.swing.JLabel lAddress;
     private javax.swing.JLabel lBloodgroup;
-    private javax.swing.JLabel lCell;
     private javax.swing.JLabel lCell1;
     private javax.swing.JLabel lCity;
     private javax.swing.JLabel lColor;
     private javax.swing.JLabel lEyes;
-    private javax.swing.JLabel lFacility;
     private javax.swing.JLabel lFacility1;
     private javax.swing.JLabel lGender;
     private javax.swing.JLabel lHair;
@@ -579,11 +534,6 @@ public class Show extends javax.swing.JFrame {
     private javax.swing.JLabel lKg;
     private javax.swing.JLabel lMarital;
     private javax.swing.JLabel lName;
-    private javax.swing.JLabel lName15;
-    private javax.swing.JLabel lName16;
-    private javax.swing.JLabel lName17;
-    private javax.swing.JLabel lName18;
-    private javax.swing.JLabel lSection;
     private javax.swing.JLabel lSection1;
     private javax.swing.JLabel lState;
     private javax.swing.JLabel lWeight;

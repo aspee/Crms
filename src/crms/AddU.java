@@ -549,7 +549,7 @@ public class AddU extends javax.swing.JPanel {
         // TODO add your handling code here:
         int temp = Integer.parseInt("" + jTable2.getValueAt(jTable2.getSelectedRow(), 0));
         int result = JOptionPane.showOptionDialog(this,
-                "Are you sure you want to Delete?\nID:" + temp + "\nName:" + jTable2.getValueAt(jTable2.getSelectedRow(), 1) + "\nUsername:" + jTable2.getValueAt(jTable2.getSelectedRow(), 1),
+                "Are you sure you want to Delete?\nID:" + temp + "\nName:" + jTable2.getValueAt(jTable2.getSelectedRow(), 1) + "\nUsername:" + jTable2.getValueAt(jTable2.getSelectedRow(), 2),
                 "Exit Confirmation", JOptionPane.YES_NO_OPTION,
                 JOptionPane.QUESTION_MESSAGE, null, null, null);
         if (result == JOptionPane.YES_OPTION) {
