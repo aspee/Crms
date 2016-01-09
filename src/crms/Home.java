@@ -31,12 +31,14 @@ public class Home extends javax.swing.JFrame {
      */
     CardLayout cl;
     Crimes c;
+    SearchC sc;
     public Home() {
         initComponents();
         setName();
         Permissions();
         Cards.add(new Settings(this), "Settings");
-        Cards.add(new SearchC(), "Search Criminal");
+        sc=new SearchC();
+        Cards.add(sc, "Search Criminal");
         Cards.add(new AddC(this), "Add Criminal");
         Cards.add(new AddU(), "Add User");
         c=new Crimes(this);
@@ -194,8 +196,8 @@ public class Home extends javax.swing.JFrame {
                         .addComponent(LO, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(30, 30, 30))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(Cards, javax.swing.GroupLayout.PREFERRED_SIZE, 900, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 10, Short.MAX_VALUE))))
+                        .addComponent(Cards, javax.swing.GroupLayout.PREFERRED_SIZE, 906, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 4, Short.MAX_VALUE))))
             .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
@@ -224,6 +226,8 @@ public class Home extends javax.swing.JFrame {
     private void bSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bSearchActionPerformed
         // TODO add your handling code here:
         cl.show(Cards, "Search Criminal");
+        sc.fetchCriminals();
+        
     }//GEN-LAST:event_bSearchActionPerformed
 
     private void bAddcActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bAddcActionPerformed
@@ -320,5 +324,9 @@ public class Home extends javax.swing.JFrame {
         }
         jToolBar1.revalidate();
         jToolBar1.repaint();
+    }
+
+    void pdf(int i) {
+           c.setPunish(i);
     }
 }

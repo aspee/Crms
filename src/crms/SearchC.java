@@ -5,27 +5,20 @@
  */
 package crms;
 
-import static com.oracle.jrockit.jfr.ContentType.Bytes;
-import java.awt.Toolkit;
-import java.io.ByteArrayInputStream;
-import java.io.File;
-import java.io.InputStream;
+import java.awt.Component;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.regex.Pattern;
-import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JLabel;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
-import javax.swing.JTable;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableModel;
-import javax.swing.table.TableRowSorter;
-import org.jdesktop.swingx.sort.RowFilters;
 
 /**
  *
@@ -37,8 +30,13 @@ public class SearchC extends javax.swing.JPanel {
      * Creates new form SearchC
      */
     DefaultTableModel dtm;
+    DefaultComboBoxModel mState, mCity;
+    PreparedStatement pst;
 
     public SearchC() {
+        mState = new DefaultComboBoxModel();
+        mCity = new DefaultComboBoxModel();
+        allStates();
         dtm = new DefaultTableModel(0, 0) {
 
             @Override
@@ -78,13 +76,59 @@ public class SearchC extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        buttonGroup1 = new javax.swing.ButtonGroup();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable3 = new javax.swing.JTable(dtm);
         bDelete = new javax.swing.JButton();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        isp = new org.jdesktop.swingx.JXTable();
-        jScrollPane5 = new javax.swing.JScrollPane();
-        jTable4 = new javax.swing.JTable();
+        jButton1 = new javax.swing.JButton();
+        lName = new javax.swing.JLabel();
+        ldob = new javax.swing.JLabel();
+        tFirst = new javax.swing.JTextField();
+        tdob = new com.toedter.calendar.JDateChooser();
+        tMiddle = new javax.swing.JTextField();
+        tLast = new javax.swing.JTextField();
+        cState = new javax.swing.JComboBox(mState);
+        cCity = new javax.swing.JComboBox(mCity);
+        rMale = new javax.swing.JRadioButton();
+        rFemale = new javax.swing.JRadioButton();
+        U = new javax.swing.JRadioButton();
+        cMarital = new javax.swing.JComboBox();
+        lMarital = new javax.swing.JLabel();
+        lGender = new javax.swing.JLabel();
+        lCity = new javax.swing.JLabel();
+        lState = new javax.swing.JLabel();
+        lFirst = new javax.swing.JLabel();
+        lMiddle = new javax.swing.JLabel();
+        lLast = new javax.swing.JLabel();
+        lArrest = new javax.swing.JLabel();
+        lColor = new javax.swing.JLabel();
+        tColor = new javax.swing.JComboBox();
+        lHair = new javax.swing.JLabel();
+        cHair = new javax.swing.JComboBox();
+        lBloodgroup = new javax.swing.JLabel();
+        cBloodgroup = new javax.swing.JComboBox();
+        tEyes = new javax.swing.JTextField();
+        lEyes = new javax.swing.JLabel();
+        tWeight = new javax.swing.JTextField();
+        lWeight = new javax.swing.JLabel();
+        lInch = new javax.swing.JLabel();
+        tInch = new javax.swing.JTextField();
+        tFoot = new javax.swing.JTextField();
+        lHeight = new javax.swing.JLabel();
+        lFoot = new javax.swing.JLabel();
+        lFacility = new javax.swing.JLabel();
+        tFacility = new javax.swing.JTextField();
+        lSection = new javax.swing.JLabel();
+        tSection = new javax.swing.JTextField();
+        lCell = new javax.swing.JLabel();
+        tCell = new javax.swing.JTextField();
+        jPanel1 = new javax.swing.JPanel();
+        lId = new javax.swing.JLabel();
+        CID = new javax.swing.JTextField();
+        bClear = new javax.swing.JButton();
+        bSearch = new javax.swing.JButton();
+        tArrestDate = new com.toedter.calendar.JDateChooser();
+        A = new javax.swing.JRadioButton();
 
         jScrollPane1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jScrollPane1.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -108,61 +152,487 @@ public class SearchC extends javax.swing.JPanel {
             }
         });
 
-        isp.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
-        jScrollPane2.setViewportView(isp);
+        jButton1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jButton1.setText("Refresh");
 
-        jTable4.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2"
+        lName.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lName.setText("Name");
+
+        ldob.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        ldob.setText("DOB");
+
+        tFirst.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        tFirst.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tFirstActionPerformed(evt);
             }
-        ));
-        jScrollPane5.setViewportView(jTable4);
+        });
+
+        tMiddle.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        tMiddle.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tMiddleActionPerformed(evt);
+            }
+        });
+
+        tLast.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        tLast.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tLastActionPerformed(evt);
+            }
+        });
+
+        cState.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        cState.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cStateItemStateChanged(evt);
+            }
+        });
+        cState.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cStateActionPerformed(evt);
+            }
+        });
+
+        cCity.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+
+        buttonGroup1.add(rMale);
+        rMale.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        rMale.setText("M");
+
+        buttonGroup1.add(rFemale);
+        rFemale.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        rFemale.setText("F");
+
+        buttonGroup1.add(U);
+        U.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        U.setText("U");
+
+        cMarital.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        cMarital.setModel(new javax.swing.DefaultComboBoxModel(new String[] { " ", "Single", "Married", "Widowed", "Separated", "Divorced" }));
+        cMarital.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cMaritalActionPerformed(evt);
+            }
+        });
+
+        lMarital.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lMarital.setText("Marital Status ");
+
+        lGender.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lGender.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        lGender.setText("Gender ");
+
+        lCity.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lCity.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        lCity.setText("City ");
+
+        lState.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lState.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        lState.setText("State ");
+
+        lFirst.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lFirst.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lFirst.setText("First");
+
+        lMiddle.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lMiddle.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lMiddle.setText("Middle");
+
+        lLast.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lLast.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lLast.setText("Last");
+        lLast.setToolTipText("");
+
+        lArrest.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lArrest.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lArrest.setText("Arrest Date");
+
+        lColor.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lColor.setText("Color");
+
+        tColor.setEditable(true);
+        tColor.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        tColor.setModel(new javax.swing.DefaultComboBoxModel(new String[] { " ", "Light", "Fair", "Medium", "Olive", "Brown", "Black" }));
+        tColor.setToolTipText("");
+        tColor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tColorActionPerformed(evt);
+            }
+        });
+
+        lHair.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lHair.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        lHair.setText("Hair");
+
+        cHair.setEditable(true);
+        cHair.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        cHair.setModel(new javax.swing.DefaultComboBoxModel(new String[] { " ", "Straight", "Curly" }));
+
+        lBloodgroup.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lBloodgroup.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        lBloodgroup.setText("Blood Group ");
+
+        cBloodgroup.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        cBloodgroup.setModel(new javax.swing.DefaultComboBoxModel(new String[] { " ", "A +ve", "A -ve", "B +ve", "B -ve", "O +ve", "O -ve", "AB +ve", "AB -ve" }));
+        cBloodgroup.setToolTipText("");
+        cBloodgroup.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cBloodgroupActionPerformed(evt);
+            }
+        });
+
+        tEyes.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+
+        lEyes.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lEyes.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        lEyes.setText("Eyes ");
+
+        tWeight.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        tWeight.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                tWeightKeyTyped(evt);
+            }
+        });
+
+        lWeight.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lWeight.setText("Weight (In Kg.)");
+
+        lInch.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lInch.setText("inch");
+
+        tInch.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        tInch.setText("0");
+        tInch.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                tInchKeyTyped(evt);
+            }
+        });
+
+        tFoot.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        tFoot.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tFootActionPerformed(evt);
+            }
+        });
+        tFoot.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                tFootKeyTyped(evt);
+            }
+        });
+
+        lHeight.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lHeight.setText("Height");
+
+        lFoot.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lFoot.setText("ft.");
+
+        lFacility.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lFacility.setText("Facility");
+
+        tFacility.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+
+        lSection.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lSection.setText("Section");
+
+        tSection.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+
+        lCell.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lCell.setText("Cell");
+
+        tCell.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        tCell.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                tCellKeyTyped(evt);
+            }
+        });
+
+        jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jPanel1.setToolTipText("");
+
+        lId.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lId.setText("ID");
+        lId.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+
+        CID.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        CID.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        CID.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        CID.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CIDActionPerformed(evt);
+            }
+        });
+
+        bClear.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        bClear.setText("Clear");
+        bClear.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bClearActionPerformed(evt);
+            }
+        });
+
+        bSearch.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        bSearch.setText("Search");
+        bSearch.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bSearchActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(lId)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(CID))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(bSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(bClear, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lId)
+                    .addComponent(CID, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(bClear)
+                    .addComponent(bSearch))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        buttonGroup1.add(A);
+        A.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        A.setText("A");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(bDelete)
-                .addContainerGap())
-            .addGroup(layout.createSequentialGroup()
-                .addGap(10, 10, 10)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 337, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane2)
-                    .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 402, Short.MAX_VALUE))
-                .addGap(154, 154, 154))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                .addGap(117, 117, 117)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(lFirst, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addGap(33, 33, 33))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(tFirst, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(cMarital, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(lMiddle, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(lLast, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addComponent(tMiddle, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGap(18, 18, 18)
+                                                .addComponent(tLast, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addComponent(lState, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                                .addComponent(cState, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGap(18, 18, 18)
+                                                .addComponent(lCity, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGap(14, 14, 14)
+                                                .addComponent(cCity, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addGap(45, 45, 45)
+                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                                    .addComponent(cHair, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                    .addComponent(tWeight, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                    .addComponent(tSection, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                .addGap(18, 18, 18)
+                                                .addComponent(lArrest)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                                .addComponent(tArrestDate, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                        .addGap(0, 0, Short.MAX_VALUE))))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(lMarital, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(lName, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(lHeight)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(117, 117, 117)
+                                        .addComponent(tFoot, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(lFoot)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(tInch, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(lInch)
+                                        .addGap(27, 27, 27)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(lHair, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(lWeight)
+                                            .addComponent(lSection))))
+                                .addGap(311, 311, 311)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(22, 22, 22)
+                                .addComponent(ldob, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(lGender)
+                                    .addComponent(lEyes, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(tdob, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(rMale)
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addGap(39, 39, 39)
+                                                .addComponent(rFemale, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                        .addComponent(U))
+                                    .addComponent(tEyes, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(4, 4, 4)
+                                .addComponent(A)
+                                .addContainerGap())))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(43, 43, 43))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(429, 429, 429)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(lCell, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(lBloodgroup, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(cBloodgroup, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(tCell, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(lColor)
+                                .addGap(85, 85, 85)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(tFacility, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(tColor, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(lFacility)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 692, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jButton1)
+                                    .addGap(18, 18, 18)
+                                    .addComponent(bDelete)
+                                    .addGap(19, 19, 19))
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 879, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addContainerGap(29, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(310, 310, 310)
+                .addGap(20, 20, 20)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lFirst)
+                    .addComponent(lMiddle)
+                    .addComponent(lLast))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                        .addComponent(jScrollPane5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 169, Short.MAX_VALUE)))
-                .addGap(103, 103, 103)
-                .addComponent(bDelete)
-                .addContainerGap(147, Short.MAX_VALUE))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createSequentialGroup()
+                            .addGap(3, 3, 3)
+                            .addComponent(lName))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(tFirst, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(tMiddle, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(tLast, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(ldob)))
+                    .addComponent(tdob, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(rMale)
+                        .addComponent(rFemale)
+                        .addComponent(U)
+                        .addComponent(A))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(cCity, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(lGender))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(lState)
+                        .addComponent(cState, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(lMarital, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(cMarital, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(lCity)))
+                .addGap(19, 19, 19)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(tFoot, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(lFoot)
+                        .addComponent(tInch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(lInch)
+                        .addComponent(lHeight))
+                    .addComponent(lWeight)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(1, 1, 1)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(lArrest)
+                                .addComponent(lEyes)
+                                .addComponent(tEyes, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(tWeight, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(tArrestDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lColor)
+                            .addComponent(tColor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lHair)
+                            .addComponent(cHair, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lBloodgroup)
+                            .addComponent(cBloodgroup, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(17, 17, 17)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(tFacility, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(lFacility)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(lSection)
+                                        .addComponent(tSection, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(18, 18, 18)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(tCell, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(lCell)))))
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton1)
+                    .addComponent(bDelete))
+                .addGap(28, 28, 28)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(74, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -188,28 +658,197 @@ public class SearchC extends javax.swing.JPanel {
                 JOptionPane.QUESTION_MESSAGE, null, null, null);
         if (result == JOptionPane.YES_OPTION) {
             try {
-                
-                Database.getStatement().execute("delete from mtblCriminals where id=" + temp);
+                Database.getStatement().execute("SET FOREIGN_KEY_CHECKS=0;");
+                Database.getStatement().execute("delete from tblpunishment where id=" + temp);
+                Database.getStatement().execute("delete from mtblCriminals where cid=" + temp);
+                Database.getStatement().execute("SET FOREIGN_KEY_CHECKS=1;");
             } catch (SQLException ex) {
                 Logger.getLogger(AddU.class.getName()).log(Level.SEVERE, null, ex);
             }
             fetchCriminals();
-          // clearAll();
+            // clearAll();
         }
     }//GEN-LAST:event_bDeleteActionPerformed
 
+    private void tFirstActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tFirstActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tFirstActionPerformed
+
+    private void tMiddleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tMiddleActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tMiddleActionPerformed
+
+    private void tLastActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tLastActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tLastActionPerformed
+
+    private void cStateItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cStateItemStateChanged
+        try {
+            // TODO add your handling code here:
+            //cCity.removeAllItems();
+            //  mState.removeElement("");
+            mCity.removeAllElements();
+
+            ResultSet rs = Database.getStatement().executeQuery("select location_id from location where name='" + mState.getSelectedItem() + "'");
+            int lid = 100;
+            while (rs.next()) {
+                lid = rs.getInt(1);
+            }
+            ResultSet rs1 = Database.getStatement().executeQuery("select name from location where parent_id=" + lid);
+            Boolean empty = true;
+            while (rs1.next()) {
+                mCity.addElement(rs1.getString(1));
+                empty = false;
+            }
+            if (empty == true) {
+                mCity.addElement("");
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(AddC.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_cStateItemStateChanged
+
+    private void cStateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cStateActionPerformed
+
+    }//GEN-LAST:event_cStateActionPerformed
+
+    private void cMaritalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cMaritalActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cMaritalActionPerformed
+
+    private void tColorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tColorActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tColorActionPerformed
+
+    private void cBloodgroupActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cBloodgroupActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cBloodgroupActionPerformed
+
+    private void tWeightKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tWeightKeyTyped
+        // TODO add your handling code here:
+        char caracter = evt.getKeyChar();
+        if (((caracter < '0') || (caracter > '9')) || tWeight.getText().length() >= 3 && (caracter != '\b')) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_tWeightKeyTyped
+
+    private void tInchKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tInchKeyTyped
+        // TODO add your handling code here:
+        char caracter = evt.getKeyChar();
+        if (((caracter < '0') || (caracter > '9')) || tInch.getText().length() >= 1 && (caracter != '\b')) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_tInchKeyTyped
+
+    private void tFootActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tFootActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tFootActionPerformed
+
+    private void tFootKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tFootKeyTyped
+        // TODO add your handling code here:
+        char caracter = evt.getKeyChar();
+        if (((caracter < '0') || (caracter > '9')) || tFoot.getText().length() >= 2 && (caracter != '\b')) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_tFootKeyTyped
+
+    private void tCellKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tCellKeyTyped
+        // TODO add your handling code here:
+        char caracter = evt.getKeyChar();
+        if (((caracter < '0') || (caracter > '9')) || tCell.getText().length() >= 11 && (caracter != '\b')) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_tCellKeyTyped
+
+    private void bClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bClearActionPerformed
+        // TODO add your handling code here
+        clearAll();
+    }//GEN-LAST:event_bClearActionPerformed
+
+    private void CIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CIDActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_CIDActionPerformed
+
+    private void bSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bSearchActionPerformed
+
+        Search();
+    }//GEN-LAST:event_bSearchActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JRadioButton A;
+    private javax.swing.JTextField CID;
+    private javax.swing.JRadioButton U;
+    private javax.swing.JButton bClear;
     private javax.swing.JButton bDelete;
-    private org.jdesktop.swingx.JXTable isp;
+    private javax.swing.JButton bSearch;
+    private javax.swing.ButtonGroup buttonGroup1;
+    private javax.swing.JComboBox cBloodgroup;
+    private javax.swing.JComboBox cCity;
+    private javax.swing.JComboBox cHair;
+    private javax.swing.JComboBox cMarital;
+    private javax.swing.JComboBox cState;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JTable jTable3;
-    private javax.swing.JTable jTable4;
+    private javax.swing.JLabel lArrest;
+    private javax.swing.JLabel lBloodgroup;
+    private javax.swing.JLabel lCell;
+    private javax.swing.JLabel lCity;
+    private javax.swing.JLabel lColor;
+    private javax.swing.JLabel lEyes;
+    private javax.swing.JLabel lFacility;
+    private javax.swing.JLabel lFirst;
+    private javax.swing.JLabel lFoot;
+    private javax.swing.JLabel lGender;
+    private javax.swing.JLabel lHair;
+    private javax.swing.JLabel lHeight;
+    private javax.swing.JLabel lId;
+    private javax.swing.JLabel lInch;
+    private javax.swing.JLabel lLast;
+    private javax.swing.JLabel lMarital;
+    private javax.swing.JLabel lMiddle;
+    private javax.swing.JLabel lName;
+    private javax.swing.JLabel lSection;
+    private javax.swing.JLabel lState;
+    private javax.swing.JLabel lWeight;
+    private javax.swing.JLabel ldob;
+    private javax.swing.JRadioButton rFemale;
+    private javax.swing.JRadioButton rMale;
+    private com.toedter.calendar.JDateChooser tArrestDate;
+    private javax.swing.JTextField tCell;
+    private javax.swing.JComboBox tColor;
+    private javax.swing.JTextField tEyes;
+    private javax.swing.JTextField tFacility;
+    private javax.swing.JTextField tFirst;
+    private javax.swing.JTextField tFoot;
+    private javax.swing.JTextField tInch;
+    private javax.swing.JTextField tLast;
+    private javax.swing.JTextField tMiddle;
+    private javax.swing.JTextField tSection;
+    private javax.swing.JTextField tWeight;
+    private com.toedter.calendar.JDateChooser tdob;
     // End of variables declaration//GEN-END:variables
 
-    private void fetchCriminals() {
+    private void allStates() {
+        try {
+
+            //cState.removeAllItems();
+            ResultSet rs2 = Database.getStatement().executeQuery("select name from location where parent_id=100");
+            //rs2.next();
+            mState.addElement("");
+            mCity.addElement("");
+            while (rs2.next()) {
+                mState.addElement("" + rs2.getString(1));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(AddC.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public void fetchCriminals() {
         try {
             dtm.setRowCount(0);
             ResultSet rs = Database.getStatement().executeQuery("Select  cid,fname,mname,lname,gender,ad,city,facility,section,cell from mtblCriminals");
@@ -243,5 +882,105 @@ public class SearchC extends javax.swing.JPanel {
             System.out.println(e.getMessage());
         }
 
+    }
+
+    
+    private void clearAll() {
+        JTextField tfield = null;
+
+        for (Component d : this.getComponents()) {
+            if (d.getClass().toString().contains("javax.swing.JTextField")) {
+                tfield = (JTextField) d;
+                tfield.setText("");
+            }
+        }
+
+        tdob.setDate(null);
+        U.setSelected(true);
+        tColor.setSelectedItem("");
+        tArrestDate.setDate(null);
+        mState.setSelectedItem("");
+        mCity.setSelectedItem("");
+        cMarital.setSelectedIndex(0);
+        cHair.setSelectedIndex(0);
+        cBloodgroup.setSelectedIndex(0);
+
+    }
+
+    private void Search() {
+        try {
+            dtm.setRowCount(0);
+            Date dateFromtArrest = tArrestDate.getDate();
+            String dateArrest = (String.format("%1$tY-%1$tm-%1$td", dateFromtArrest));
+            if (dateArrest.equals("null-null-null")) {
+                dateArrest = "";
+            }
+            Date dateFromttdob = tdob.getDate();
+            String datedob = (String.format("%1$tY-%1$tm-%1$td", dateFromttdob));
+            if (datedob.equals("null-null-null")) {
+                datedob = "";
+            }
+            String mar = (String) cMarital.getSelectedItem();
+            if (mar.equals(" ")) {
+                mar = "";
+            }
+            String col = (String) tColor.getSelectedItem();
+            if (col.equals(" ")) {
+                col = "";
+            }
+            String ha = (String) cHair.getSelectedItem();
+            if (ha.equals(" ")) {
+                ha = "";
+            }
+            String b = (String) cBloodgroup.getSelectedItem();
+            if (b.equals(" ")) {
+                b = "";
+            }
+            String sHeight = null;
+            double Height = (Double.parseDouble(tFoot.getText() + "." + tInch.getText() + "0"));
+            if (Height == 0) {
+                sHeight = "";
+            } else {
+                sHeight = String.valueOf(Height).replace(".0", "");
+            }
+            ResultSet rs = Database.getStatement().executeQuery("select cid,fname,mname,lname,gender,ad,city,facility,section,cell from mtblCriminals where "
+                    + "ifnull(ad,1) like '%" + dateArrest + "%' and "
+                    + "fname like '%" + tFirst.getText() + "%' and "
+                    + "mname like '%" + tMiddle.getText() + "%' and "
+                    + "lname like '%" + tLast.getText() + "%' and "
+                    + "ifnull(dob,1) like '%" + datedob + "%' and "
+                    + "state like '%" + cState.getSelectedItem() + "%' and "
+                    + "city like '%" + cCity.getSelectedItem() + "%' and "
+                    + "gender like '%" + (rMale.isSelected() ? "M" : rFemale.isSelected() ? "F" : U.isSelected() ? "U" : "") + "%' and "
+                    + "mstatus like '%" + mar + "%' and "
+                    + "color like '%" + col + "%' and "
+                    + "hair like '%" + ha + "%' and "
+                    + "bg like '%" + b + "%' and "
+                    + "ifnull(height,1) like '%" + sHeight + "%' and "
+                    + "weight like '%" + tWeight.getText() + "%' and "
+                    + "eyes like '%" + tEyes.getText() + "%' and "
+                    + "facility like '%" + tFacility.getText() + "%' and "
+                    + "section like '%" + tSection.getText() + "%' and "
+                    + "cell like '%" + tCell.getText() + "%'");
+            ResultSetMetaData rsmd = rs.getMetaData();
+            int num = rsmd.getColumnCount();
+            String[] name = new String[num];
+            for (int i = 0; i < num; i++) {
+                name[i] = rsmd.getColumnName(i + 1);
+            }
+            dtm.setColumnIdentifiers(name);
+            while (rs.next()) {
+                // b=rs.getBytes(2);
+                String rowdata[] = new String[num];
+                for (int i = 0; i < num; i++) {
+                    rowdata[i] = rs.getString(i + 1);
+                }
+                dtm.addRow(rowdata);
+            }
+            System.out.println(Height);
+
+        } catch (SQLException ex) {
+            Logger.getLogger(SearchC.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 }

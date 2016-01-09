@@ -73,8 +73,6 @@ public class Crimes extends javax.swing.JPanel {
         jButton6 = new javax.swing.JButton();
         jComboBox3 = new javax.swing.JComboBox();
         jButton4 = new javax.swing.JButton();
-        jScrollPane5 = new javax.swing.JScrollPane();
-        jTable4 = new javax.swing.JTable();
         jButton7 = new javax.swing.JButton();
         jScrollPane3 = new javax.swing.JScrollPane();
         isp = new org.jdesktop.swingx.JXTable(){
@@ -95,6 +93,23 @@ public class Crimes extends javax.swing.JPanel {
         };
         jButton1 = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
+        jScrollPane5 = new javax.swing.JScrollPane();
+        tPunish = new org.jdesktop.swingx.JXTable(){
+            public String getToolTipText(MouseEvent e) {
+                String tip = null;
+                java.awt.Point p = e.getPoint();
+                int rowIndex = rowAtPoint(p);
+                int colIndex = columnAtPoint(p);
+
+                try {
+                    tip = getValueAt(rowIndex, colIndex).toString();
+                } catch (RuntimeException e1) {
+                    //catch null pointer exception if mouse is over an empty line
+                }
+
+                return tip;
+            }
+        };
         jScrollPane2 = new javax.swing.JScrollPane();
         jTextArea1 = new javax.swing.JTextArea();
 
@@ -123,7 +138,7 @@ public class Crimes extends javax.swing.JPanel {
         });
 
         jComboBox3.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jComboBox3.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Imprison till", "Hang on" }));
+        jComboBox3.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Imprison till", "Death by hanging" }));
         jComboBox3.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 jComboBox3ItemStateChanged(evt);
@@ -137,12 +152,6 @@ public class Crimes extends javax.swing.JPanel {
                 jButton4ActionPerformed(evt);
             }
         });
-
-        jScrollPane5.setBackground(new java.awt.Color(255, 255, 255));
-        jScrollPane5.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-
-        jTable4.setModel(dtm1);
-        jScrollPane5.setViewportView(jTable4);
 
         jButton7.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jButton7.setText("Del");
@@ -158,12 +167,14 @@ public class Crimes extends javax.swing.JPanel {
         jScrollPane3.setViewportView(isp);
         isp.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
 
+        jButton1.setBackground(java.awt.Color.lightGray);
         jButton1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/res/left.png"))); // NOI18N
         jButton1.setBorder(null);
         jButton1.setFocusable(false);
         jButton1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton1.setMargin(new java.awt.Insets(2, 2, 2, 2));
+        jButton1.setOpaque(false);
         jButton1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -174,6 +185,12 @@ public class Crimes extends javax.swing.JPanel {
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel2.setText("Punishment");
+
+        jScrollPane5.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+
+        tPunish.setModel(dtm1);
+        jScrollPane5.setViewportView(tPunish);
+        tPunish.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -196,15 +213,17 @@ public class Crimes extends javax.swing.JPanel {
                         .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 138, Short.MAX_VALUE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jComboBox3, 0, 110, Short.MAX_VALUE)
+                                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jComboBox3, 0, 118, Short.MAX_VALUE)
                                 .addGap(18, 18, 18)
                                 .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 402, Short.MAX_VALUE))
-                        .addGap(22, 22, 22))
+                                .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(22, 22, 22))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jScrollPane5)
+                                .addContainerGap())))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
@@ -228,11 +247,11 @@ public class Crimes extends javax.swing.JPanel {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(cIpc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel1))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 175, Short.MAX_VALUE))
-                .addContainerGap(18, Short.MAX_VALUE))
+                .addGap(22, 22, 22))
         );
 
         jScrollPane2.setBorder(javax.swing.BorderFactory.createTitledBorder("Brief Case Information"));
@@ -259,9 +278,9 @@ public class Crimes extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addGap(20, 20, 20)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 256, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(14, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 246, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(33, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -326,7 +345,7 @@ public class Crimes extends javax.swing.JPanel {
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
         // TODO add your handling code here:
-        dtm1.removeRow(jTable4.getSelectedRow());
+        dtm1.removeRow(tPunish.getSelectedRow());
     }//GEN-LAST:event_jButton7ActionPerformed
 
 
@@ -345,8 +364,8 @@ public class Crimes extends javax.swing.JPanel {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane5;
-    private javax.swing.JTable jTable4;
     private javax.swing.JTextArea jTextArea1;
+    private org.jdesktop.swingx.JXTable tPunish;
     // End of variables declaration//GEN-END:variables
 
     private void ipc() {
@@ -368,7 +387,6 @@ public class Crimes extends javax.swing.JPanel {
         try {
 
             for (int i = 0; i < isp.getRowCount(); i++) {
-                System.out.println("blalbl");
                 Database.getStatement().execute("insert into tblIpc values(" + id + ",'" + isp.getValueAt(i, 0) + "')");
 
             }
@@ -379,15 +397,27 @@ public class Crimes extends javax.swing.JPanel {
     }
 
     public void removeAll() {
-        System.out.println("baby im perfect fot you");
         dtm.setRowCount(0);
+        dtm1.setRowCount(0);
         ipc();
     }
 
-    public void setPunish(String date, int Fine) {
+    public void punish(String date, int Fine) {
         String Ptype=(String) jComboBox3.getSelectedItem();
         String rowdata[] = {Ptype, "" + date, "" + Fine};
         dtm1.addRow(rowdata);
+    }
+    void setPunish(int id) {
+        try {
+
+            for (int i = 0; i < tPunish.getRowCount(); i++) {
+                Database.getStatement().execute("insert into tblPunishment values(" + id + ",'" + tPunish.getValueAt(i, 0) + "','" + tPunish.getValueAt(i, 1) + "'," + tPunish.getValueAt(i, 2) + ")");
+
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Crimes.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
     }
 
 }

@@ -254,7 +254,7 @@ public class Login extends javax.swing.JFrame implements ActionListener, KeyList
 
          try {
          //javax.swing.UIManager.put("control", new Color(0xbed3e6));
-         javax.swing.UIManager.put("nimbusBase", new Color(0x878c96));
+        // javax.swing.UIManager.put("nimbusBase", new Color(0x878c96));
          for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
          if ("Windows".equals(info.getName())) {
          javax.swing.UIManager.setLookAndFeel(info.getClassName());

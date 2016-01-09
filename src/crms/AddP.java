@@ -7,6 +7,7 @@ package crms;
 
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import java.util.Date;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 
@@ -20,12 +21,13 @@ public class AddP extends javax.swing.JDialog {
      * Creates new form AddP
      */
     Crimes c;
-    public AddP(java.awt.Frame parent, boolean modal,String Title,Crimes panel) {
+
+    public AddP(java.awt.Frame parent, boolean modal, String Title, Crimes panel) {
         super(parent, modal);
         initComponents();
         setLocationRelativeTo(null);
         setTitle(Title);
-        c=panel;
+        c = panel;
     }
 
     /**
@@ -155,7 +157,12 @@ public class AddP extends javax.swing.JDialog {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        c.setPunish(""+jCalendar1.getDate(),Integer.parseInt(jTextField1.getText()));
+        Date dateFromDateChooser = jCalendar1.getDate();
+        String dateString = (String.format("%1$tY-%1$tm-%1$td", dateFromDateChooser));
+        if (dateString.equals("null-null-null")) {
+            dateString = null;
+        }
+        c.punish(dateString, Integer.parseInt(jTextField1.getText()));
         this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -170,7 +177,7 @@ public class AddP extends javax.swing.JDialog {
         if (((caracter < '0') || (caracter > '9')) || jTextField1.getText().length() >= 10 && (caracter != '\b')) {
             evt.consume();
         }
-        
+
     }//GEN-LAST:event_jTextField1KeyTyped
 
     /**
