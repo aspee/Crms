@@ -25,15 +25,17 @@ import javax.swing.ImageIcon;
  * @author Orlon
  */
 public class Show extends javax.swing.JFrame {
+
     int cid;
+
     /**
      * Creates new form Printing
      */
     public Show(int cid) {
         initComponents();
-        this.cid=cid;
+        this.cid = cid;
         SetAll();
-        setLocationRelativeTo(null); 
+        setLocationRelativeTo(null);
     }
 
     /**
@@ -251,9 +253,8 @@ public class Show extends javax.swing.JFrame {
 
         tImage.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         tImage.setForeground(new java.awt.Color(0, 51, 153));
-        tImage.setIcon(new javax.swing.ImageIcon(getClass().getResource("/res/Settings.png"))); // NOI18N
+        tImage.setIcon(new javax.swing.ImageIcon(getClass().getResource("/res/Alert.png"))); // NOI18N
         tImage.setToolTipText("");
-        tImage.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         tImage.setPreferredSize(new java.awt.Dimension(192, 192));
 
         tId.setFont(new java.awt.Font("Arial Narrow", 1, 14)); // NOI18N
@@ -310,10 +311,10 @@ public class Show extends javax.swing.JFrame {
                         .addComponent(tEyes, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(16, 16, 16))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lHeight)
-                            .addComponent(lColor))
-                        .addGap(18, 18, 18)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(lHeight, javax.swing.GroupLayout.DEFAULT_SIZE, 42, Short.MAX_VALUE)
+                            .addComponent(lColor, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                 .addComponent(tHeight, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -510,7 +511,7 @@ public class Show extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void bPrintActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bPrintActionPerformed
-        PrintUtilities p=new PrintUtilities(jPanel1);
+        PrintUtilities p = new PrintUtilities(jPanel1);
         p.print();
     }//GEN-LAST:event_bPrintActionPerformed
 
@@ -563,45 +564,46 @@ public class Show extends javax.swing.JFrame {
 
     private void SetAll() {
         try {
-            ResultSet rs=Database.getStatement().executeQuery("select * from mtblCriminals where cid="+cid);
-           if(rs.next())
-           {   
-            tImage.setIcon(new ImageIcon(((new ImageIcon(rs.getBytes("image"))).getImage()).getScaledInstance(192, 192, java.awt.Image.SCALE_SMOOTH)));
+            ResultSet rs = Database.getStatement().executeQuery("select * from mtblCriminals where cid=" + cid);
+            if (rs.next()) {
+                if (!(new String(rs.getBytes("image"))).equals("null")) {
+                    tImage.setIcon(new ImageIcon(((new ImageIcon(rs.getBytes("image"))).getImage()).getScaledInstance(192, 192, java.awt.Image.SCALE_SMOOTH)));
+                } else {
+                    
+                    tImage.setIcon(new ImageIcon(((new ImageIcon(getClass().getResource("/res/Alert.png"))).getImage()).getScaledInstance(192, 192, java.awt.Image.SCALE_SMOOTH)));
 
-              // tImage.setIcon(new ImageIcon(rs.getBytes("image")));
-               tId.setText("#"+rs.getInt("cid"));
-               tAdditional.setText(rs.getString("ai"));
-               tAddress.setText(""+rs.getString("address"));
-               tBlood.setText(rs.getString("bg"));
-               tCell.setText(rs.getString("cell"));
-               tCity.setText(rs.getString("city"));
-               tColor.setText(rs.getString("color"));
-               tDob.setText(rs.getString("dob"));
-               tEyes.setText(rs.getString("eyes"));
-               tFacility.setText(rs.getString("facility"));
-               tFirst.setText(rs.getString("fname"));
-               tGender.setText(rs.getString("gender"));
-               tHair.setText(rs.getString("hair"));
-               tHeight.setText(rs.getString("height"));
-               //tId.setText(rs.getString("cell"));
-               //t.setText(rs.getString("cell"));
-               tLast.setText(rs.getString("lname"));
-               tMarital.setText(rs.getString("mstatus"));
-               tMiddle.setText(rs.getString("mname"));
-               tSection.setText(rs.getString("section"));
-               tState.setText(rs.getString("state"));
-               tWeight.setText(rs.getString("weight"));
-                       
-               
-           }
-           
-            
+                }
+                tId.setText("#" + rs.getInt("cid"));
+                tAdditional.setText(rs.getString("ai"));
+                tAddress.setText("" + rs.getString("address"));
+                tBlood.setText(rs.getString("bg"));
+                tCell.setText(rs.getString("cell"));
+                tCity.setText(rs.getString("city"));
+                tColor.setText(rs.getString("color"));
+                tDob.setText(rs.getString("dob"));
+                tEyes.setText(rs.getString("eyes"));
+                tFacility.setText(rs.getString("facility"));
+                tFirst.setText(rs.getString("fname"));
+                tGender.setText(rs.getString("gender"));
+                tHair.setText(rs.getString("hair"));
+                tHeight.setText(rs.getString("height"));
+                //tId.setText(rs.getString("cell"));
+                //t.setText(rs.getString("cell"));
+                tLast.setText(rs.getString("lname"));
+                tMarital.setText(rs.getString("mstatus"));
+                tMiddle.setText(rs.getString("mname"));
+                tSection.setText(rs.getString("section"));
+                tState.setText(rs.getString("state"));
+                tWeight.setText(rs.getString("weight"));
+
+            }
+
         } catch (SQLException ex) {
             Logger.getLogger(Show.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
     String getJobName() {
-            return tId.getText()+tFirst.getText()+tDob.getText();
+        return tId.getText() + tFirst.getText() + tDob.getText();
     }
 }

@@ -104,16 +104,18 @@ public class Home extends javax.swing.JFrame {
         LO = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
-        setBackground(new java.awt.Color(121, 134, 203));
+        setBackground(new java.awt.Color(66, 133, 244));
+        setFocusTraversalPolicyProvider(true);
+        setForeground(new java.awt.Color(66, 133, 244));
         setResizable(false);
 
-        jToolBar1.setBackground(java.awt.Color.lightGray);
+        jToolBar1.setBackground(new java.awt.Color(66, 133, 244));
         jToolBar1.setFloatable(false);
         jToolBar1.setRollover(true);
 
-        Settings.setBackground(java.awt.Color.lightGray);
-        Settings.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        Settings.setBackground(new java.awt.Color(66, 133, 244));
         Settings.setIcon(new javax.swing.ImageIcon(getClass().getResource("/res/Settings.png"))); // NOI18N
+        Settings.setToolTipText("");
         Settings.setFocusable(false);
         Settings.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         Settings.setMargin(new java.awt.Insets(5, 5, 5, 5));
@@ -124,8 +126,9 @@ public class Home extends javax.swing.JFrame {
         });
         jToolBar1.add(Settings);
 
-        bAddc.setBackground(java.awt.Color.lightGray);
+        bAddc.setBackground(new java.awt.Color(66, 133, 244));
         bAddc.setIcon(new javax.swing.ImageIcon(getClass().getResource("/res/Criminal.png"))); // NOI18N
+        bAddc.setToolTipText("");
         bAddc.setFocusable(false);
         bAddc.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         bAddc.setMargin(new java.awt.Insets(5, 5, 5, 5));
@@ -137,8 +140,9 @@ public class Home extends javax.swing.JFrame {
         });
         jToolBar1.add(bAddc);
 
-        bSearch.setBackground(java.awt.Color.lightGray);
+        bSearch.setBackground(new java.awt.Color(66, 133, 244));
         bSearch.setIcon(new javax.swing.ImageIcon(getClass().getResource("/res/Search.png"))); // NOI18N
+        bSearch.setToolTipText("");
         bSearch.setFocusable(false);
         bSearch.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         bSearch.setMargin(new java.awt.Insets(5, 5, 5, 5));
@@ -150,8 +154,9 @@ public class Home extends javax.swing.JFrame {
         });
         jToolBar1.add(bSearch);
 
-        bAddu.setBackground(java.awt.Color.lightGray);
+        bAddu.setBackground(new java.awt.Color(66, 133, 244));
         bAddu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/res/Add.png"))); // NOI18N
+        bAddu.setToolTipText("");
         bAddu.setFocusable(false);
         bAddu.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         bAddu.setMargin(new java.awt.Insets(5, 5, 5, 5));
@@ -166,6 +171,7 @@ public class Home extends javax.swing.JFrame {
         Hello.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         Hello.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         Hello.setText("Hello, Man");
+        Hello.setOpaque(true);
 
         Cards.setLayout(new java.awt.CardLayout());
 
@@ -227,6 +233,7 @@ public class Home extends javax.swing.JFrame {
         // TODO add your handling code here:
         cl.show(Cards, "Search Criminal");
         sc.fetchCriminals();
+        sc.clearAll();
         
     }//GEN-LAST:event_bSearchActionPerformed
 
