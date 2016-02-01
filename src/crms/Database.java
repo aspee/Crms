@@ -72,7 +72,8 @@ public class Database
             //ALSO SET THE CLASSPATH
             Class.forName("com.mysql.jdbc.Driver");
             con=DriverManager.getConnection("Jdbc:mysql://localhost:6666/crms?user=root&password=1234");
-            st=con.createStatement();
+            st=con.createStatement( ResultSet.TYPE_SCROLL_INSENSITIVE,
+                           ResultSet.CONCUR_READ_ONLY);
                         
            }
         catch (ClassNotFoundException | SQLException e) 

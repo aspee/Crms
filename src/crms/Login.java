@@ -11,16 +11,20 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.util.LinkedList;
 import java.util.TimerTask;
 import javax.swing.JLabel;
 import javax.swing.Timer;
 import javax.swing.UIManager;
+import javax.swing.plaf.ColorUIResource;
 
 /**
  *
  * @author Orlon
  */
-public class Login extends javax.swing.JFrame implements ActionListener, KeyListener {
+public class Login extends javax.swing.JFrame implements ActionListener, KeyListener, MouseListener {
 
     /**
      * Creates new form Login
@@ -31,6 +35,7 @@ public class Login extends javax.swing.JFrame implements ActionListener, KeyList
 
     public Login() {
         setContentPane(new JLabel(new javax.swing.ImageIcon(getClass().getResource("/res/background.jpg"))));
+        getContentPane().setBackground(new Color(255, 255, 255));
         initComponents();
         setSize(534, 243);
         tfUsername.requestFocus();
@@ -45,7 +50,7 @@ public class Login extends javax.swing.JFrame implements ActionListener, KeyList
         bLogin.addKeyListener(Login.this);
         tfUsername.addActionListener(Login.this);
         tfPassword.addActionListener(Login.this);
-        bLogin.addActionListener(Login.this);
+        bLogin.addMouseListener(Login.this);
 
     }
 
@@ -61,13 +66,13 @@ public class Login extends javax.swing.JFrame implements ActionListener, KeyList
         lLogo = new javax.swing.JLabel();
         lCaps = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
-        bLogin = new javax.swing.JButton();
         tfUsername = new javax.swing.JTextField();
         lUsername = new javax.swing.JLabel();
         lPassword = new javax.swing.JLabel();
         tfPassword = new javax.swing.JPasswordField();
         lValid = new javax.swing.JLabel();
-        bLogin1 = new javax.swing.JButton();
+        bLogin = new crms.LoginButton();
+        jLabel1 = new crms.LoginButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Login");
@@ -77,24 +82,13 @@ public class Login extends javax.swing.JFrame implements ActionListener, KeyList
         lLogo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/res/insignia.alpha.png"))); // NOI18N
         lLogo.setToolTipText("");
 
-        lCaps.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        lCaps.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         lCaps.setForeground(new java.awt.Color(255, 255, 255));
         lCaps.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setForeground(new java.awt.Color(255, 255, 255));
         jPanel1.setOpaque(false);
-
-        bLogin.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
-        bLogin.setForeground(new java.awt.Color(77, 112, 180));
-        bLogin.setText("Login");
-        bLogin.setAutoscrolls(true);
-        bLogin.setOpaque(false);
-        bLogin.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                bLoginActionPerformed(evt);
-            }
-        });
 
         tfUsername.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         tfUsername.setText("peter");
@@ -106,12 +100,12 @@ public class Login extends javax.swing.JFrame implements ActionListener, KeyList
         });
 
         lUsername.setBackground(new java.awt.Color(255, 255, 255));
-        lUsername.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        lUsername.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         lUsername.setForeground(new java.awt.Color(255, 255, 255));
         lUsername.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         lUsername.setText("Username:");
 
-        lPassword.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        lPassword.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         lPassword.setForeground(new java.awt.Color(255, 255, 255));
         lPassword.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         lPassword.setText("Password:");
@@ -125,10 +119,16 @@ public class Login extends javax.swing.JFrame implements ActionListener, KeyList
             }
         });
 
-        lValid.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
-        lValid.setForeground(new java.awt.Color(255, 0, 0));
+        lValid.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        lValid.setForeground(new java.awt.Color(249, 1, 1));
+        lValid.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lValid.setText(" ");
         lValid.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+
+        bLogin.setFont(new java.awt.Font("Arial", 1, 11)); // NOI18N
+        bLogin.setForeground(new java.awt.Color(72, 106, 179));
+        bLogin.setText("Login");
+        bLogin.setOpaque(true);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -146,9 +146,9 @@ public class Login extends javax.swing.JFrame implements ActionListener, KeyList
                             .addComponent(tfUsername, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(tfPassword, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(lValid, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(bLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(lValid, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(27, 27, 27)
+                        .addComponent(bLogin, javax.swing.GroupLayout.DEFAULT_SIZE, 64, Short.MAX_VALUE)))
                 .addContainerGap())
         );
 
@@ -166,23 +166,21 @@ public class Login extends javax.swing.JFrame implements ActionListener, KeyList
                     .addComponent(lPassword)
                     .addComponent(tfPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(bLogin)
-                    .addComponent(lValid))
-                .addGap(18, 18, 18))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(bLogin, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lValid, javax.swing.GroupLayout.DEFAULT_SIZE, 31, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         lValid.getAccessibleContext().setAccessibleName("jLabel4");
         lValid.getAccessibleContext().setAccessibleDescription("");
 
-        bLogin1.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
-        bLogin1.setForeground(new java.awt.Color(77, 112, 180));
-        bLogin1.setText("Exit");
-        bLogin1.setAutoscrolls(true);
-        bLogin1.setOpaque(false);
-        bLogin1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                bLogin1ActionPerformed(evt);
+        jLabel1.setFont(new java.awt.Font("Arial", 1, 11)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(72, 106, 179));
+        jLabel1.setText("Exit");
+        jLabel1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel1MouseClicked(evt);
             }
         });
 
@@ -203,15 +201,15 @@ public class Login extends javax.swing.JFrame implements ActionListener, KeyList
                         .addGap(20, 20, 20))))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(bLogin1, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(bLogin1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addContainerGap()
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(lLogo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -223,10 +221,6 @@ public class Login extends javax.swing.JFrame implements ActionListener, KeyList
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void bLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bLoginActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_bLoginActionPerformed
-
     private void tfUsernameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfUsernameActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_tfUsernameActionPerformed
@@ -235,10 +229,10 @@ public class Login extends javax.swing.JFrame implements ActionListener, KeyList
         // TODO add your handling code here:
     }//GEN-LAST:event_tfPasswordActionPerformed
 
-    private void bLogin1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bLogin1ActionPerformed
+    private void jLabel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MouseClicked
         // TODO add your handling code here:
         System.exit(0);
-    }//GEN-LAST:event_bLogin1ActionPerformed
+    }//GEN-LAST:event_jLabel1MouseClicked
 
     /**
      * @param args the command line arguments
@@ -250,31 +244,31 @@ public class Login extends javax.swing.JFrame implements ActionListener, KeyList
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
          */
 
+        try {
+            //javax.swing.UIManager.put("control", new Color(0xbed3e6));
+            // javax.swing.UIManager.put("nimbusBase", new Color(0x878c96));
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Windows".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
 
+                    break;
 
-         try {
-         //javax.swing.UIManager.put("control", new Color(0xbed3e6));
-        // javax.swing.UIManager.put("nimbusBase", new Color(0x878c96));
-         for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-         if ("Windows".equals(info.getName())) {
-         javax.swing.UIManager.setLookAndFeel(info.getClassName());
-         break;
-         }
-         }
-         } catch (ClassNotFoundException ex) {
-         java.util.logging.Logger.getLogger(Login.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-         } catch (InstantiationException ex) {
-         java.util.logging.Logger.getLogger(Login.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-         } catch (IllegalAccessException ex) {
-         java.util.logging.Logger.getLogger(Login.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-         java.util.logging.Logger.getLogger(Login.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-         }
-         //</editor-fold>*
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(Login.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(Login.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(Login.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(Login.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
 
-         /* Create and display the form */
+        /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
+
                 new Login().setVisible(true);
 
             }
@@ -282,8 +276,8 @@ public class Login extends javax.swing.JFrame implements ActionListener, KeyList
 
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton bLogin;
-    private javax.swing.JButton bLogin1;
+    private javax.swing.JLabel bLogin;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel lCaps;
     private javax.swing.JLabel lLogo;
@@ -325,6 +319,41 @@ public class Login extends javax.swing.JFrame implements ActionListener, KeyList
 
     @Override
     public void keyReleased(KeyEvent e) {
+    }
+
+    @Override
+    public void mouseClicked(MouseEvent me) {
+        String pass = new String(tfPassword.getPassword());
+        String user = tfUsername.getText();
+
+        if (user.length() != 0 && pass.length() != 0 && (tmp = database.checkLogin(user, pass)) != 0) {
+            dispose();
+            Home home = new Home();
+            home.setVisible(true);
+            home.setLocationRelativeTo(null);
+        } else {
+            //lValid.setForeground(Color.red);
+            lValid.setText("Invalid Credentials");
+            java.awt.Toolkit.getDefaultToolkit().beep();
+            tfUsername.setText("");
+            tfPassword.setText("");
+        }
+    }
+
+    @Override
+    public void mousePressed(MouseEvent me) {
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent me) {
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent me) {
+    }
+
+    @Override
+    public void mouseExited(MouseEvent me) {
     }
 
 }

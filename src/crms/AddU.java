@@ -106,6 +106,8 @@ public class AddU extends javax.swing.JPanel {
         bSearch = new javax.swing.JButton();
         bDelete = new javax.swing.JButton();
 
+        setBackground(new java.awt.Color(255, 255, 255));
+
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel2.setText("ID");
 
@@ -273,6 +275,7 @@ public class AddU extends javax.swing.JPanel {
         jLabel16.setText("*");
 
         jTable2.setModel(dtm);
+        jTable2.setOpaque(false);
         jTable2.getTableHeader().setReorderingAllowed(false);
         jTable2.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {

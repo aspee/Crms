@@ -6,6 +6,7 @@
 package crms;
 
 import java.awt.CardLayout;
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Container;
 import java.awt.TextField;
@@ -15,9 +16,12 @@ import java.awt.event.WindowListener;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.BorderFactory;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.border.Border;
 import javax.swing.text.JTextComponent;
 
 /**
@@ -32,19 +36,25 @@ public class Home extends javax.swing.JFrame {
     CardLayout cl;
     Crimes c;
     SearchC sc;
+    AddC ac;
+
     public Home() {
+       
         initComponents();
+      
         setName();
         Permissions();
         Cards.add(new Settings(this), "Settings");
-        sc=new SearchC();
+        sc = new SearchC(this);
         Cards.add(sc, "Search Criminal");
-        Cards.add(new AddC(this), "Add Criminal");
+        ac =new AddC(this);
+        Cards.add(ac, "Add Criminal");
         Cards.add(new AddU(), "Add User");
-        c=new Crimes(this);
+        c = new Crimes(this);
         Cards.add(c, "Crimes");
         cl = (CardLayout) (Cards.getLayout());
         addWindowListener(exitListener);
+        getContentPane().setBackground(Color.WHITE);
     }
 
     public void setName() {
@@ -62,12 +72,12 @@ public class Home extends javax.swing.JFrame {
     public void showAddCriminal() {
         cl.show(Cards, "Add Criminal");
     }
-    public void ipc(int id)
-    {
+
+    public void ipc(int id) {
         c.setIPC(id);
     }
-    public void ipcClear()
-    {
+
+    public void ipcClear() {
         c.removeAll();
     }
     WindowListener exitListener = new WindowAdapter() {
@@ -101,7 +111,7 @@ public class Home extends javax.swing.JFrame {
         bAddu = new javax.swing.JButton();
         Hello = new javax.swing.JLabel();
         Cards = new javax.swing.JPanel();
-        LO = new javax.swing.JButton();
+        jLabel3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setBackground(new java.awt.Color(66, 133, 244));
@@ -168,6 +178,7 @@ public class Home extends javax.swing.JFrame {
         });
         jToolBar1.add(bAddu);
 
+        Hello.setBackground(new java.awt.Color(255, 255, 255));
         Hello.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         Hello.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         Hello.setText("Hello, Man");
@@ -175,16 +186,27 @@ public class Home extends javax.swing.JFrame {
 
         Cards.setLayout(new java.awt.CardLayout());
 
-        LO.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        LO.setText("Log Out");
-        LO.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                LOFocusLost(evt);
+        jLabel3.setBackground(new java.awt.Color(66, 133, 244));
+        jLabel3.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel3.setText("Log Out");
+        jLabel3.setOpaque(true);
+        jLabel3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel3MouseClicked(evt);
             }
-        });
-        LO.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                LOActionPerformed(evt);
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jLabel3MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jLabel3MouseExited(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jLabel3MousePressed(evt);
+            }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                jLabel3MouseReleased(evt);
             }
         });
 
@@ -198,9 +220,9 @@ public class Home extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(Hello, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(LO, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(30, 30, 30))
+                        .addGap(38, 38, 38)
+                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(Cards, javax.swing.GroupLayout.PREFERRED_SIZE, 906, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 4, Short.MAX_VALUE))))
@@ -210,12 +232,12 @@ public class Home extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(8, 8, 8)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 11, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(LO, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(Hello, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(Hello, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(Cards, javax.swing.GroupLayout.DEFAULT_SIZE, 575, Short.MAX_VALUE)
+                .addComponent(Cards, javax.swing.GroupLayout.DEFAULT_SIZE, 574, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -234,7 +256,7 @@ public class Home extends javax.swing.JFrame {
         cl.show(Cards, "Search Criminal");
         sc.fetchCriminals();
         sc.clearAll();
-        
+
     }//GEN-LAST:event_bSearchActionPerformed
 
     private void bAddcActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bAddcActionPerformed
@@ -247,7 +269,7 @@ public class Home extends javax.swing.JFrame {
         cl.show(Cards, "Settings");
     }//GEN-LAST:event_SettingsActionPerformed
 
-    private void LOActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LOActionPerformed
+    private void jLabel3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel3MouseClicked
         // TODO add your handling code here:
         int confirm = JOptionPane.showOptionDialog(this,
                 "Are You Sure to Log Off?",
@@ -258,12 +280,31 @@ public class Home extends javax.swing.JFrame {
             dispose();
             new Login().setVisible(true);
         }
+    }//GEN-LAST:event_jLabel3MouseClicked
 
-    }//GEN-LAST:event_LOActionPerformed
+    private void jLabel3MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel3MouseEntered
+        // TODO add your handling code here:
+        Border one = BorderFactory.createEtchedBorder();
+        Border two = BorderFactory.createMatteBorder(1, 1, 1, 1, Color.WHITE);
+        jLabel3.setBorder(BorderFactory.createCompoundBorder(one, two));
+    }//GEN-LAST:event_jLabel3MouseEntered
 
-    private void LOFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_LOFocusLost
+    private void jLabel3MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel3MouseExited
+        // TODO add your handling code here:
+        jLabel3.setBorder(null);
+    }//GEN-LAST:event_jLabel3MouseExited
 
-    }//GEN-LAST:event_LOFocusLost
+    private void jLabel3MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel3MousePressed
+        // TODO add your handling code here:
+        jLabel3.setBackground(Color.WHITE);
+        jLabel3.setForeground(Color.BLACK);
+    }//GEN-LAST:event_jLabel3MousePressed
+
+    private void jLabel3MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel3MouseReleased
+        // TODO add your handling code here:
+        jLabel3.setBackground(new Color(66, 133, 244));
+        jLabel3.setForeground(Color.WHITE);
+    }//GEN-LAST:event_jLabel3MouseReleased
 
     /**
      * @param args the command line arguments
@@ -303,29 +344,26 @@ public class Home extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel Cards;
     private javax.swing.JLabel Hello;
-    private javax.swing.JButton LO;
     private javax.swing.JButton Settings;
     private javax.swing.JButton bAddc;
     private javax.swing.JButton bAddu;
     private javax.swing.JButton bSearch;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JToolBar jToolBar1;
     // End of variables declaration//GEN-END:variables
 
     private void Permissions() {
-        String Role=Database.getRole();
+        String Role = Database.getRole();
         if (Role.equals("Admin")) {
             //No Admin Panel
             //jToolBar1.remove(bAddu);
             jToolBar1.remove(bAddc);
             jToolBar1.remove(bSearch);
-            
-        }
-        else if(Role.equals("Jailer"))
-        {   jToolBar1.remove(bAddu);
-            
-        }
-        else if(Role.equals("CBI") || Role.equals("Police") || Role.equals("Judge"))
-        {
+
+        } else if (Role.equals("Jailer")) {
+            jToolBar1.remove(bAddu);
+
+        } else if (Role.equals("CBI") || Role.equals("Police") || Role.equals("Judge")) {
             jToolBar1.remove(bAddu);
             jToolBar1.remove(bAddc);
         }
@@ -334,6 +372,14 @@ public class Home extends javax.swing.JFrame {
     }
 
     void pdf(int i) {
-           c.setPunish(i);
+        c.setPunish(i);
     }
+
+    void editCriminals(int parseInt) {
+        ac.editCriminal(parseInt);
+    }
+
+    
+
+ 
 }

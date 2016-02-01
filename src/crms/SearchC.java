@@ -5,6 +5,7 @@
  */
 package crms;
 
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -18,6 +19,7 @@ import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
@@ -38,10 +40,11 @@ public class SearchC extends javax.swing.JPanel {
     DefaultTableModel dtm;
     DefaultComboBoxModel mState, mCity;
     PreparedStatement pst;
+    javax.swing.JFrame parent;
     private TableRowSorter<TableModel> rowSorter;
 
-    public SearchC() {
-
+    public SearchC(javax.swing.JFrame parent) {
+        this.parent = parent;
         mState = new DefaultComboBoxModel();
         mCity = new DefaultComboBoxModel();
         allStates();
@@ -73,6 +76,7 @@ public class SearchC extends javax.swing.JPanel {
         fetchCriminals();
         this.rowSorter = new TableRowSorter<>(jTable3.getModel());
         jTable3.setRowSorter(rowSorter);
+        jScrollPane1.getViewport().setBackground(Color.WHITE);
 
     }
 
@@ -88,8 +92,6 @@ public class SearchC extends javax.swing.JPanel {
         buttonGroup1 = new javax.swing.ButtonGroup();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable3 = new javax.swing.JTable(dtm);
-        bDelete = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
         tCell1 = new javax.swing.JTextField();
         lCell1 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
@@ -130,9 +132,9 @@ public class SearchC extends javax.swing.JPanel {
         lState = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         lId = new javax.swing.JLabel();
-        bClear = new javax.swing.JButton();
-        bSearch = new javax.swing.JButton();
         CID1 = new javax.swing.JTextField();
+        jButton3 = new javax.swing.JButton();
+        jButton4 = new javax.swing.JButton();
         tWeight = new javax.swing.JTextField();
         cHair = new javax.swing.JComboBox();
         ldob = new javax.swing.JLabel();
@@ -140,37 +142,30 @@ public class SearchC extends javax.swing.JPanel {
         lWeight = new javax.swing.JLabel();
         lSection = new javax.swing.JLabel();
         tCell = new javax.swing.JTextField();
-        jButton2 = new javax.swing.JButton();
+        jLabel1 = new crms.CButton();
+        jLabel2 = new crms.CButton();
+        jLabel3 = new crms.CButton();
 
+        setBackground(new java.awt.Color(255, 255, 255));
+        setPreferredSize(new java.awt.Dimension(906, 574));
+
+        jScrollPane1.setBackground(new java.awt.Color(255, 255, 255));
         jScrollPane1.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
+        jScrollPane1.setOpaque(false);
         jScrollPane1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jScrollPane1MouseClicked(evt);
             }
         });
 
+        jTable3.setOpaque(false);
+        jTable3.setSelectionBackground(new java.awt.Color(66, 133, 244));
         jTable3.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jTable3MouseClicked(evt);
             }
         });
         jScrollPane1.setViewportView(jTable3);
-
-        bDelete.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        bDelete.setText("Delete");
-        bDelete.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                bDeleteActionPerformed(evt);
-            }
-        });
-
-        jButton1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jButton1.setText("List All");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
 
         tCell1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         tCell1.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -182,6 +177,7 @@ public class SearchC extends javax.swing.JPanel {
         lCell1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         lCell1.setText("Quick Search");
 
+        jPanel2.setBackground(new java.awt.Color(255, 255, 255));
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Search", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 14))); // NOI18N
 
         lGender.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -230,6 +226,7 @@ public class SearchC extends javax.swing.JPanel {
         lHeight.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         lHeight.setText("Height");
 
+        rMale.setBackground(new java.awt.Color(255, 255, 255));
         buttonGroup1.add(rMale);
         rMale.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         rMale.setText("M");
@@ -272,6 +269,7 @@ public class SearchC extends javax.swing.JPanel {
             }
         });
 
+        A.setBackground(new java.awt.Color(255, 255, 255));
         buttonGroup1.add(A);
         A.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         A.setText("A");
@@ -290,6 +288,7 @@ public class SearchC extends javax.swing.JPanel {
             }
         });
 
+        rFemale.setBackground(new java.awt.Color(255, 255, 255));
         buttonGroup1.add(rFemale);
         rFemale.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         rFemale.setText("F");
@@ -346,28 +345,13 @@ public class SearchC extends javax.swing.JPanel {
         lState.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         lState.setText("State ");
 
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jPanel1.setToolTipText("");
 
         lId.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         lId.setText("ID");
         lId.setVerticalAlignment(javax.swing.SwingConstants.TOP);
-
-        bClear.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        bClear.setText("Clear");
-        bClear.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                bClearActionPerformed(evt);
-            }
-        });
-
-        bSearch.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        bSearch.setText("Search");
-        bSearch.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                bSearchActionPerformed(evt);
-            }
-        });
 
         CID1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         CID1.setHorizontalAlignment(javax.swing.JTextField.CENTER);
@@ -383,6 +367,22 @@ public class SearchC extends javax.swing.JPanel {
             }
         });
 
+        jButton3.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jButton3.setText("Search");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+
+        jButton4.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jButton4.setText("Clear");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -395,9 +395,11 @@ public class SearchC extends javax.swing.JPanel {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(CID1))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(bSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(10, 10, 10)
+                        .addComponent(jButton3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(bClear, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jButton4)
+                        .addGap(0, 2, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -408,9 +410,9 @@ public class SearchC extends javax.swing.JPanel {
                     .addComponent(lId)
                     .addComponent(CID1, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(bClear)
-                    .addComponent(bSearch))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton3)
+                    .addComponent(jButton4))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -470,24 +472,26 @@ public class SearchC extends javax.swing.JPanel {
                                         .addGap(18, 18, 18)
                                         .addComponent(lLast, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addGroup(jPanel2Layout.createSequentialGroup()
-                                        .addComponent(tMiddle, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(tLast, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(jPanel2Layout.createSequentialGroup()
-                                        .addComponent(lState, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(cState, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(lCity, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(14, 14, 14)
-                                        .addComponent(cCity, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(jPanel2Layout.createSequentialGroup()
-                                        .addGap(45, 45, 45)
-                                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                            .addComponent(cHair, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(tWeight, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addGap(18, 18, 18)
-                                        .addComponent(lArrest)
+                                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                                .addComponent(tMiddle, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGap(18, 18, 18)
+                                                .addComponent(tLast, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                                .addComponent(lState, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                                .addComponent(cState, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGap(18, 18, 18)
+                                                .addComponent(lCity, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGap(14, 14, 14)
+                                                .addComponent(cCity, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                                .addGap(45, 45, 45)
+                                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                                    .addComponent(cHair, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                    .addComponent(tWeight, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                .addGap(18, 18, 18)
+                                                .addComponent(lArrest)))
                                         .addGap(0, 0, Short.MAX_VALUE))))
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -539,8 +543,7 @@ public class SearchC extends javax.swing.JPanel {
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                 .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
-                                    .addGap(287, 287, 287)
-                                    .addGap(45, 45, 45)
+                                    .addGap(332, 332, 332)
                                     .addComponent(tSection, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGap(18, 18, 18)
                                     .addComponent(lCell, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -552,8 +555,7 @@ public class SearchC extends javax.swing.JPanel {
                                     .addComponent(lSection)
                                     .addGap(287, 287, 287)))
                             .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGap(85, 85, 85)
-                                .addGap(32, 32, 32)
+                                .addGap(117, 117, 117)
                                 .addComponent(tFacility, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                 .addComponent(tArrestDate, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -615,12 +617,13 @@ public class SearchC extends javax.swing.JPanel {
                     .addComponent(lWeight)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(1, 1, 1)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(lArrest)
-                            .addComponent(lEyes)
-                            .addComponent(tEyes, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(tWeight, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(tArrestDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(tArrestDate, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(lArrest)
+                                .addComponent(lEyes)
+                                .addComponent(tEyes, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(tWeight, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
@@ -644,11 +647,25 @@ public class SearchC extends javax.swing.JPanel {
                 .addContainerGap())
         );
 
-        jButton2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jButton2.setText("Show");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+        jLabel1.setText("Edit");
+        jLabel1.setPreferredSize(new java.awt.Dimension(67, 25));
+        jLabel1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel1MouseClicked(evt);
+            }
+        });
+
+        jLabel2.setText("Delete");
+        jLabel2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel2MouseClicked(evt);
+            }
+        });
+
+        jLabel3.setText("Show");
+        jLabel3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel3MouseClicked(evt);
             }
         });
 
@@ -658,20 +675,21 @@ public class SearchC extends javax.swing.JPanel {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 879, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jButton2)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(bDelete))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 879, Short.MAX_VALUE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(lCell1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(tCell1, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(29, Short.MAX_VALUE))
+                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 879, Short.MAX_VALUE)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 879, Short.MAX_VALUE)
+                        .addGroup(layout.createSequentialGroup()
+                            .addComponent(lCell1)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addComponent(tCell1, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(41, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -680,16 +698,16 @@ public class SearchC extends javax.swing.JPanel {
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(bDelete)
-                    .addComponent(jButton2))
+                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(tCell1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lCell1))
-                .addContainerGap(47, Short.MAX_VALUE))
+                .addContainerGap(63, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -706,26 +724,6 @@ public class SearchC extends javax.swing.JPanel {
             //handle double click event.
         }
     }//GEN-LAST:event_jTable3MouseClicked
-
-    private void bDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bDeleteActionPerformed
-        int temp = Integer.parseInt("" + jTable3.getValueAt(jTable3.getSelectedRow(), 0));
-        int result = JOptionPane.showOptionDialog(this,
-                "Are you sure you want to Delete?\nID:" + temp + "\nName:" + jTable3.getValueAt(jTable3.getSelectedRow(), 1),
-                "Password Confirmation Required", JOptionPane.YES_NO_OPTION,
-                JOptionPane.QUESTION_MESSAGE, null, null, null);
-        if (result == JOptionPane.YES_OPTION) {
-            try {
-                Database.getStatement().execute("SET FOREIGN_KEY_CHECKS=0;");
-                Database.getStatement().execute("delete from tblpunishment where id=" + temp);
-                Database.getStatement().execute("delete from mtblCriminals where cid=" + temp);
-                Database.getStatement().execute("SET FOREIGN_KEY_CHECKS=1;");
-            } catch (SQLException ex) {
-                Logger.getLogger(AddU.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            fetchCriminals();
-            // clearAll();
-        }
-    }//GEN-LAST:event_bDeleteActionPerformed
 
     private void tFirstActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tFirstActionPerformed
         // TODO add your handling code here:
@@ -818,27 +816,6 @@ public class SearchC extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_tCellKeyTyped
 
-    private void bClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bClearActionPerformed
-        // TODO add your handling code here
-        clearAll();
-        fetchCriminals();
-    }//GEN-LAST:event_bClearActionPerformed
-
-    private void bSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bSearchActionPerformed
-        searchButton();
-    }//GEN-LAST:event_bSearchActionPerformed
-
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-        fetchCriminals();
-    }//GEN-LAST:event_jButton1ActionPerformed
-
-    private void CID1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CID1ActionPerformed
-        // TODO add your handling code here:
-        
-        searchButton();
-    }//GEN-LAST:event_CID1ActionPerformed
-
     private void tCell1KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tCell1KeyTyped
         String text = tCell1.getText();
         if (text.trim().length() == 0) {
@@ -848,34 +825,82 @@ public class SearchC extends javax.swing.JPanel {
         }        // TODO add your handling code here:
     }//GEN-LAST:event_tCell1KeyTyped
 
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+        searchButton();
+        ;
+    }//GEN-LAST:event_jButton3ActionPerformed
+
     private void CID1KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_CID1KeyTyped
         // TODO add your handling code here:
-         char caracter = evt.getKeyChar();
+        char caracter = evt.getKeyChar();
         if (((caracter < '0') || (caracter > '9')) && (caracter != '\b')) {
             evt.consume();
         }
     }//GEN-LAST:event_CID1KeyTyped
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void CID1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CID1ActionPerformed
         // TODO add your handling code here:
-         new Show((Integer.parseInt("" + jTable3.getValueAt(jTable3.getSelectedRow(), 0)))).setVisible(true);
-    }//GEN-LAST:event_jButton2ActionPerformed
+
+        searchButton();
+    }//GEN-LAST:event_CID1ActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        // TODO add your handling code here:
+        clearAll();
+        fetchCriminals();
+    }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jLabel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MouseClicked
+        // TODO add your handling code here:
+        Home h = (Home) parent;
+        h.showAddCriminal();
+        h.editCriminals(Integer.parseInt((String) jTable3.getValueAt(jTable3.getSelectedRow(), 0)));
+
+    }//GEN-LAST:event_jLabel1MouseClicked
+
+    private void jLabel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MouseClicked
+        // TODO add your handling code here:
+        int temp = Integer.parseInt("" + jTable3.getValueAt(jTable3.getSelectedRow(), 0));
+        int result = JOptionPane.showOptionDialog(this,
+                "Are you sure you want to Delete?\nID:" + temp + "\nName:" + jTable3.getValueAt(jTable3.getSelectedRow(), 1),
+                "Password Confirmation Required", JOptionPane.YES_NO_OPTION,
+                JOptionPane.QUESTION_MESSAGE, null, null, null);
+        if (result == JOptionPane.YES_OPTION) {
+            try {
+                Database.getStatement().execute("SET FOREIGN_KEY_CHECKS=0;");
+                Database.getStatement().execute("delete from tblpunishment where id=" + temp);
+                Database.getStatement().execute("delete from mtblCriminals where cid=" + temp);
+                Database.getStatement().execute("SET FOREIGN_KEY_CHECKS=1;");
+            } catch (SQLException ex) {
+                Logger.getLogger(AddU.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            fetchCriminals();
+            // clearAll();
+        }
+    }//GEN-LAST:event_jLabel2MouseClicked
+
+    private void jLabel3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel3MouseClicked
+        // TODO add your handling code here:
+        new Show((Integer.parseInt("" + jTable3.getValueAt(jTable3.getSelectedRow(), 0)))).setVisible(true);
+
+    }//GEN-LAST:event_jLabel3MouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JRadioButton A;
     private javax.swing.JTextField CID1;
-    private javax.swing.JButton bClear;
-    private javax.swing.JButton bDelete;
-    private javax.swing.JButton bSearch;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JComboBox cBloodgroup;
     private javax.swing.JComboBox cCity;
     private javax.swing.JComboBox cHair;
     private javax.swing.JComboBox cMarital;
     private javax.swing.JComboBox cState;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
@@ -977,7 +1002,7 @@ public class SearchC extends javax.swing.JPanel {
 
     void clearAll() {
         JTextField tfield = null;
-        JPanel tJpanel=null;
+        JPanel tJpanel = null;
         for (Component c : this.getComponents()) {
             //  System.out.println(c);
             if (c.getClass().toString().contains("javax.swing.JPanel")) {

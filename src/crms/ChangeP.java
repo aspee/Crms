@@ -22,6 +22,7 @@ public class ChangeP extends javax.swing.JDialog {
      */
     public ChangeP(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
+        getContentPane().setBackground(new Color(255,255,255));
         initComponents();
         setLocationRelativeTo(null);
         setVisible(true);
@@ -37,35 +38,18 @@ public class ChangeP extends javax.swing.JDialog {
     private void initComponents() {
 
         jLabel2 = new javax.swing.JLabel();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         npass = new javax.swing.JPasswordField();
         cpass = new javax.swing.JPasswordField();
         Valid = new javax.swing.JLabel();
+        ok = new crms.CButton();
+        Cancel = new crms.CButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel2.setText("New Password");
-
-        jButton2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jButton2.setText("Ok");
-        jButton2.setPreferredSize(new java.awt.Dimension(73, 25));
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
-            }
-        });
-
-        jButton3.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jButton3.setText("Cancel");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
-            }
-        });
 
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/res/User.png"))); // NOI18N
 
@@ -97,9 +81,25 @@ public class ChangeP extends javax.swing.JDialog {
             }
         });
 
+        Valid.setBackground(new java.awt.Color(255, 255, 255));
         Valid.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         Valid.setForeground(new java.awt.Color(255, 0, 0));
         Valid.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        Valid.setOpaque(true);
+
+        ok.setText("Ok");
+        ok.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                okMouseClicked(evt);
+            }
+        });
+
+        Cancel.setText("Cancel");
+        Cancel.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                CancelMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -120,12 +120,12 @@ public class ChangeP extends javax.swing.JDialog {
                         .addComponent(Valid, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(cpass)
+                    .addComponent(cpass, javax.swing.GroupLayout.DEFAULT_SIZE, 160, Short.MAX_VALUE)
                     .addComponent(npass)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 14, Short.MAX_VALUE)
-                        .addComponent(jButton3)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(ok, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(Cancel, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -143,44 +143,15 @@ public class ChangeP extends javax.swing.JDialog {
                             .addComponent(npass, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(Valid, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jButton3)))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(Valid, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 25, Short.MAX_VALUE)
+                    .addComponent(Cancel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(ok, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        try {
-//select * from tblUsers where Password=AES_ENCRYPT('sushant','rycbarm') and id=1
-            // TODO add your handling code here:
-            String ctemp=new String(cpass.getPassword());
-            String ntemp=new String(npass.getPassword());
-            ResultSet rs=Database.getStatement().executeQuery("select * from tblUsers where Password=AES_ENCRYPT('"+ctemp+"','rycbarm') and id="+Database.getID());
-            if(rs.next() && !ntemp.equals(""))  
-            {
-            Database.getStatement().executeUpdate("update tblUsers set Password=AES_ENCRYPT('"+ntemp+"','rycbarm') where id="+Database.getID());
-            dispose();
-            }
-            
-            else
-            {
-                Valid.setText("Failed to Change Password");
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(ChangeN.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
-    }//GEN-LAST:event_jButton2ActionPerformed
-
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        // TODO add your handling code here:
-        dispose();
-    }//GEN-LAST:event_jButton3ActionPerformed
 
     private void cpassActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cpassActionPerformed
         // TODO add your handling code here:
@@ -203,6 +174,34 @@ public class ChangeP extends javax.swing.JDialog {
             evt.consume();
         }
     }//GEN-LAST:event_npassKeyTyped
+
+    private void okMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_okMouseClicked
+        // TODO add your handling code here:
+         try {
+//select * from tblUsers where Password=AES_ENCRYPT('sushant','rycbarm') and id=1
+            // TODO add your handling code here:
+            String ctemp=new String(cpass.getPassword());
+            String ntemp=new String(npass.getPassword());
+            ResultSet rs=Database.getStatement().executeQuery("select * from tblUsers where Password=AES_ENCRYPT('"+ctemp+"','rycbarm') and id="+Database.getID());
+            if(rs.next() && !ntemp.equals(""))  
+            {
+            Database.getStatement().executeUpdate("update tblUsers set Password=AES_ENCRYPT('"+ntemp+"','rycbarm') where id="+Database.getID());
+            dispose();
+            }
+            
+            else
+            {
+                Valid.setText("Failed to Change Password");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ChangeN.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_okMouseClicked
+
+    private void CancelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_CancelMouseClicked
+        // TODO add your handling code here:
+        dispose();
+    }//GEN-LAST:event_CancelMouseClicked
 
     /**
      * @param args the command line arguments
@@ -247,13 +246,13 @@ public class ChangeP extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel Cancel;
     private javax.swing.JLabel Valid;
     private javax.swing.JPasswordField cpass;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPasswordField npass;
+    private javax.swing.JLabel ok;
     // End of variables declaration//GEN-END:variables
 }

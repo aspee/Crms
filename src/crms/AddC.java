@@ -21,6 +21,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Types;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -49,6 +51,7 @@ public class AddC extends javax.swing.JPanel {
     JFileChooser chooser;
     DefaultComboBoxModel mState, mCity;
     PreparedStatement pst;
+    static boolean editing = false;
     boolean imagePresent = false;
     Home parent;
 
@@ -147,9 +150,9 @@ public class AddC extends javax.swing.JPanel {
         lCity = new javax.swing.JLabel();
         cCity = new javax.swing.JComboBox(mCity);
         jRadioButton1 = new javax.swing.JRadioButton();
-        bCrimes = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
         tdob = new com.toedter.calendar.JDateChooser();
+        jLabel6 = new crms.CButton();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         tAdditional = new javax.swing.JTextArea();
@@ -164,17 +167,21 @@ public class AddC extends javax.swing.JPanel {
         tSection = new javax.swing.JTextField();
         tFacility = new javax.swing.JTextField();
         jPanel5 = new javax.swing.JPanel();
-        bClear = new javax.swing.JButton();
-        bSave = new javax.swing.JButton();
+        bClear = new crms.CButton()
+        ;
+        bSave1 = new crms.CButton()
+        ;
         jPanel6 = new javax.swing.JPanel();
-        bBrowse = new javax.swing.JButton();
-        bRemove = new javax.swing.JButton();
         IMAGE = new javax.swing.JLabel();
         lArrest = new javax.swing.JLabel();
         CID = new javax.swing.JTextField();
         lId = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         tArrestdate = new org.jdesktop.swingx.JXDatePicker();
+        bBrowse = new crms.CButton()
+        ;
+        bRemove = new crms.CButton()
+        ;
         jPanel4 = new javax.swing.JPanel();
         lColor = new javax.swing.JLabel();
         tWeight = new javax.swing.JTextField();
@@ -193,6 +200,8 @@ public class AddC extends javax.swing.JPanel {
         lEyes = new javax.swing.JLabel();
         tColor = new javax.swing.JComboBox();
 
+        setBackground(new java.awt.Color(255, 255, 255));
+
         jPanel2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jPanel2.setOpaque(false);
 
@@ -200,6 +209,7 @@ public class AddC extends javax.swing.JPanel {
         lMiddle.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lMiddle.setText("Middle");
 
+        cMarital.setEditable(true);
         cMarital.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         cMarital.setModel(new javax.swing.DefaultComboBoxModel(new String[] { " ", "Single", "Married", "Widowed", "Separated", "Divorced" }));
         cMarital.addActionListener(new java.awt.event.ActionListener() {
@@ -207,11 +217,18 @@ public class AddC extends javax.swing.JPanel {
                 cMaritalActionPerformed(evt);
             }
         });
+        cMarital.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                cMaritalKeyTyped(evt);
+            }
+        });
 
+        rFemale.setBackground(new java.awt.Color(255, 255, 255));
         buttonGroup1.add(rFemale);
         rFemale.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         rFemale.setText("Female");
 
+        rMale.setBackground(new java.awt.Color(255, 255, 255));
         buttonGroup1.add(rMale);
         rMale.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         rMale.setText("Male");
@@ -220,6 +237,7 @@ public class AddC extends javax.swing.JPanel {
         lState.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         lState.setText("State ");
 
+        cState.setEditable(true);
         cState.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         cState.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
@@ -292,23 +310,29 @@ public class AddC extends javax.swing.JPanel {
         lCity.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         lCity.setText("City ");
 
+        cCity.setEditable(true);
         cCity.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        cCity.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cCityActionPerformed(evt);
+            }
+        });
 
+        jRadioButton1.setBackground(new java.awt.Color(255, 255, 255));
         buttonGroup1.add(jRadioButton1);
         jRadioButton1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jRadioButton1.setSelected(true);
         jRadioButton1.setText("Unknown");
 
-        bCrimes.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        bCrimes.setText("Crimes & Punishments");
-        bCrimes.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                bCrimesActionPerformed(evt);
-            }
-        });
-
         jLabel5.setForeground(new java.awt.Color(255, 0, 0));
         jLabel5.setText("*");
+
+        jLabel6.setText("Crimes & Punishments");
+        jLabel6.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel6MouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -357,7 +381,7 @@ public class AddC extends javax.swing.JPanel {
                                         .addComponent(jRadioButton1)))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE))
                             .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(bCrimes)
+                                .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jLabel5)
                                 .addGap(0, 0, Short.MAX_VALUE)))))
@@ -404,10 +428,10 @@ public class AddC extends javax.swing.JPanel {
                     .addComponent(lAddress))
                 .addGap(18, 18, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(bCrimes)
                     .addComponent(cMarital, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lMarital, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(lMarital, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
@@ -468,12 +492,12 @@ public class AddC extends javax.swing.JPanel {
                     .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                         .addComponent(tSection, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(tFacility, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(30, 30, 30)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel2)
                     .addComponent(jLabel3)
                     .addComponent(jLabel4))
-                .addGap(81, 81, 81)
+                .addGap(107, 107, 107)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lAdditional)
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 261, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -516,17 +540,21 @@ public class AddC extends javax.swing.JPanel {
 
         bClear.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         bClear.setText("Clear");
-        bClear.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                bClearActionPerformed(evt);
+        bClear.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        bClear.setPreferredSize(new java.awt.Dimension(83, 25));
+        bClear.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                bClearMouseClicked(evt);
             }
         });
 
-        bSave.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        bSave.setText("Save");
-        bSave.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                bSaveActionPerformed(evt);
+        bSave1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        bSave1.setText("Save");
+        bSave1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        bSave1.setPreferredSize(new java.awt.Dimension(83, 25));
+        bSave1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                bSave1MouseClicked(evt);
             }
         });
 
@@ -534,43 +562,27 @@ public class AddC extends javax.swing.JPanel {
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel5Layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(bSave, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(bSave1, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(bClear, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addComponent(bClear, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(20, 20, 20))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(bClear)
-                    .addComponent(bSave))
+                    .addComponent(bClear, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(bSave1, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
         jPanel6.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jPanel6.setOpaque(false);
 
-        bBrowse.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        bBrowse.setText("Browse");
-        bBrowse.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                bBrowseActionPerformed(evt);
-            }
-        });
-
-        bRemove.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        bRemove.setText("Remove");
-        bRemove.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                bRemoveActionPerformed(evt);
-            }
-        });
-
-        IMAGE.setIcon(new javax.swing.ImageIcon(getClass().getResource("/res/insignia.alpha.png"))); // NOI18N
+        IMAGE.setIcon(new javax.swing.ImageIcon(getClass().getResource("/res/jinsignia.alpha.png"))); // NOI18N
 
         lArrest.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         lArrest.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -598,6 +610,26 @@ public class AddC extends javax.swing.JPanel {
             }
         });
 
+        bBrowse.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        bBrowse.setText("Browse");
+        bBrowse.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        bBrowse.setPreferredSize(new java.awt.Dimension(83, 25));
+        bBrowse.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                bBrowseMouseClicked(evt);
+            }
+        });
+
+        bRemove.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        bRemove.setText("Remove");
+        bRemove.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        bRemove.setPreferredSize(new java.awt.Dimension(83, 25));
+        bRemove.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                bRemoveMouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
         jPanel6Layout.setHorizontalGroup(
@@ -609,20 +641,21 @@ public class AddC extends javax.swing.JPanel {
                         .addComponent(lId)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(CID, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(jPanel6Layout.createSequentialGroup()
+                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(IMAGE, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jPanel6Layout.createSequentialGroup()
-                                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(lArrest, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(tArrestdate, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 8, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel6Layout.createSequentialGroup()
-                                .addComponent(bBrowse)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(bRemove)))))
+                            .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addGroup(jPanel6Layout.createSequentialGroup()
+                                    .addComponent(bBrowse, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(bRemove, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel6Layout.createSequentialGroup()
+                                    .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addComponent(lArrest, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(tArrestdate, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 8, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel6Layout.setVerticalGroup(
@@ -634,11 +667,11 @@ public class AddC extends javax.swing.JPanel {
                     .addComponent(lId))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(IMAGE, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(18, 18, 18)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(bBrowse)
-                    .addComponent(bRemove))
-                .addGap(46, 46, 46)
+                    .addComponent(bBrowse, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(bRemove, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(38, 38, 38)
                 .addComponent(lArrest)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -710,6 +743,7 @@ public class AddC extends javax.swing.JPanel {
         lKg.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lKg.setText("Kg.");
 
+        cBloodgroup.setEditable(true);
         cBloodgroup.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         cBloodgroup.setModel(new javax.swing.DefaultComboBoxModel(new String[] { " ", "A +ve", "A -ve", "B +ve", "B -ve", "O +ve", "O -ve", "AB +ve", "AB -ve" }));
         cBloodgroup.setToolTipText("");
@@ -727,6 +761,8 @@ public class AddC extends javax.swing.JPanel {
         tColor.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         tColor.setModel(new javax.swing.DefaultComboBoxModel(new String[] { " ", "Light", "Fair", "Medium", "Olive", "Brown", "Black" }));
         tColor.setToolTipText("");
+        tColor.setDoubleBuffered(true);
+        tColor.setOpaque(false);
         tColor.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 tColorActionPerformed(evt);
@@ -840,20 +876,6 @@ public class AddC extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void bBrowseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bBrowseActionPerformed
-        // TODO add your handling code here:
-        chooser = new JFileChooser();
-        chooser.setAcceptAllFileFilterUsed(false);
-        FileNameExtensionFilter filter = new FileNameExtensionFilter(
-                "JPG & PNG Images", "jpg", "png");
-        chooser.setFileFilter(filter);
-        int returnVal = chooser.showOpenDialog(this);
-        if (returnVal == JFileChooser.APPROVE_OPTION) {
-            IMAGE.setIcon(new ImageIcon(((new ImageIcon("" + chooser.getSelectedFile())).getImage()).getScaledInstance(192, 192, java.awt.Image.SCALE_SMOOTH)));
-            imagePresent = true;
-        }
-    }//GEN-LAST:event_bBrowseActionPerformed
-
     private void tMiddleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tMiddleActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_tMiddleActionPerformed
@@ -866,38 +888,14 @@ public class AddC extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_tFirstActionPerformed
 
-    private void bRemoveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bRemoveActionPerformed
-        // TODO add your handling code here:
-        IMAGE.setIcon(new javax.swing.ImageIcon(getClass().getResource("/res/insignia.alpha.png")));
-        imagePresent = false;
-    }//GEN-LAST:event_bRemoveActionPerformed
-
     private void cStateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cStateActionPerformed
 
 
     }//GEN-LAST:event_cStateActionPerformed
 
-    private void bClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bClearActionPerformed
-        // TODO add your handling code here
-        clearAll();
-    }//GEN-LAST:event_bClearActionPerformed
-
     private void cMaritalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cMaritalActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_cMaritalActionPerformed
-
-    private void bSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bSaveActionPerformed
-        if (verify()) {
-            setAll();
-            Saved();
-        }
-    }//GEN-LAST:event_bSaveActionPerformed
-
-    private void bCrimesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bCrimesActionPerformed
-        // TODO add your handling code here:
-        Home h = (Home) parent;
-        h.showCrimes();
-    }//GEN-LAST:event_bCrimesActionPerformed
 
     private void CIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CIDActionPerformed
         // TODO add your handling code here:
@@ -913,30 +911,7 @@ public class AddC extends javax.swing.JPanel {
 
     private void cStateItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cStateItemStateChanged
         // TODO add your handling code here:
-        try {
-            // TODO add your handling code here:
-            //cCity.removeAllItems();
-            //  mState.removeElement("");
-            mCity.removeAllElements();
-
-            ResultSet rs = Database.getStatement().executeQuery("select location_id from location where name='" + mState.getSelectedItem() + "'");
-            int lid = 100;
-            while (rs.next()) {
-                lid = rs.getInt(1);
-            }
-            ResultSet rs1 = Database.getStatement().executeQuery("select name from location where parent_id=" + lid);
-            Boolean empty = true;
-            while (rs1.next()) {
-                mCity.addElement(rs1.getString(1));
-                empty = false;
-            }
-            if (empty == true) {
-                mCity.addElement("");
-            }
-
-        } catch (SQLException ex) {
-            Logger.getLogger(AddC.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        setcState();
     }//GEN-LAST:event_cStateItemStateChanged
 
     private void tFootKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tFootKeyTyped
@@ -979,15 +954,54 @@ public class AddC extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_tArrestdateActionPerformed
 
+    private void bBrowseMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bBrowseMouseClicked
+        chooser = new JFileChooser();
+        chooser.setAcceptAllFileFilterUsed(false);
+        FileNameExtensionFilter filter = new FileNameExtensionFilter(
+                "JPG & PNG Images", "jpg", "png");
+        chooser.setFileFilter(filter);
+        int returnVal = chooser.showOpenDialog(this);
+        if (returnVal == JFileChooser.APPROVE_OPTION) {
+            IMAGE.setIcon(new ImageIcon(((new ImageIcon("" + chooser.getSelectedFile())).getImage()).getScaledInstance(192, 192, java.awt.Image.SCALE_SMOOTH)));
+            imagePresent = true;
+        }
+    }//GEN-LAST:event_bBrowseMouseClicked
+
+    private void cCityActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cCityActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cCityActionPerformed
+
+    private void bRemoveMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bRemoveMouseClicked
+        // TODO add your handling code here:
+        IMAGE.setIcon(new javax.swing.ImageIcon(getClass().getResource("/res/jinsignia.alpha.png")));
+        imagePresent = false;
+    }//GEN-LAST:event_bRemoveMouseClicked
+
+    private void bClearMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bClearMouseClicked
+        clearAll();
+    }//GEN-LAST:event_bClearMouseClicked
+
+    private void bSave1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bSave1MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_bSave1MouseClicked
+
+    private void jLabel6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel6MouseClicked
+        Home h = (Home) parent;
+        h.showCrimes();
+    }//GEN-LAST:event_jLabel6MouseClicked
+
+    private void cMaritalKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cMaritalKeyTyped
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cMaritalKeyTyped
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField CID;
     private javax.swing.JLabel IMAGE;
-    private javax.swing.JButton bBrowse;
-    private javax.swing.JButton bClear;
-    private javax.swing.JButton bCrimes;
-    private javax.swing.JButton bRemove;
-    private javax.swing.JButton bSave;
+    private javax.swing.JLabel bBrowse;
+    private javax.swing.JLabel bClear;
+    private javax.swing.JLabel bRemove;
+    private javax.swing.JLabel bSave1;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JComboBox cBloodgroup;
     private javax.swing.JComboBox cCity;
@@ -999,6 +1013,7 @@ public class AddC extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
@@ -1060,7 +1075,6 @@ public class AddC extends javax.swing.JPanel {
             if (imagePresent == false) {
                 pst.setBytes(1, absent);
                 pst.setInt(2, 1);
-                System.out.println("yoga");
             } else if (imagePresent == true) {
                 file = chooser.getSelectedFile();
 
@@ -1073,8 +1087,6 @@ public class AddC extends javax.swing.JPanel {
                     byte b[] = new byte[fileInputStream.available()];
                     fileInputStream.read(b);
                     fileInputStream.close();
-                    //pst.setObject(1, jTextField1.getText());
-                    System.out.println("waht the hell");
                     pst.setBytes(1, b);
                     pst.setInt(2, 1);
                 }
@@ -1188,6 +1200,117 @@ public class AddC extends javax.swing.JPanel {
         });
         dlg.setVisible(true);
 
+    }
+
+    void editCriminal(int cid) {
+        clearAll();
+        CID.setText("#" + cid);
+
+        try {
+
+            ResultSet edit = Database.getStatement().executeQuery("select * from mtblCriminals where cid=" + cid);
+            if (edit.next()) {
+                //        setcState();
+//                cCity.setSelectedItem(""+rs.getString("city"));
+                this.editing = true;
+                if (!(new String(edit.getBytes("image"))).equals("null")) {
+                    IMAGE.setIcon(new ImageIcon(((new ImageIcon(edit.getBytes("image"))).getImage()).getScaledInstance(192, 192, java.awt.Image.SCALE_SMOOTH)));
+                } else {
+
+                    IMAGE.setIcon(new ImageIcon(((new ImageIcon(getClass().getResource("/res/jinsignia.alpha.png"))).getImage()).getScaledInstance(192, 192, java.awt.Image.SCALE_SMOOTH)));
+
+                }
+                String tempad = null;
+                SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+                if ((tempad = edit.getString("ad")) != null) {
+                    tArrestdate.setDate(formatter.parse(tempad));
+                } else {
+                    tArrestdate.setDate(null);
+                }
+                tFirst.setText(edit.getString("fname"));
+                tMiddle.setText(edit.getString("mname"));
+                tLast.setText(edit.getString("lname"));
+                String tempDate = null;
+
+                if ((tempDate = edit.getString("dob")) != null) {
+                    tdob.setDate(formatter.parse(tempDate));
+                } else {
+                    tdob.setDate(null);
+                }
+                cState.setSelectedItem("" + edit.getString("state"));
+                setcState();
+            }
+            ResultSet edit1 = Database.getStatement().executeQuery("select * from mtblCriminals where cid=" + cid);
+            if (edit1.next());
+            {
+                cCity.setSelectedItem("" + edit1.getString(10));
+                tAddress.setText("" + edit1.getString("address"));
+                cCity.setSelectedItem("" + edit1.getString("city"));
+                tAdditional.setText(edit1.getString("ai"));
+                String gender = edit1.getString("gender");
+                if (gender.equals("M")) {
+                    rMale.setSelected(true);
+                } else if (gender.equals("F")) {
+                    rFemale.setSelected(true);
+                } else {
+                    jRadioButton1.setSelected(true);
+                }
+                cMarital.setSelectedItem("" + edit1.getString("mstatus"));
+                tColor.setSelectedItem(edit1.getString("color"));
+                cHair.setSelectedItem(edit1.getString("hair"));
+                cBloodgroup.setSelectedItem("" + edit1.getString("bg"));
+                if (!edit1.getString("weight").equals("0")) {
+                    tWeight.setText("" + edit1.getString("weight"));
+                }
+                String height = "" + edit1.getDouble("height");
+                if (height.equals("0.0")) {
+                    tFoot.setText("");
+                    tInch.setText("");
+                } else {
+                    int dec = height.indexOf(".");
+                    tFoot.setText("" + height.substring(0, dec));
+                    tInch.setText("" + height.substring(dec + 1, height.length()));
+
+                }
+                tEyes.setText(edit1.getString("eyes"));
+                tFacility.setText(edit1.getString("facility"));
+                tSection.setText(edit1.getString("section"));
+                tCell.setText(edit1.getString("cell"));
+                tAdditional.setText(edit1.getString("ai"));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(AddC.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ParseException ex) {
+            Logger.getLogger(AddC.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+
+    private void setcState() {
+        try {
+            // TODO add your handling code here:
+            //cCity.removeAllItems();
+            //  mState.removeElement("");
+            mCity.removeAllElements();
+
+            ResultSet rs = Database.getStatement().executeQuery("select location_id from location where name='" + mState.getSelectedItem() + "'");
+            int lid = 100;
+            while (rs.next()) {
+                lid = rs.getInt(1);
+            }
+            ResultSet rs1 = Database.getStatement().executeQuery("select name from location where parent_id=" + lid);
+            Boolean empty = true;
+            while (rs1.next()) {
+                mCity.addElement(rs1.getString(1));
+                empty = false;
+            }
+            if (empty == true) {
+                mCity.addElement("");
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(AddC.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
 }
