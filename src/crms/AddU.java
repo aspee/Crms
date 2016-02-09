@@ -19,7 +19,10 @@ import javax.crypto.NoSuchPaddingException;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
 
 /**
  *
@@ -32,6 +35,7 @@ public class AddU extends javax.swing.JPanel {
      */
     DefaultTableModel dtm;
     PreparedStatement pst;
+    private TableRowSorter<TableModel> rowSorter;
 
     Boolean edited = false;
 
@@ -48,6 +52,8 @@ public class AddU extends javax.swing.JPanel {
         dtm.isCellEditable(0, 0);
         fetchUsers();
         initComponents();
+        this.rowSorter = new TableRowSorter<>(jTable2.getModel());
+        jTable2.setRowSorter(rowSorter);
         tName.setTransferHandler(null);
         tUsername.setTransferHandler(null);
         tPassword.setTransferHandler(null);
@@ -103,8 +109,9 @@ public class AddU extends javax.swing.JPanel {
         Panel = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable2 = new javax.swing.JTable();
-        bSearch = new javax.swing.JButton();
         bDelete = new javax.swing.JButton();
+        tCell1 = new javax.swing.JTextField();
+        lCell1 = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(255, 255, 255));
 
@@ -301,9 +308,6 @@ public class AddU extends javax.swing.JPanel {
                 .addContainerGap())
         );
 
-        bSearch.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        bSearch.setText("Search");
-
         bDelete.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         bDelete.setText("Delete");
         bDelete.addActionListener(new java.awt.event.ActionListener() {
@@ -311,6 +315,21 @@ public class AddU extends javax.swing.JPanel {
                 bDeleteActionPerformed(evt);
             }
         });
+
+        tCell1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        tCell1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tCell1ActionPerformed(evt);
+            }
+        });
+        tCell1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                tCell1KeyTyped(evt);
+            }
+        });
+
+        lCell1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lCell1.setText("Quick Search");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -375,9 +394,11 @@ public class AddU extends javax.swing.JPanel {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jLabel15))))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(358, 358, 358)
-                        .addComponent(bSearch)
+                        .addGap(113, 113, 113)
+                        .addComponent(lCell1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(tCell1, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
                         .addComponent(bDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(14, 14, 14)
                         .addComponent(bEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -432,11 +453,14 @@ public class AddU extends javax.swing.JPanel {
                         .addComponent(bRefresh)
                         .addComponent(bSave)
                         .addComponent(bNew)
-                        .addComponent(bEdit)
-                        .addComponent(bSearch, javax.swing.GroupLayout.DEFAULT_SIZE, 26, Short.MAX_VALUE))
+                        .addComponent(bEdit))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(bDelete)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(bDelete)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(tCell1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(lCell1)))
+                        .addGap(0, 1, Short.MAX_VALUE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(Panel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(105, 105, 105))
@@ -495,10 +519,10 @@ public class AddU extends javax.swing.JPanel {
         if (verify()) {
             if (!edited) {
                 addUsers();
-                
+
             } else {
                 updateUser();
-                
+
             }
 
         }
@@ -603,6 +627,19 @@ public class AddU extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_tNameKeyTyped
 
+    private void tCell1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tCell1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tCell1ActionPerformed
+
+    private void tCell1KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tCell1KeyTyped
+        String text = tCell1.getText();
+        if (text.trim().length() == 0) {
+            rowSorter.setRowFilter(null);
+        } else {
+            rowSorter.setRowFilter(RowFilter.regexFilter("(?i)" + text));
+        }
+    }//GEN-LAST:event_tCell1KeyTyped
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel Panel;
@@ -611,7 +648,6 @@ public class AddU extends javax.swing.JPanel {
     private javax.swing.JButton bNew;
     private javax.swing.JButton bRefresh;
     private javax.swing.JButton bSave;
-    private javax.swing.JButton bSearch;
     private javax.swing.JComboBox cRole;
     private javax.swing.JButton jButton7;
     private javax.swing.JLabel jLabel10;
@@ -631,6 +667,8 @@ public class AddU extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable2;
+    private javax.swing.JLabel lCell1;
+    private javax.swing.JTextField tCell1;
     private javax.swing.JTextField tID;
     private javax.swing.JTextField tLastlogin;
     private javax.swing.JTextField tLocation;
@@ -695,7 +733,7 @@ public class AddU extends javax.swing.JPanel {
         } catch (SQLException ex) {
             Logger.getLogger(AddU.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
     }
 
     private void edit(int id) {
@@ -749,7 +787,7 @@ public class AddU extends javax.swing.JPanel {
                 JOptionPane.showMessageDialog(this, "Username already exist");
             }
         }
-        
+
     }
 
     private Boolean verify() {
@@ -759,7 +797,6 @@ public class AddU extends javax.swing.JPanel {
             s += "Name Required.\n";
             a = a & false;
         }
-
         if ("".equals(tUsername.getText())) {
             s += "Username Required.\n";
             a = a & false;
@@ -776,13 +813,25 @@ public class AddU extends javax.swing.JPanel {
         if ("".equals(tMobile.getText())) {
             s += "Mobile number Required\n";
             a = a & false;
+        } else {
+            ResultSet rs;
+            try {
+                rs = Database.getStatement().executeQuery("select mobile from tblUsers where id<>" + tID.getText().substring(1) + " and mobile='" + tMobile.getText() + "'");
+                if (rs.next()) {
+                    s += "Mobile Number Already Exist";
+                    a = a & false;
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(AddU.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
         }
         if ("".equals(tLocation.getText())) {
             s += "Location Required.\n";
             a = a & false;
         }
         if (!a) {
-            JOptionPane.showMessageDialog(null, s, "Mandatory Fields", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, s, "Error", JOptionPane.ERROR_MESSAGE);
         }
         return a;
     }
@@ -819,6 +868,6 @@ public class AddU extends javax.swing.JPanel {
         bRefresh.setEnabled(true);
         bDelete.setEnabled(true);
         bNew.setText("New");
-       // fetchUsers();
+        // fetchUsers();
     }
 }

@@ -90,6 +90,10 @@ public class Show extends javax.swing.JFrame {
         tAdditional = new javax.swing.JTextArea();
         jScrollPane2 = new javax.swing.JScrollPane();
         tAddress = new javax.swing.JTextArea();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        ipc = new javax.swing.JTextArea();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        Punishment = new javax.swing.JTextArea();
         jLabel1 = new crms.CButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -99,166 +103,167 @@ public class Show extends javax.swing.JFrame {
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
-        lState.setFont(new java.awt.Font("Arial Narrow", 0, 14)); // NOI18N
+        lState.setFont(new java.awt.Font("HP Simplified Light", 0, 14)); // NOI18N
         lState.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         lState.setText("State ");
         lState.setToolTipText("");
 
-        lName.setFont(new java.awt.Font("Arial Narrow", 0, 14)); // NOI18N
+        lName.setFont(new java.awt.Font("HP Simplified Light", 0, 14)); // NOI18N
         lName.setText("Name");
         lName.setToolTipText("");
 
-        ldob.setFont(new java.awt.Font("Arial Narrow", 0, 14)); // NOI18N
+        ldob.setFont(new java.awt.Font("HP Simplified Light", 0, 14)); // NOI18N
         ldob.setText("Date of Birth");
         ldob.setToolTipText("");
 
-        lMarital.setFont(new java.awt.Font("Arial Narrow", 0, 14)); // NOI18N
+        lMarital.setFont(new java.awt.Font("HP Simplified Light", 0, 14)); // NOI18N
         lMarital.setText("Marital Status ");
         lMarital.setToolTipText("");
 
-        lGender.setFont(new java.awt.Font("Arial Narrow", 0, 14)); // NOI18N
+        lGender.setFont(new java.awt.Font("HP Simplified Light", 0, 14)); // NOI18N
         lGender.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         lGender.setText("Gender ");
         lGender.setToolTipText("");
 
-        lAddress.setFont(new java.awt.Font("Arial Narrow", 0, 14)); // NOI18N
+        lAddress.setFont(new java.awt.Font("HP Simplified Light", 0, 14)); // NOI18N
         lAddress.setText("Address ");
         lAddress.setToolTipText("");
 
-        lCity.setFont(new java.awt.Font("Arial Narrow", 0, 14)); // NOI18N
+        lCity.setFont(new java.awt.Font("HP Simplified Light", 0, 14)); // NOI18N
         lCity.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         lCity.setText("City ");
         lCity.setToolTipText("");
 
-        tMiddle.setFont(new java.awt.Font("Arial Narrow", 0, 14)); // NOI18N
+        tMiddle.setFont(new java.awt.Font("HP Simplified Light", 0, 14)); // NOI18N
         tMiddle.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         tMiddle.setText("Ramesh");
         tMiddle.setToolTipText("");
 
-        tLast.setFont(new java.awt.Font("Arial Narrow", 0, 14)); // NOI18N
+        tLast.setFont(new java.awt.Font("HP Simplified Light", 0, 14)); // NOI18N
         tLast.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         tLast.setText("Parab");
         tLast.setToolTipText("");
 
-        tDob.setFont(new java.awt.Font("Arial Narrow", 0, 14)); // NOI18N
+        tDob.setFont(new java.awt.Font("HP Simplified Light", 0, 14)); // NOI18N
         tDob.setText("1-12-1995");
         tDob.setToolTipText("");
 
-        tCity.setFont(new java.awt.Font("Arial Narrow", 0, 14)); // NOI18N
+        tCity.setFont(new java.awt.Font("HP Simplified Light", 0, 14)); // NOI18N
         tCity.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         tCity.setText("Mumbai");
         tCity.setToolTipText("");
 
-        tState.setFont(new java.awt.Font("Arial Narrow", 0, 14)); // NOI18N
+        tState.setFont(new java.awt.Font("HP Simplified Light", 0, 14)); // NOI18N
         tState.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         tState.setText("Maharashtra");
         tState.setToolTipText("");
 
-        tMarital.setFont(new java.awt.Font("Arial Narrow", 0, 14)); // NOI18N
+        tMarital.setFont(new java.awt.Font("HP Simplified Light", 0, 14)); // NOI18N
         tMarital.setText("Single");
         tMarital.setToolTipText("");
 
-        tGender.setFont(new java.awt.Font("Arial Narrow", 0, 14)); // NOI18N
+        tGender.setFont(new java.awt.Font("HP Simplified Light", 0, 14)); // NOI18N
         tGender.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         tGender.setText("Male");
         tGender.setToolTipText("");
 
-        tFirst.setFont(new java.awt.Font("Arial Narrow", 0, 14)); // NOI18N
+        tFirst.setFont(new java.awt.Font("HP Simplified Light", 0, 14)); // NOI18N
         tFirst.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         tFirst.setText("Sushant");
         tFirst.setToolTipText("");
 
-        lEyes.setFont(new java.awt.Font("Arial Narrow", 0, 14)); // NOI18N
+        lEyes.setFont(new java.awt.Font("HP Simplified Light", 0, 14)); // NOI18N
         lEyes.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         lEyes.setText("Eyes ");
         lEyes.setToolTipText("");
 
-        tColor.setFont(new java.awt.Font("Arial Narrow", 0, 14)); // NOI18N
+        tColor.setFont(new java.awt.Font("HP Simplified Light", 0, 14)); // NOI18N
         tColor.setText("Brown");
         tColor.setToolTipText("");
 
-        tHair.setFont(new java.awt.Font("Arial Narrow", 0, 14)); // NOI18N
+        tHair.setFont(new java.awt.Font("HP Simplified Light", 0, 14)); // NOI18N
         tHair.setText("Straight");
         tHair.setToolTipText("");
 
-        tBlood.setFont(new java.awt.Font("Arial Narrow", 0, 14)); // NOI18N
+        tBlood.setFont(new java.awt.Font("HP Simplified Light", 0, 14)); // NOI18N
         tBlood.setText("A+");
         tBlood.setToolTipText("");
 
-        tHeight.setFont(new java.awt.Font("Arial Narrow", 0, 14)); // NOI18N
+        tHeight.setFont(new java.awt.Font("HP Simplified Light", 0, 14)); // NOI18N
         tHeight.setText("5'9");
         tHeight.setToolTipText("");
 
-        lColor.setFont(new java.awt.Font("Arial Narrow", 0, 14)); // NOI18N
+        lColor.setFont(new java.awt.Font("HP Simplified Light", 0, 14)); // NOI18N
         lColor.setText("Color");
         lColor.setToolTipText("");
 
-        tWeight.setFont(new java.awt.Font("Arial Narrow", 0, 14)); // NOI18N
+        tWeight.setFont(new java.awt.Font("HP Simplified Light", 0, 14)); // NOI18N
         tWeight.setText("60");
         tWeight.setToolTipText("");
 
-        lHeight.setFont(new java.awt.Font("Arial Narrow", 0, 14)); // NOI18N
+        lHeight.setFont(new java.awt.Font("HP Simplified Light", 0, 14)); // NOI18N
         lHeight.setText("Height");
         lHeight.setToolTipText("");
 
-        tEyes.setFont(new java.awt.Font("Arial Narrow", 0, 14)); // NOI18N
+        tEyes.setFont(new java.awt.Font("HP Simplified Light", 0, 14)); // NOI18N
         tEyes.setText("Black");
         tEyes.setToolTipText("");
 
-        lHair.setFont(new java.awt.Font("Arial Narrow", 0, 14)); // NOI18N
+        lHair.setFont(new java.awt.Font("HP Simplified Light", 0, 14)); // NOI18N
         lHair.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         lHair.setText("Hair");
         lHair.setToolTipText("");
 
-        lWeight.setFont(new java.awt.Font("Arial Narrow", 0, 14)); // NOI18N
+        lWeight.setFont(new java.awt.Font("HP Simplified Light", 0, 14)); // NOI18N
         lWeight.setText("Weight");
         lWeight.setToolTipText("");
 
-        lBloodgroup.setFont(new java.awt.Font("Arial Narrow", 0, 14)); // NOI18N
+        lBloodgroup.setFont(new java.awt.Font("HP Simplified Light", 0, 14)); // NOI18N
         lBloodgroup.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         lBloodgroup.setText("Blood Group ");
         lBloodgroup.setToolTipText("");
 
-        lKg.setFont(new java.awt.Font("Arial Narrow", 0, 14)); // NOI18N
+        lKg.setFont(new java.awt.Font("HP Simplified Light", 0, 14)); // NOI18N
         lKg.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lKg.setText("Kg.");
         lKg.setToolTipText("");
 
-        lSection1.setFont(new java.awt.Font("Arial Narrow", 0, 14)); // NOI18N
+        lSection1.setFont(new java.awt.Font("HP Simplified Light", 0, 14)); // NOI18N
         lSection1.setText("Section");
 
-        lFacility1.setFont(new java.awt.Font("Arial Narrow", 0, 14)); // NOI18N
+        lFacility1.setFont(new java.awt.Font("HP Simplified Light", 0, 14)); // NOI18N
         lFacility1.setText("Facility");
 
-        lAdditional1.setFont(new java.awt.Font("Arial Narrow", 0, 14)); // NOI18N
+        lAdditional1.setFont(new java.awt.Font("HP Simplified Light", 0, 14)); // NOI18N
         lAdditional1.setText("Additional Information");
         lAdditional1.setToolTipText("");
 
-        lCell1.setFont(new java.awt.Font("Arial Narrow", 0, 14)); // NOI18N
+        lCell1.setFont(new java.awt.Font("HP Simplified Light", 0, 14)); // NOI18N
         lCell1.setText("Cell");
 
-        tFacility.setFont(new java.awt.Font("Arial Narrow", 0, 14)); // NOI18N
+        tFacility.setFont(new java.awt.Font("HP Simplified Light", 0, 14)); // NOI18N
         tFacility.setText("Prison ");
         tFacility.setToolTipText("");
 
-        tCell.setFont(new java.awt.Font("Arial Narrow", 0, 14)); // NOI18N
+        tCell.setFont(new java.awt.Font("HP Simplified Light", 0, 14)); // NOI18N
         tCell.setText("323");
 
-        tSection.setFont(new java.awt.Font("Arial Narrow", 0, 14)); // NOI18N
+        tSection.setFont(new java.awt.Font("HP Simplified Light", 0, 14)); // NOI18N
         tSection.setText("A");
 
-        lId.setFont(new java.awt.Font("Arial Narrow", 1, 14)); // NOI18N
+        lId.setFont(new java.awt.Font("HP Simplified Light", 0, 14)); // NOI18N
         lId.setText("ID");
         lId.setToolTipText("");
         lId.setVerticalAlignment(javax.swing.SwingConstants.TOP);
 
-        tImage.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        tImage.setFont(new java.awt.Font("HP Simplified Light", 0, 14)); // NOI18N
         tImage.setForeground(new java.awt.Color(0, 51, 153));
         tImage.setIcon(new javax.swing.ImageIcon(getClass().getResource("/res/Alert.png"))); // NOI18N
         tImage.setToolTipText("");
+        tImage.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
         tImage.setPreferredSize(new java.awt.Dimension(192, 192));
 
-        tId.setFont(new java.awt.Font("Arial Narrow", 1, 14)); // NOI18N
+        tId.setFont(new java.awt.Font("HP Simplified Light", 0, 14)); // NOI18N
         tId.setText("#1");
         tId.setToolTipText("");
 
@@ -271,7 +276,7 @@ public class Show extends javax.swing.JFrame {
 
         tAdditional.setEditable(false);
         tAdditional.setColumns(20);
-        tAdditional.setFont(new java.awt.Font("Arial Narrow", 0, 14)); // NOI18N
+        tAdditional.setFont(new java.awt.Font("HP Simplified Light", 0, 13)); // NOI18N
         tAdditional.setLineWrap(true);
         tAdditional.setRows(5);
         tAdditional.setText("dkflmdsklfmkldsmfkldmslfmkdsmfkmdsklfmkldsfmkldsmklfmdsklmfkldsmfklmdsklfmdsklmflkdsmfklmdsklfmds");
@@ -288,12 +293,35 @@ public class Show extends javax.swing.JFrame {
 
         tAddress.setEditable(false);
         tAddress.setColumns(20);
-        tAddress.setFont(new java.awt.Font("Arial Narrow", 0, 14)); // NOI18N
+        tAddress.setFont(new java.awt.Font("HP Simplified Light", 0, 13)); // NOI18N
         tAddress.setLineWrap(true);
         tAddress.setRows(5);
         tAddress.setWrapStyleWord(true);
         tAddress.setBorder(null);
         jScrollPane2.setViewportView(tAddress);
+
+        jScrollPane3.setBorder(null);
+
+        ipc.setEditable(false);
+        ipc.setColumns(20);
+        ipc.setFont(new java.awt.Font("HP Simplified Light", 0, 13)); // NOI18N
+        ipc.setLineWrap(true);
+        ipc.setRows(5);
+        ipc.setWrapStyleWord(true);
+        ipc.setBorder(null);
+        jScrollPane3.setViewportView(ipc);
+
+        jScrollPane4.setBorder(null);
+        jScrollPane4.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        jScrollPane4.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
+
+        Punishment.setEditable(false);
+        Punishment.setColumns(20);
+        Punishment.setFont(new java.awt.Font("HP Simplified Light", 0, 13)); // NOI18N
+        Punishment.setLineWrap(true);
+        Punishment.setRows(5);
+        Punishment.setWrapStyleWord(true);
+        jScrollPane4.setViewportView(Punishment);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -302,27 +330,18 @@ public class Show extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lSection1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(lCell1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(lFacility1, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(tEyes, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(16, 16, 16))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(lHeight, javax.swing.GroupLayout.DEFAULT_SIZE, 42, Short.MAX_VALUE)
                             .addComponent(lColor, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(tHeight, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(tColor, javax.swing.GroupLayout.DEFAULT_SIZE, 80, Short.MAX_VALUE))
                             .addComponent(tFacility, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(tCell, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(tSection, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(tSection, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(tHeight, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(tColor, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lAdditional1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -332,8 +351,8 @@ public class Show extends javax.swing.JFrame {
                                     .addGroup(jPanel1Layout.createSequentialGroup()
                                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addComponent(lHair, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(lWeight, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addGap(21, 21, 21)
+                                            .addComponent(lWeight))
+                                        .addGap(19, 19, 19)
                                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addGroup(jPanel1Layout.createSequentialGroup()
                                                 .addComponent(tHair, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -342,9 +361,10 @@ public class Show extends javax.swing.JFrame {
                                                 .addGap(18, 18, 18)
                                                 .addComponent(tBlood, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE))
                                             .addGroup(jPanel1Layout.createSequentialGroup()
+                                                .addGap(12, 12, 12)
                                                 .addComponent(tWeight, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(lKg, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addComponent(lKg, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                 .addGap(27, 27, 27)
                                                 .addComponent(lEyes, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                                 .addGap(0, 0, Short.MAX_VALUE))))
@@ -390,20 +410,43 @@ public class Show extends javax.swing.JFrame {
                                                 .addGap(3, 3, 3)))
                                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addComponent(tCity, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(tState, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                            .addComponent(tImage, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addContainerGap(30, Short.MAX_VALUE))))
+                                            .addComponent(tState, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                        .addContainerGap(30, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(tImage, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jScrollPane3)
+                                    .addComponent(jScrollPane4)))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(lSection1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(lCell1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(lFacility1, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(tEyes, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(16, 16, 16))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(tImage, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lId)
-                    .addComponent(tId))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(tImage, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lId)
+                            .addComponent(tId))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jScrollPane3)
+                        .addGap(18, 18, 18)
+                        .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(38, 38, 38)))
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lName)
                     .addComponent(tFirst)
@@ -477,6 +520,7 @@ public class Show extends javax.swing.JFrame {
                 .addContainerGap(40, Short.MAX_VALUE))
         );
 
+        jLabel1.setFont(new java.awt.Font("HP Simplified Light", 0, 11)); // NOI18N
         jLabel1.setText("Print");
         jLabel1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -517,10 +561,14 @@ public class Show extends javax.swing.JFrame {
     }//GEN-LAST:event_jLabel1MouseClicked
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextArea Punishment;
+    private javax.swing.JTextArea ipc;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JLabel lAdditional1;
     private javax.swing.JLabel lAddress;
     private javax.swing.JLabel lBloodgroup;
@@ -570,10 +618,11 @@ public class Show extends javax.swing.JFrame {
                 if (!(new String(rs.getBytes("image"))).equals("null")) {
                     tImage.setIcon(new ImageIcon(((new ImageIcon(rs.getBytes("image"))).getImage()).getScaledInstance(192, 192, java.awt.Image.SCALE_SMOOTH)));
                 } else {
-                    
+
                     tImage.setIcon(new ImageIcon(((new ImageIcon(getClass().getResource("/res/Alert.png"))).getImage()).getScaledInstance(192, 192, java.awt.Image.SCALE_SMOOTH)));
 
                 }
+
                 tId.setText("#" + rs.getInt("cid"));
                 tAdditional.setText(rs.getString("ai"));
                 tAddress.setText("" + rs.getString("address"));
@@ -598,7 +647,26 @@ public class Show extends javax.swing.JFrame {
                 tWeight.setText(rs.getString("weight"));
 
             }
+            ResultSet ipc1 = Database.getStatement().executeQuery("select a.sections, a.particulars from contents a,tblipc b where a.sections=b.ipc and b.id=" + cid);
+                ipc.setText("Broken Indian Panel Code:");
+            while (ipc1.next()) {
+                
+                ipc.append(ipc1.getInt(1) + " ");
+            }
+            ResultSet p = Database.getStatement().executeQuery("select * from tblpunishment where id=" + cid);
 
+            if (p.next()) {
+                if (p.getString(3).equals("0001-01-01")) {
+                    Punishment.setText("LIFE IMPRISONMENT");
+
+                } else {
+                    Punishment.setText(p.getString(2) + " " + p.getString(3));
+                    if (p.getInt(4) != 0) {
+                        Punishment.append(" with fine:" + p.getInt(4));
+                    }
+                }
+
+            }
         } catch (SQLException ex) {
             Logger.getLogger(Show.class.getName()).log(Level.SEVERE, null, ex);
         }

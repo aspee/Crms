@@ -39,22 +39,22 @@ public class Home extends javax.swing.JFrame {
     AddC ac;
 
     public Home() {
-       
+
         initComponents();
-      
+
         setName();
         Permissions();
         Cards.add(new Settings(this), "Settings");
         sc = new SearchC(this);
         Cards.add(sc, "Search Criminal");
-        ac =new AddC(this);
+        ac = new AddC(this);
         Cards.add(ac, "Add Criminal");
         Cards.add(new AddU(), "Add User");
         c = new Crimes(this);
         Cards.add(c, "Crimes");
         cl = (CardLayout) (Cards.getLayout());
         addWindowListener(exitListener);
-        getContentPane().setBackground(Color.WHITE);
+        getContentPane().setBackground(new Color(247, 247, 247));
     }
 
     public void setName() {
@@ -111,7 +111,7 @@ public class Home extends javax.swing.JFrame {
         bAddu = new javax.swing.JButton();
         Hello = new javax.swing.JLabel();
         Cards = new javax.swing.JPanel();
-        jLabel3 = new javax.swing.JLabel();
+        jLabel3 = new crms.CButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setBackground(new java.awt.Color(66, 133, 244));
@@ -119,11 +119,13 @@ public class Home extends javax.swing.JFrame {
         setForeground(new java.awt.Color(66, 133, 244));
         setResizable(false);
 
-        jToolBar1.setBackground(new java.awt.Color(66, 133, 244));
+        jToolBar1.setBackground(new java.awt.Color(51, 51, 51));
         jToolBar1.setFloatable(false);
+        jToolBar1.setForeground(new java.awt.Color(51, 51, 51));
         jToolBar1.setRollover(true);
 
-        Settings.setBackground(new java.awt.Color(66, 133, 244));
+        Settings.setBackground(new java.awt.Color(51, 51, 51));
+        Settings.setForeground(new java.awt.Color(51, 51, 51));
         Settings.setIcon(new javax.swing.ImageIcon(getClass().getResource("/res/Settings.png"))); // NOI18N
         Settings.setToolTipText("");
         Settings.setFocusable(false);
@@ -136,7 +138,8 @@ public class Home extends javax.swing.JFrame {
         });
         jToolBar1.add(Settings);
 
-        bAddc.setBackground(new java.awt.Color(66, 133, 244));
+        bAddc.setBackground(new java.awt.Color(51, 51, 51));
+        bAddc.setForeground(new java.awt.Color(51, 51, 51));
         bAddc.setIcon(new javax.swing.ImageIcon(getClass().getResource("/res/Criminal.png"))); // NOI18N
         bAddc.setToolTipText("");
         bAddc.setFocusable(false);
@@ -150,7 +153,8 @@ public class Home extends javax.swing.JFrame {
         });
         jToolBar1.add(bAddc);
 
-        bSearch.setBackground(new java.awt.Color(66, 133, 244));
+        bSearch.setBackground(new java.awt.Color(51, 51, 51));
+        bSearch.setForeground(new java.awt.Color(51, 51, 51));
         bSearch.setIcon(new javax.swing.ImageIcon(getClass().getResource("/res/Search.png"))); // NOI18N
         bSearch.setToolTipText("");
         bSearch.setFocusable(false);
@@ -164,7 +168,8 @@ public class Home extends javax.swing.JFrame {
         });
         jToolBar1.add(bSearch);
 
-        bAddu.setBackground(new java.awt.Color(66, 133, 244));
+        bAddu.setBackground(new java.awt.Color(51, 51, 51));
+        bAddu.setForeground(new java.awt.Color(51, 51, 51));
         bAddu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/res/Add.png"))); // NOI18N
         bAddu.setToolTipText("");
         bAddu.setFocusable(false);
@@ -178,16 +183,14 @@ public class Home extends javax.swing.JFrame {
         });
         jToolBar1.add(bAddu);
 
-        Hello.setBackground(new java.awt.Color(255, 255, 255));
-        Hello.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        Hello.setBackground(new java.awt.Color(247, 247, 247));
+        Hello.setFont(new java.awt.Font("HP Simplified", 0, 16)); // NOI18N
         Hello.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         Hello.setText("Hello, Man");
         Hello.setOpaque(true);
 
         Cards.setLayout(new java.awt.CardLayout());
 
-        jLabel3.setBackground(new java.awt.Color(66, 133, 244));
-        jLabel3.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel3.setText("Log Out");
@@ -195,18 +198,6 @@ public class Home extends javax.swing.JFrame {
         jLabel3.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jLabel3MouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                jLabel3MouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                jLabel3MouseExited(evt);
-            }
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                jLabel3MousePressed(evt);
-            }
-            public void mouseReleased(java.awt.event.MouseEvent evt) {
-                jLabel3MouseReleased(evt);
             }
         });
 
@@ -221,23 +212,23 @@ public class Home extends javax.swing.JFrame {
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(Hello, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(38, 38, 38)
-                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap())
+                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(Cards, javax.swing.GroupLayout.PREFERRED_SIZE, 906, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 4, Short.MAX_VALUE))))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
             .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 11, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 9, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(Hello, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(Cards, javax.swing.GroupLayout.DEFAULT_SIZE, 574, Short.MAX_VALUE)
+                .addComponent(Cards, javax.swing.GroupLayout.PREFERRED_SIZE, 574, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -250,14 +241,6 @@ public class Home extends javax.swing.JFrame {
         // TODO add your handling code here:
         cl.show(Cards, "Add User");
     }//GEN-LAST:event_bAdduActionPerformed
-
-    private void bSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bSearchActionPerformed
-        // TODO add your handling code here:
-        cl.show(Cards, "Search Criminal");
-        sc.fetchCriminals();
-        sc.clearAll();
-
-    }//GEN-LAST:event_bSearchActionPerformed
 
     private void bAddcActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bAddcActionPerformed
         // TODO add your handling code here:
@@ -282,29 +265,12 @@ public class Home extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jLabel3MouseClicked
 
-    private void jLabel3MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel3MouseEntered
+    private void bSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bSearchActionPerformed
         // TODO add your handling code here:
-        Border one = BorderFactory.createEtchedBorder();
-        Border two = BorderFactory.createMatteBorder(1, 1, 1, 1, Color.WHITE);
-        jLabel3.setBorder(BorderFactory.createCompoundBorder(one, two));
-    }//GEN-LAST:event_jLabel3MouseEntered
-
-    private void jLabel3MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel3MouseExited
-        // TODO add your handling code here:
-        jLabel3.setBorder(null);
-    }//GEN-LAST:event_jLabel3MouseExited
-
-    private void jLabel3MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel3MousePressed
-        // TODO add your handling code here:
-        jLabel3.setBackground(Color.WHITE);
-        jLabel3.setForeground(Color.BLACK);
-    }//GEN-LAST:event_jLabel3MousePressed
-
-    private void jLabel3MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel3MouseReleased
-        // TODO add your handling code here:
-        jLabel3.setBackground(new Color(66, 133, 244));
-        jLabel3.setForeground(Color.WHITE);
-    }//GEN-LAST:event_jLabel3MouseReleased
+        cl.show(Cards, "Search Criminal");
+        sc.fetchCriminals();
+        sc.clearAll();
+    }//GEN-LAST:event_bSearchActionPerformed
 
     /**
      * @param args the command line arguments
@@ -377,9 +343,8 @@ public class Home extends javax.swing.JFrame {
 
     void editCriminals(int parseInt) {
         ac.editCriminal(parseInt);
+        c.editIpc(parseInt);
+        c.editPunish(parseInt);
     }
 
-    
-
- 
 }

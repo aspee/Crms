@@ -133,8 +133,8 @@ public class SearchC extends javax.swing.JPanel {
         jPanel1 = new javax.swing.JPanel();
         lId = new javax.swing.JLabel();
         CID1 = new javax.swing.JTextField();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
+        Search = new crms.CButton();
+        jLabel4 = new crms.CButton();
         tWeight = new javax.swing.JTextField();
         cHair = new javax.swing.JComboBox();
         ldob = new javax.swing.JLabel();
@@ -168,6 +168,11 @@ public class SearchC extends javax.swing.JPanel {
         jScrollPane1.setViewportView(jTable3);
 
         tCell1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        tCell1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tCell1ActionPerformed(evt);
+            }
+        });
         tCell1.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 tCell1KeyTyped(evt);
@@ -180,7 +185,7 @@ public class SearchC extends javax.swing.JPanel {
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Search", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 14))); // NOI18N
 
-        lGender.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lGender.setFont(new java.awt.Font("HP Simplified Light", 0, 14)); // NOI18N
         lGender.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         lGender.setText("Gender ");
 
@@ -210,28 +215,33 @@ public class SearchC extends javax.swing.JPanel {
             }
         });
 
-        lMiddle.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lMiddle.setFont(new java.awt.Font("HP Simplified Light", 0, 14)); // NOI18N
         lMiddle.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lMiddle.setText("Middle");
 
-        lInch.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lInch.setFont(new java.awt.Font("HP Simplified Light", 0, 14)); // NOI18N
         lInch.setText("inch");
 
-        lArrest.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lArrest.setFont(new java.awt.Font("HP Simplified Light", 0, 14)); // NOI18N
         lArrest.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lArrest.setText("Arrest Date");
 
         tSection.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        tSection.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tSectionActionPerformed(evt);
+            }
+        });
 
-        lHeight.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lHeight.setFont(new java.awt.Font("HP Simplified Light", 0, 14)); // NOI18N
         lHeight.setText("Height");
 
         rMale.setBackground(new java.awt.Color(255, 255, 255));
         buttonGroup1.add(rMale);
-        rMale.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        rMale.setFont(new java.awt.Font("HP Simplified Light", 0, 14)); // NOI18N
         rMale.setText("M");
 
-        lLast.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lLast.setFont(new java.awt.Font("HP Simplified Light", 0, 14)); // NOI18N
         lLast.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lLast.setText("Last");
         lLast.setToolTipText("");
@@ -254,11 +264,11 @@ public class SearchC extends javax.swing.JPanel {
             }
         });
 
-        lHair.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lHair.setFont(new java.awt.Font("HP Simplified Light", 0, 14)); // NOI18N
         lHair.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         lHair.setText("Hair");
 
-        lFoot.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lFoot.setFont(new java.awt.Font("HP Simplified Light", 0, 14)); // NOI18N
         lFoot.setText("ft.");
 
         cMarital.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -271,14 +281,14 @@ public class SearchC extends javax.swing.JPanel {
 
         A.setBackground(new java.awt.Color(255, 255, 255));
         buttonGroup1.add(A);
-        A.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        A.setFont(new java.awt.Font("HP Simplified Light", 0, 14)); // NOI18N
         A.setText("A");
 
-        lCity.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lCity.setFont(new java.awt.Font("HP Simplified Light", 0, 14)); // NOI18N
         lCity.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         lCity.setText("City ");
 
-        lCell.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lCell.setFont(new java.awt.Font("HP Simplified Light", 0, 14)); // NOI18N
         lCell.setText("Cell");
 
         tMiddle.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -290,14 +300,14 @@ public class SearchC extends javax.swing.JPanel {
 
         rFemale.setBackground(new java.awt.Color(255, 255, 255));
         buttonGroup1.add(rFemale);
-        rFemale.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        rFemale.setFont(new java.awt.Font("HP Simplified Light", 0, 14)); // NOI18N
         rFemale.setText("F");
 
         tEyes.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
         cCity.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
-        lFirst.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lFirst.setFont(new java.awt.Font("HP Simplified Light", 0, 14)); // NOI18N
         lFirst.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lFirst.setText("First");
 
@@ -310,23 +320,23 @@ public class SearchC extends javax.swing.JPanel {
             }
         });
 
-        lEyes.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lEyes.setFont(new java.awt.Font("HP Simplified Light", 0, 14)); // NOI18N
         lEyes.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         lEyes.setText("Eyes ");
 
         tFacility.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
-        lFacility.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lFacility.setFont(new java.awt.Font("HP Simplified Light", 0, 14)); // NOI18N
         lFacility.setText("Facility");
 
-        lBloodgroup.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lBloodgroup.setFont(new java.awt.Font("HP Simplified Light", 0, 14)); // NOI18N
         lBloodgroup.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         lBloodgroup.setText("Blood Group ");
 
-        lMarital.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lMarital.setFont(new java.awt.Font("HP Simplified Light", 0, 14)); // NOI18N
         lMarital.setText("Marital Status ");
 
-        lColor.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lColor.setFont(new java.awt.Font("HP Simplified Light", 0, 14)); // NOI18N
         lColor.setText("Color");
 
         tFoot.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -341,7 +351,7 @@ public class SearchC extends javax.swing.JPanel {
             }
         });
 
-        lState.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lState.setFont(new java.awt.Font("HP Simplified Light", 0, 14)); // NOI18N
         lState.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         lState.setText("State ");
 
@@ -349,7 +359,7 @@ public class SearchC extends javax.swing.JPanel {
         jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jPanel1.setToolTipText("");
 
-        lId.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lId.setFont(new java.awt.Font("HP Simplified Light", 0, 14)); // NOI18N
         lId.setText("ID");
         lId.setVerticalAlignment(javax.swing.SwingConstants.TOP);
 
@@ -367,19 +377,17 @@ public class SearchC extends javax.swing.JPanel {
             }
         });
 
-        jButton3.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jButton3.setText("Search");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+        Search.setText("Search");
+        Search.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                SearchMouseClicked(evt);
             }
         });
 
-        jButton4.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jButton4.setText("Clear");
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
+        jLabel4.setText("Clear");
+        jLabel4.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel4MouseClicked(evt);
             }
         });
 
@@ -389,17 +397,14 @@ public class SearchC extends javax.swing.JPanel {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
+                .addComponent(lId)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(lId)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(CID1))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(10, 10, 10)
-                        .addComponent(jButton3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton4)
-                        .addGap(0, 2, Short.MAX_VALUE)))
+                        .addComponent(Search, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, 60, Short.MAX_VALUE))
+                    .addComponent(CID1))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -410,9 +415,9 @@ public class SearchC extends javax.swing.JPanel {
                     .addComponent(lId)
                     .addComponent(CID1, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton3)
-                    .addComponent(jButton4))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(Search, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, 25, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -427,16 +432,16 @@ public class SearchC extends javax.swing.JPanel {
         cHair.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         cHair.setModel(new javax.swing.DefaultComboBoxModel(new String[] { " ", "Straight", "Curly" }));
 
-        ldob.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        ldob.setFont(new java.awt.Font("HP Simplified Light", 0, 14)); // NOI18N
         ldob.setText("DOB");
 
-        lName.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lName.setFont(new java.awt.Font("HP Simplified Light", 0, 14)); // NOI18N
         lName.setText("Name");
 
-        lWeight.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lWeight.setFont(new java.awt.Font("HP Simplified Light", 0, 14)); // NOI18N
         lWeight.setText("Weight (In Kg.)");
 
-        lSection.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lSection.setFont(new java.awt.Font("HP Simplified Light", 0, 14)); // NOI18N
         lSection.setText("Section");
 
         tCell.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -647,6 +652,7 @@ public class SearchC extends javax.swing.JPanel {
                 .addContainerGap())
         );
 
+        jLabel1.setFont(new java.awt.Font("HP Simplified Light", 0, 11)); // NOI18N
         jLabel1.setText("Edit");
         jLabel1.setPreferredSize(new java.awt.Dimension(67, 25));
         jLabel1.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -655,6 +661,7 @@ public class SearchC extends javax.swing.JPanel {
             }
         });
 
+        jLabel2.setFont(new java.awt.Font("HP Simplified Light", 0, 11)); // NOI18N
         jLabel2.setText("Delete");
         jLabel2.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -662,6 +669,7 @@ public class SearchC extends javax.swing.JPanel {
             }
         });
 
+        jLabel3.setFont(new java.awt.Font("HP Simplified Light", 0, 11)); // NOI18N
         jLabel3.setText("Show");
         jLabel3.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -689,7 +697,7 @@ public class SearchC extends javax.swing.JPanel {
                             .addComponent(lCell1)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                             .addComponent(tCell1, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(41, Short.MAX_VALUE))
+                .addContainerGap(17, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -707,7 +715,7 @@ public class SearchC extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(tCell1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lCell1))
-                .addContainerGap(63, Short.MAX_VALUE))
+                .addContainerGap(58, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -822,34 +830,8 @@ public class SearchC extends javax.swing.JPanel {
             rowSorter.setRowFilter(null);
         } else {
             rowSorter.setRowFilter(RowFilter.regexFilter("(?i)" + text));
-        }        // TODO add your handling code here:
-    }//GEN-LAST:event_tCell1KeyTyped
-
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        // TODO add your handling code here:
-        searchButton();
-        ;
-    }//GEN-LAST:event_jButton3ActionPerformed
-
-    private void CID1KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_CID1KeyTyped
-        // TODO add your handling code here:
-        char caracter = evt.getKeyChar();
-        if (((caracter < '0') || (caracter > '9')) && (caracter != '\b')) {
-            evt.consume();
         }
-    }//GEN-LAST:event_CID1KeyTyped
-
-    private void CID1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CID1ActionPerformed
-        // TODO add your handling code here:
-
-        searchButton();
-    }//GEN-LAST:event_CID1ActionPerformed
-
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        // TODO add your handling code here:
-        clearAll();
-        fetchCriminals();
-    }//GEN-LAST:event_jButton4ActionPerformed
+    }//GEN-LAST:event_tCell1KeyTyped
 
     private void jLabel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MouseClicked
         // TODO add your handling code here:
@@ -869,6 +851,7 @@ public class SearchC extends javax.swing.JPanel {
         if (result == JOptionPane.YES_OPTION) {
             try {
                 Database.getStatement().execute("SET FOREIGN_KEY_CHECKS=0;");
+                Database.getStatement().execute("delete from tblIPC where id=" + temp);
                 Database.getStatement().execute("delete from tblpunishment where id=" + temp);
                 Database.getStatement().execute("delete from mtblCriminals where cid=" + temp);
                 Database.getStatement().execute("SET FOREIGN_KEY_CHECKS=1;");
@@ -886,21 +869,52 @@ public class SearchC extends javax.swing.JPanel {
 
     }//GEN-LAST:event_jLabel3MouseClicked
 
+    private void tCell1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tCell1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tCell1ActionPerformed
+
+    private void tSectionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tSectionActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tSectionActionPerformed
+
+    private void SearchMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_SearchMouseClicked
+        searchButton();
+    }//GEN-LAST:event_SearchMouseClicked
+
+    private void CID1KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_CID1KeyTyped
+        // TODO add your handling code here:
+        char caracter = evt.getKeyChar();
+        if (((caracter < '0') || (caracter > '9')) && (caracter != '\b')) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_CID1KeyTyped
+
+    private void CID1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CID1ActionPerformed
+        // TODO add your handling code here:
+
+        searchButton();
+    }//GEN-LAST:event_CID1ActionPerformed
+
+    private void jLabel4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4MouseClicked
+        clearAll();
+        fetchCriminals();
+    }//GEN-LAST:event_jLabel4MouseClicked
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JRadioButton A;
     private javax.swing.JTextField CID1;
+    private javax.swing.JLabel Search;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JComboBox cBloodgroup;
     private javax.swing.JComboBox cCity;
     private javax.swing.JComboBox cHair;
     private javax.swing.JComboBox cMarital;
     private javax.swing.JComboBox cState;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;

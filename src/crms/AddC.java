@@ -6,17 +6,12 @@
 package crms;
 
 import java.awt.Component;
-import java.awt.Container;
-import java.awt.Frame;
-import java.awt.Graphics;
-import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.IOException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -30,12 +25,9 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JDialog;
 import javax.swing.JFileChooser;
-import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JTextArea;
 import javax.swing.JTextField;
-import javax.swing.SwingUtilities;
 import javax.swing.Timer;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
@@ -62,17 +54,25 @@ public class AddC extends javax.swing.JPanel {
         allStates();
         initComponents();
         this.parent = (Home) parent;
-        try {
-            CID.setText("#" + currentID());
-            pst = Database.getConnection().prepareStatement("insert into mtblCriminals values(null,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
-        } catch (SQLException ex) {
-            Logger.getLogger(AddC.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        CID.setText("#" + currentID());
 
     }
 
     public void setAll() {
         try {
+            int oldid = Integer.parseInt(CID.getText().substring(1));
+            if (editing) {
+                System.out.println("Editing:" + oldid);
+                Database.getStatement().execute("SET FOREIGN_KEY_CHECKS=0;");
+                Database.getStatement().execute("delete from tblIPC where id=" + oldid);
+                Database.getStatement().execute("delete from tblpunishment where id=" + oldid);
+                Database.getStatement().execute("delete from mtblCriminals where cid=" + oldid);
+                Database.getStatement().execute("SET FOREIGN_KEY_CHECKS=1;");
+                pst = Database.getConnection().prepareStatement("insert into mtblCriminals values(" + oldid + ",?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+                editing = false;
+            } else {
+                pst = Database.getConnection().prepareStatement("insert into mtblCriminals values(null,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+            }
             Date dateFromDateChooser = tdob.getDate();
             Date dateFromDateChooser1 = tArrestdate.getDate();
             String dateString = (String.format("%1$tY-%1$tm-%1$td", dateFromDateChooser));
@@ -101,16 +101,20 @@ public class AddC extends javax.swing.JPanel {
             } else {
                 pst.setDouble(16, Height);
             }
-            pst.setDouble(17, Double.parseDouble(tWeight.getText() + "0"));
+            if (tWeight.getText().equals("")) {
+                pst.setDouble(17, 0);
+            } else {
+                pst.setDouble(17, Double.parseDouble(tWeight.getText()));
+            }
             pst.setString(18, tEyes.getText());
             pst.setString(19, tFacility.getText());
             pst.setString(20, tSection.getText());
             pst.setString(21, tCell.getText());
             pst.setString(22, tAdditional.getText());
-            pst.executeUpdate();
-            parent.ipc(currentID() - 1);
-            parent.pdf(currentID() - 1);
 
+            pst.executeUpdate();
+            parent.ipc(oldid);
+            parent.pdf(oldid);
         } catch (SQLException ex) {
             Logger.getLogger(AddC.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -205,7 +209,7 @@ public class AddC extends javax.swing.JPanel {
         jPanel2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jPanel2.setOpaque(false);
 
-        lMiddle.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lMiddle.setFont(new java.awt.Font("HP Simplified Light", 0, 14)); // NOI18N
         lMiddle.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lMiddle.setText("Middle");
 
@@ -225,15 +229,15 @@ public class AddC extends javax.swing.JPanel {
 
         rFemale.setBackground(new java.awt.Color(255, 255, 255));
         buttonGroup1.add(rFemale);
-        rFemale.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        rFemale.setFont(new java.awt.Font("HP Simplified Light", 0, 12)); // NOI18N
         rFemale.setText("Female");
 
         rMale.setBackground(new java.awt.Color(255, 255, 255));
         buttonGroup1.add(rMale);
-        rMale.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        rMale.setFont(new java.awt.Font("HP Simplified Light", 0, 12)); // NOI18N
         rMale.setText("Male");
 
-        lState.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lState.setFont(new java.awt.Font("HP Simplified Light", 0, 14)); // NOI18N
         lState.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         lState.setText("State ");
 
@@ -267,13 +271,13 @@ public class AddC extends javax.swing.JPanel {
         tAddress.setWrapStyleWord(true);
         jScrollPane1.setViewportView(tAddress);
 
-        lName.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lName.setFont(new java.awt.Font("HP Simplified Light", 0, 14)); // NOI18N
         lName.setText("Name");
 
-        ldob.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        ldob.setFont(new java.awt.Font("HP Simplified Light", 0, 14)); // NOI18N
         ldob.setText("Date of Birth");
 
-        lMarital.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lMarital.setFont(new java.awt.Font("HP Simplified Light", 0, 14)); // NOI18N
         lMarital.setText("Marital Status ");
 
         tFirst.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -283,7 +287,7 @@ public class AddC extends javax.swing.JPanel {
             }
         });
 
-        lGender.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lGender.setFont(new java.awt.Font("HP Simplified Light", 0, 14)); // NOI18N
         lGender.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         lGender.setText("Gender ");
 
@@ -294,19 +298,19 @@ public class AddC extends javax.swing.JPanel {
             }
         });
 
-        lFirst.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lFirst.setFont(new java.awt.Font("HP Simplified Light", 0, 14)); // NOI18N
         lFirst.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lFirst.setText("First");
 
-        lLast.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lLast.setFont(new java.awt.Font("HP Simplified Light", 0, 14)); // NOI18N
         lLast.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lLast.setText("Last");
         lLast.setToolTipText("");
 
-        lAddress.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lAddress.setFont(new java.awt.Font("HP Simplified Light", 0, 14)); // NOI18N
         lAddress.setText("Address ");
 
-        lCity.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lCity.setFont(new java.awt.Font("HP Simplified Light", 0, 14)); // NOI18N
         lCity.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         lCity.setText("City ");
 
@@ -320,7 +324,7 @@ public class AddC extends javax.swing.JPanel {
 
         jRadioButton1.setBackground(new java.awt.Color(255, 255, 255));
         buttonGroup1.add(jRadioButton1);
-        jRadioButton1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jRadioButton1.setFont(new java.awt.Font("HP Simplified Light", 0, 12)); // NOI18N
         jRadioButton1.setSelected(true);
         jRadioButton1.setText("Unknown");
 
@@ -444,7 +448,7 @@ public class AddC extends javax.swing.JPanel {
         tAdditional.setRows(5);
         jScrollPane2.setViewportView(tAdditional);
 
-        lAdditional.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lAdditional.setFont(new java.awt.Font("HP Simplified Light", 0, 14)); // NOI18N
         lAdditional.setText("Additional Information");
 
         jLabel2.setForeground(new java.awt.Color(255, 0, 0));
@@ -456,7 +460,7 @@ public class AddC extends javax.swing.JPanel {
         jLabel4.setForeground(new java.awt.Color(255, 0, 0));
         jLabel4.setText("*");
 
-        lSection.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lSection.setFont(new java.awt.Font("HP Simplified Light", 0, 14)); // NOI18N
         lSection.setText("Section");
 
         tCell.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -466,10 +470,10 @@ public class AddC extends javax.swing.JPanel {
             }
         });
 
-        lCell.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lCell.setFont(new java.awt.Font("HP Simplified Light", 0, 14)); // NOI18N
         lCell.setText("Cell");
 
-        lFacility.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lFacility.setFont(new java.awt.Font("HP Simplified Light", 0, 14)); // NOI18N
         lFacility.setText("Facility");
 
         tSection.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -486,7 +490,7 @@ public class AddC extends javax.swing.JPanel {
                     .addComponent(lFacility)
                     .addComponent(lSection, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(lCell, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 54, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 56, Short.MAX_VALUE)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(tCell, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -538,7 +542,6 @@ public class AddC extends javax.swing.JPanel {
         jPanel5.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
         jPanel5.setOpaque(false);
 
-        bClear.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         bClear.setText("Clear");
         bClear.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         bClear.setPreferredSize(new java.awt.Dimension(83, 25));
@@ -548,7 +551,6 @@ public class AddC extends javax.swing.JPanel {
             }
         });
 
-        bSave1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         bSave1.setText("Save");
         bSave1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         bSave1.setPreferredSize(new java.awt.Dimension(83, 25));
@@ -584,7 +586,7 @@ public class AddC extends javax.swing.JPanel {
 
         IMAGE.setIcon(new javax.swing.ImageIcon(getClass().getResource("/res/jinsignia.alpha.png"))); // NOI18N
 
-        lArrest.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lArrest.setFont(new java.awt.Font("HP Simplified Light", 0, 14)); // NOI18N
         lArrest.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lArrest.setText("Arrest Date");
 
@@ -597,7 +599,7 @@ public class AddC extends javax.swing.JPanel {
             }
         });
 
-        lId.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lId.setFont(new java.awt.Font("HP Simplified Light", 0, 14)); // NOI18N
         lId.setText("ID");
         lId.setVerticalAlignment(javax.swing.SwingConstants.TOP);
 
@@ -610,7 +612,6 @@ public class AddC extends javax.swing.JPanel {
             }
         });
 
-        bBrowse.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         bBrowse.setText("Browse");
         bBrowse.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         bBrowse.setPreferredSize(new java.awt.Dimension(83, 25));
@@ -620,7 +621,6 @@ public class AddC extends javax.swing.JPanel {
             }
         });
 
-        bRemove.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         bRemove.setText("Remove");
         bRemove.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         bRemove.setPreferredSize(new java.awt.Dimension(83, 25));
@@ -683,7 +683,7 @@ public class AddC extends javax.swing.JPanel {
         jPanel4.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jPanel4.setOpaque(false);
 
-        lColor.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lColor.setFont(new java.awt.Font("HP Simplified Light", 0, 14)); // NOI18N
         lColor.setText("Color");
 
         tWeight.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -704,13 +704,13 @@ public class AddC extends javax.swing.JPanel {
             }
         });
 
-        lHeight.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lHeight.setFont(new java.awt.Font("HP Simplified Light", 0, 14)); // NOI18N
         lHeight.setText("Height");
 
         lFoot.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         lFoot.setText("ft.");
 
-        lHair.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lHair.setFont(new java.awt.Font("HP Simplified Light", 0, 14)); // NOI18N
         lHair.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         lHair.setText("Hair");
 
@@ -732,10 +732,10 @@ public class AddC extends javax.swing.JPanel {
         cHair.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         cHair.setModel(new javax.swing.DefaultComboBoxModel(new String[] { " ", "Straight", "Curly" }));
 
-        lWeight.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lWeight.setFont(new java.awt.Font("HP Simplified Light", 0, 14)); // NOI18N
         lWeight.setText("Weight");
 
-        lBloodgroup.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lBloodgroup.setFont(new java.awt.Font("HP Simplified Light", 0, 14)); // NOI18N
         lBloodgroup.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         lBloodgroup.setText("Blood Group ");
 
@@ -753,7 +753,7 @@ public class AddC extends javax.swing.JPanel {
             }
         });
 
-        lEyes.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lEyes.setFont(new java.awt.Font("HP Simplified Light", 0, 14)); // NOI18N
         lEyes.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         lEyes.setText("Eyes ");
 
@@ -872,7 +872,7 @@ public class AddC extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(52, Short.MAX_VALUE))
+                .addContainerGap(51, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -982,7 +982,10 @@ public class AddC extends javax.swing.JPanel {
     }//GEN-LAST:event_bClearMouseClicked
 
     private void bSave1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bSave1MouseClicked
-        // TODO add your handling code here:
+        if (verify()) {
+            setAll();
+            Saved();
+        }
     }//GEN-LAST:event_bSave1MouseClicked
 
     private void jLabel6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel6MouseClicked
@@ -1124,6 +1127,8 @@ public class AddC extends javax.swing.JPanel {
                 }
             }
         }
+        IMAGE.setIcon(new javax.swing.ImageIcon(getClass().getResource("/res/jinsignia.alpha.png")));
+        imagePresent = false;
         tAddress.setText("");
         tAdditional.setText("");
         tdob.setDate(null);
@@ -1141,28 +1146,52 @@ public class AddC extends javax.swing.JPanel {
     }
 
     private Boolean verify() {
+
         String s = "";
         Boolean a = true;
+
         if (tArrestdate.getDate() == null) {
-            s += "Arrest Date, ";
+            s += "Arrest Date Required\n";
             a = a & false;
+        } else {
+            if (!editing) {
+                if (tArrestdate.getDate().after(new Date())) {
+                    s += "Arrest Date cannot be in future\n";
+                    a = a & false;
+                }
+            }
         }
         if ("".equals(tSection.getText())) {
-            s += "Section ";
+            s += "Section Required\n";
             a = a & false;
         }
         if ("".equals(tFacility.getText())) {
-            s += "Facility ";
+            s += "Facility Required\n";
             a = a & false;
         }
         if ("".equals(tCell.getText())) {
-            s += "Cell\n";
+            s += "Cell Required\n";
             a = a & false;
+        } else {
+            try {
+                ResultSet rs = Database.getStatement().executeQuery("select cell from mtblcriminals where cid<>" + CID.getText().substring(1) + " "
+                        + "and cell='" + tCell.getText() + "' "
+                        + "and facility='" + tFacility.getText() + "' "
+                        + "and section='" + tSection.getText() + "'");
+                if (rs.next()) {
+                    s += "Cell Occupied\n";
+                    a = a & false;
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(AddC.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
+
         if (!a) {
-            JOptionPane.showMessageDialog(null, "Please Enter: " + s, "Mandatory Fields", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, s, "Error!", JOptionPane.ERROR_MESSAGE);
         }
         return a;
+
     }
 
     private void allStates() {
@@ -1277,6 +1306,7 @@ public class AddC extends javax.swing.JPanel {
                 tSection.setText(edit1.getString("section"));
                 tCell.setText(edit1.getString("cell"));
                 tAdditional.setText(edit1.getString("ai"));
+
             }
         } catch (SQLException ex) {
             Logger.getLogger(AddC.class.getName()).log(Level.SEVERE, null, ex);

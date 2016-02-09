@@ -17,6 +17,7 @@ import java.util.LinkedList;
 import java.util.TimerTask;
 import javax.swing.JLabel;
 import javax.swing.Timer;
+import javax.swing.UIDefaults;
 import javax.swing.UIManager;
 import javax.swing.plaf.ColorUIResource;
 
@@ -82,7 +83,7 @@ public class Login extends javax.swing.JFrame implements ActionListener, KeyList
         lLogo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/res/insignia.alpha.png"))); // NOI18N
         lLogo.setToolTipText("");
 
-        lCaps.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        lCaps.setFont(new java.awt.Font("HP Simplified", 0, 14)); // NOI18N
         lCaps.setForeground(new java.awt.Color(255, 255, 255));
         lCaps.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
 
@@ -100,12 +101,12 @@ public class Login extends javax.swing.JFrame implements ActionListener, KeyList
         });
 
         lUsername.setBackground(new java.awt.Color(255, 255, 255));
-        lUsername.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lUsername.setFont(new java.awt.Font("HP Simplified", 0, 14)); // NOI18N
         lUsername.setForeground(new java.awt.Color(255, 255, 255));
         lUsername.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         lUsername.setText("Username:");
 
-        lPassword.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lPassword.setFont(new java.awt.Font("HP Simplified", 0, 14)); // NOI18N
         lPassword.setForeground(new java.awt.Color(255, 255, 255));
         lPassword.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         lPassword.setText("Password:");
@@ -119,13 +120,13 @@ public class Login extends javax.swing.JFrame implements ActionListener, KeyList
             }
         });
 
-        lValid.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        lValid.setFont(new java.awt.Font("HP Simplified Light", 0, 16)); // NOI18N
         lValid.setForeground(new java.awt.Color(249, 1, 1));
         lValid.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lValid.setText(" ");
         lValid.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
-        bLogin.setFont(new java.awt.Font("Arial", 1, 11)); // NOI18N
+        bLogin.setFont(new java.awt.Font("HP Simplified", 0, 11)); // NOI18N
         bLogin.setForeground(new java.awt.Color(72, 106, 179));
         bLogin.setText("Login");
         bLogin.setOpaque(true);
@@ -175,7 +176,7 @@ public class Login extends javax.swing.JFrame implements ActionListener, KeyList
         lValid.getAccessibleContext().setAccessibleName("jLabel4");
         lValid.getAccessibleContext().setAccessibleDescription("");
 
-        jLabel1.setFont(new java.awt.Font("Arial", 1, 11)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("HP Simplified", 0, 11)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(72, 106, 179));
         jLabel1.setText("Exit");
         jLabel1.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -246,11 +247,12 @@ public class Login extends javax.swing.JFrame implements ActionListener, KeyList
 
         try {
             //javax.swing.UIManager.put("control", new Color(0xbed3e6));
-            // javax.swing.UIManager.put("nimbusBase", new Color(0x878c96));
+            //javax.swing.UIManager.put("Button.background",new Color(0xbed3e6));
+             //javax.swing.UIManager.put("nimbusBase", new Color(0x878c96));
+
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Windows".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
-
                     break;
 
                 }

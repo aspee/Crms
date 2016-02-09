@@ -7,6 +7,8 @@ package crms;
 
 import java.awt.Color;
 import java.awt.Cursor;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import javax.swing.BorderFactory;
@@ -20,9 +22,12 @@ import javax.swing.border.Border;
 public class CButton extends JLabel implements MouseListener {
 
     public CButton() {
-        setBackground(new java.awt.Color(66, 133, 244));
+//        setBackground(new java.awt.Color(66, 133, 244));
+        setBackground(new java.awt.Color(51, 51, 51));
         setFont(new java.awt.Font("Tahoma", 0, 14));
-        setForeground(new java.awt.Color(255, 255, 255));
+        setFont(new java.awt.Font("HP Simplified", 0, 14));
+//        setForeground(new java.awt.Color(247, 247, 247));
+          setForeground(new java.awt.Color(255, 255, 255));
         setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         setOpaque(true);
         this.addMouseListener(this);
@@ -42,7 +47,7 @@ public class CButton extends JLabel implements MouseListener {
 
     @Override
     public void mouseReleased(MouseEvent me) {
-        setBackground(new Color(66, 133, 244));
+        setBackground(new Color(51, 51, 51));
         setForeground(Color.WHITE);
     }
 

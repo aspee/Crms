@@ -91,7 +91,6 @@ public class Crimes extends javax.swing.JPanel {
                 return tip;
             }
         };
-        jButton1 = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         jScrollPane5 = new javax.swing.JScrollPane();
         tPunish = new org.jdesktop.swingx.JXTable(){
@@ -110,6 +109,7 @@ public class Crimes extends javax.swing.JPanel {
                 return tip;
             }
         };
+        jLabel3 = new crms.CButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTextArea1 = new javax.swing.JTextArea();
 
@@ -170,30 +170,22 @@ public class Crimes extends javax.swing.JPanel {
         jScrollPane3.setViewportView(isp);
         isp.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
 
-        jButton1.setBackground(new java.awt.Color(255, 255, 255));
-        jButton1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/res/left.png"))); // NOI18N
-        jButton1.setBorder(null);
-        jButton1.setFocusable(false);
-        jButton1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton1.setMargin(new java.awt.Insets(2, 2, 2, 2));
-        jButton1.setOpaque(false);
-        jButton1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
-
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel2.setText("Punishment");
 
-        jScrollPane5.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+        jScrollPane5.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
 
         tPunish.setModel(dtm1);
         jScrollPane5.setViewportView(tPunish);
         tPunish.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+
+        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/res/left.png"))); // NOI18N
+        jLabel3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel3MouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -202,7 +194,10 @@ public class Crimes extends javax.swing.JPanel {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jScrollPane3)
                             .addGroup(jPanel1Layout.createSequentialGroup()
@@ -226,17 +221,14 @@ public class Crimes extends javax.swing.JPanel {
                                 .addGap(22, 22, 22))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jScrollPane5)
-                                .addContainerGap())))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                                .addContainerGap())))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(2, 2, 2)
+                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jButton2)
@@ -252,9 +244,12 @@ public class Crimes extends javax.swing.JPanel {
                             .addComponent(jLabel1))))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 175, Short.MAX_VALUE))
-                .addGap(22, 22, 22))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 175, Short.MAX_VALUE)
+                        .addGap(22, 22, 22))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
 
         jScrollPane2.setBorder(javax.swing.BorderFactory.createTitledBorder("Brief Case Information"));
@@ -287,20 +282,18 @@ public class Crimes extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code heres
-        Home h = (Home) parent;
-        h.showAddCriminal();
-    }//GEN-LAST:event_jButton1ActionPerformed
-
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
         try {
             String ipc = (String) cIpc.getSelectedItem();
-
-            cIpc.removeItem(ipc);
+            System.out.println(cIpc.getSelectedIndex());
+            System.out.println(cIpc.getItemCount());
+            if (cIpc.getItemCount() != cIpc.getSelectedIndex() + 1) {
+                cIpc.setSelectedIndex(cIpc.getSelectedIndex() + 1);
+            } else {
+                cIpc.setSelectedIndex(0);
+            }
             ResultSet rs2 = Database.getStatement().executeQuery("select * from Contents where Sections='" + ipc + "'");
-            //rs2.next();
             ResultSetMetaData rsmd = rs2.getMetaData();
             int num = rsmd.getColumnCount();
             String[] name = new String[num];
@@ -318,6 +311,7 @@ public class Crimes extends javax.swing.JPanel {
 
         } catch (SQLException ex) {
             Logger.getLogger(AddC.class.getName()).log(Level.SEVERE, null, ex);
+
         }
     }//GEN-LAST:event_jButton4ActionPerformed
 
@@ -326,7 +320,7 @@ public class Crimes extends javax.swing.JPanel {
         try {
 
             int row = isp.getSelectedRow();
-            cIpc.addItem(isp.getValueAt(row, 0));
+            //cIpc.addItem(isp.getValueAt(row, 0));
             dtm.removeRow(row);
 
         } catch (Exception ex) {
@@ -344,18 +338,32 @@ public class Crimes extends javax.swing.JPanel {
         // TODO add your handling code here:
         String a = (String) jComboBox3.getSelectedItem();
         new AddP((JFrame) this.getTopLevelAncestor(), true, a, this).setVisible(true);
+        if (tPunish.getRowCount() == 1) {
+            jButton2.setEnabled(false);
+        } else {
+            jButton2.setEnabled(true);
+        }
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
         // TODO add your handling code here:
         dtm1.removeRow(tPunish.getSelectedRow());
+        if (tPunish.getRowCount() == 1) {
+            jButton2.setEnabled(false);
+        } else {
+            jButton2.setEnabled(true);
+        }
     }//GEN-LAST:event_jButton7ActionPerformed
+
+    private void jLabel3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel3MouseClicked
+        Home h = (Home) parent;
+        h.showAddCriminal();
+    }//GEN-LAST:event_jLabel3MouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox cIpc;
     private org.jdesktop.swingx.JXTable isp;
-    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton6;
@@ -363,6 +371,7 @@ public class Crimes extends javax.swing.JPanel {
     private javax.swing.JComboBox jComboBox3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
@@ -373,10 +382,7 @@ public class Crimes extends javax.swing.JPanel {
 
     private void ipc() {
         try {
-
-            //cState.removeAllItems();
             ResultSet rs2 = Database.getStatement().executeQuery("select Sections from Contents");
-            //rs2.next();
             cIpc.removeAllItems();
             while (rs2.next()) {
                 cIpc.addItem("" + rs2.getString(1));
@@ -394,7 +400,8 @@ public class Crimes extends javax.swing.JPanel {
 
             }
         } catch (SQLException ex) {
-            Logger.getLogger(Crimes.class.getName()).log(Level.SEVERE, null, ex);
+//            Logger.getLogger(Crimes.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println(id);
         }
 
     }
@@ -402,25 +409,87 @@ public class Crimes extends javax.swing.JPanel {
     public void removeAll() {
         dtm.setRowCount(0);
         dtm1.setRowCount(0);
+        jButton2.setEnabled(true);
         ipc();
     }
 
     public void punish(String date, int Fine) {
-        String Ptype=(String) jComboBox3.getSelectedItem();
+        if (date.equals("Life Imprisonment")) {
+            date = "Life Imprisonment";
+        }
+        String Ptype = (String) jComboBox3.getSelectedItem();
         String rowdata[] = {Ptype, "" + date, "" + Fine};
         dtm1.addRow(rowdata);
     }
+
     void setPunish(int id) {
         try {
-
+            String d = null;
             for (int i = 0; i < tPunish.getRowCount(); i++) {
-                Database.getStatement().execute("insert into tblPunishment values(" + id + ",'" + tPunish.getValueAt(i, 0) + "','" + tPunish.getValueAt(i, 1) + "'," + tPunish.getValueAt(i, 2) + ")");
+                d = tPunish.getValueAt(i, 1).toString();
+                if (tPunish.getValueAt(i, 1).equals("Life Imprisonment")) {
+                    d = "0000-01-01";
+                }
+
+                Database.getStatement().execute("insert into tblPunishment values(" + id + ",'" + tPunish.getValueAt(i, 0) + "','" + d + "'," + tPunish.getValueAt(i, 2) + ")");
 
             }
         } catch (SQLException ex) {
             Logger.getLogger(Crimes.class.getName()).log(Level.SEVERE, null, ex);
         }
 
+    }
+
+    void editIpc(int id) {
+        try {
+
+            ResultSet rs2 = Database.getStatement().executeQuery("select a.sections, a.particulars from contents a,tblipc b where a.sections=b.ipc and b.id=" + id);
+            ResultSetMetaData rsmd = rs2.getMetaData();
+            int num = rsmd.getColumnCount();
+            String[] name = new String[num];
+            for (int i = 0; i < num; i++) {
+                name[i] = rsmd.getColumnName(i + 1);
+            }
+            dtm.setColumnIdentifiers(name);
+            while (rs2.next()) {
+                String rowdata[] = new String[num];
+                for (int i = 0; i < num; i++) {
+                    rowdata[i] = rs2.getString(i + 1);
+                }
+                dtm.addRow(rowdata);
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(Crimes.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    void editPunish(int parseInt) {
+
+        try {
+            ResultSet rs2 = Database.getStatement().executeQuery("select ptype,tdate,fine from tblpunishment where id=" + parseInt);
+            ResultSetMetaData rsmd = rs2.getMetaData();
+            int num = rsmd.getColumnCount();
+            dtm1.setColumnIdentifiers(new String[]{"Punishment", "On Date", "Fine"});
+            while (rs2.next()) {
+                String rowdata[] = new String[num];
+                for (int i = 0; i < num; i++) {
+
+                    rowdata[i] = rs2.getString(i + 1);
+                }
+                if (rowdata[1].equals("0001-01-01")) {
+                    rowdata[1] = "Life Imprisonment";
+                }
+                dtm1.addRow(rowdata);
+            }
+            if (tPunish.getRowCount() == 1) {
+                jButton2.setEnabled(false);
+            } else {
+                jButton2.setEnabled(true);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Crimes.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
 }

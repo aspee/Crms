@@ -9,6 +9,7 @@ import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.util.Date;
 import javax.swing.JDialog;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 /**
@@ -27,6 +28,10 @@ public class AddP extends javax.swing.JDialog {
         initComponents();
         setLocationRelativeTo(null);
         setTitle(Title);
+        if (Title.equals("Death by hanging")) {
+            jCheckBox1.setEnabled(false);
+            jTextField1.setEnabled(false);
+        }
         c = panel;
     }
 
@@ -41,6 +46,7 @@ public class AddP extends javax.swing.JDialog {
 
         jPanel1 = new javax.swing.JPanel();
         jCalendar1 = new com.toedter.calendar.JCalendar();
+        jCheckBox1 = new javax.swing.JCheckBox();
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jTextField1 = new javax.swing.JTextField();
@@ -52,21 +58,40 @@ public class AddP extends javax.swing.JDialog {
 
         jCalendar1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
+        jCheckBox1.setForeground(new java.awt.Color(255, 0, 0));
+        jCheckBox1.setText("Life Imprisonment ");
+        jCheckBox1.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jCheckBox1ItemStateChanged(evt);
+            }
+        });
+        jCheckBox1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCheckBox1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jCalendar1, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jCheckBox1)
+                .addGap(54, 54, 54))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jCalendar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jCalendar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jCheckBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(8, Short.MAX_VALUE))
         );
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -128,23 +153,22 @@ public class AddP extends javax.swing.JDialog {
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(10, 10, 10)
                                 .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
                                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(19, 19, 19))))
+                        .addGap(22, 22, 22))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -168,14 +192,36 @@ public class AddP extends javax.swing.JDialog {
     }//GEN-LAST:event_jLabel2MouseClicked
 
     private void jLabel3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel3MouseClicked
+
         Date dateFromDateChooser = jCalendar1.getDate();
+        if(dateFromDateChooser.after(new Date()))
+        {
         String dateString = (String.format("%1$tY-%1$tm-%1$td", dateFromDateChooser));
-        if (dateString.equals("null-null-null")) {
+        if (jCheckBox1.isSelected()) {
+            dateString = "Life Imprisonment";
+        } else if (dateString.equals("null-null-null")) {
             dateString = null;
         }
         c.punish(dateString, Integer.parseInt(jTextField1.getText()));
         this.dispose();
+        }
+        else
+        {
+            JOptionPane.showMessageDialog(null,"Date must be in the future" , "Error!", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_jLabel3MouseClicked
+
+    private void jCheckBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox1ActionPerformed
+        if (jCheckBox1.isSelected()) {
+            jCalendar1.setEnabled(false);
+        } else {
+            jCalendar1.setEnabled(true);
+        }
+    }//GEN-LAST:event_jCheckBox1ActionPerformed
+
+    private void jCheckBox1ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jCheckBox1ItemStateChanged
+
+    }//GEN-LAST:event_jCheckBox1ItemStateChanged
 
     /**
      * @param args the command line arguments
@@ -183,6 +229,7 @@ public class AddP extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private com.toedter.calendar.JCalendar jCalendar1;
+    private javax.swing.JCheckBox jCheckBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

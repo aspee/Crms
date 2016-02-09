@@ -58,7 +58,7 @@
                   <Component id="jPanel5" min="-2" max="-2" attributes="0"/>
                   <Component id="jPanel3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace pref="52" max="32767" attributes="0"/>
+              <EmptySpace pref="51" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -207,7 +207,7 @@
         <Component class="javax.swing.JLabel" name="lMiddle">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Tahoma" size="14" style="0"/>
+              <Font name="HP Simplified Light" size="14" style="0"/>
             </Property>
             <Property name="horizontalAlignment" type="int" value="0"/>
             <Property name="text" type="java.lang.String" value="Middle"/>
@@ -244,7 +244,7 @@
               <ComponentRef name="buttonGroup1"/>
             </Property>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Tahoma" size="14" style="0"/>
+              <Font name="HP Simplified Light" size="12" style="0"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Female"/>
           </Properties>
@@ -258,7 +258,7 @@
               <ComponentRef name="buttonGroup1"/>
             </Property>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Tahoma" size="14" style="0"/>
+              <Font name="HP Simplified Light" size="12" style="0"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Male"/>
           </Properties>
@@ -266,7 +266,7 @@
         <Component class="javax.swing.JLabel" name="lState">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Tahoma" size="14" style="0"/>
+              <Font name="HP Simplified Light" size="14" style="0"/>
             </Property>
             <Property name="horizontalAlignment" type="int" value="11"/>
             <Property name="text" type="java.lang.String" value="State "/>
@@ -327,7 +327,7 @@
         <Component class="javax.swing.JLabel" name="lName">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Tahoma" size="14" style="0"/>
+              <Font name="HP Simplified Light" size="14" style="0"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Name"/>
           </Properties>
@@ -335,7 +335,7 @@
         <Component class="javax.swing.JLabel" name="ldob">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Tahoma" size="14" style="0"/>
+              <Font name="HP Simplified Light" size="14" style="0"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Date of Birth"/>
           </Properties>
@@ -343,7 +343,7 @@
         <Component class="javax.swing.JLabel" name="lMarital">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Tahoma" size="14" style="0"/>
+              <Font name="HP Simplified Light" size="14" style="0"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Marital Status "/>
           </Properties>
@@ -361,7 +361,7 @@
         <Component class="javax.swing.JLabel" name="lGender">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Tahoma" size="14" style="0"/>
+              <Font name="HP Simplified Light" size="14" style="0"/>
             </Property>
             <Property name="horizontalAlignment" type="int" value="11"/>
             <Property name="text" type="java.lang.String" value="Gender "/>
@@ -380,7 +380,7 @@
         <Component class="javax.swing.JLabel" name="lFirst">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Tahoma" size="14" style="0"/>
+              <Font name="HP Simplified Light" size="14" style="0"/>
             </Property>
             <Property name="horizontalAlignment" type="int" value="0"/>
             <Property name="text" type="java.lang.String" value="First"/>
@@ -389,7 +389,7 @@
         <Component class="javax.swing.JLabel" name="lLast">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Tahoma" size="14" style="0"/>
+              <Font name="HP Simplified Light" size="14" style="0"/>
             </Property>
             <Property name="horizontalAlignment" type="int" value="0"/>
             <Property name="text" type="java.lang.String" value="Last"/>
@@ -399,7 +399,7 @@
         <Component class="javax.swing.JLabel" name="lAddress">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Tahoma" size="14" style="0"/>
+              <Font name="HP Simplified Light" size="14" style="0"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Address "/>
           </Properties>
@@ -407,7 +407,7 @@
         <Component class="javax.swing.JLabel" name="lCity">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Tahoma" size="14" style="0"/>
+              <Font name="HP Simplified Light" size="14" style="0"/>
             </Property>
             <Property name="horizontalAlignment" type="int" value="11"/>
             <Property name="text" type="java.lang.String" value="City "/>
@@ -439,7 +439,7 @@
               <ComponentRef name="buttonGroup1"/>
             </Property>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Tahoma" size="12" style="0"/>
+              <Font name="HP Simplified Light" size="12" style="0"/>
             </Property>
             <Property name="selected" type="boolean" value="true"/>
             <Property name="text" type="java.lang.String" value="Unknown"/>
@@ -488,7 +488,7 @@
                       <Component id="lSection" alignment="0" max="32767" attributes="0"/>
                       <Component id="lCell" alignment="0" min="-2" pref="45" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace pref="54" max="32767" attributes="0"/>
+                  <EmptySpace pref="56" max="32767" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Component id="tCell" alignment="1" min="-2" pref="160" max="-2" attributes="0"/>
                       <Group type="103" alignment="0" groupAlignment="1" attributes="0">
@@ -575,7 +575,7 @@
         <Component class="javax.swing.JLabel" name="lAdditional">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Tahoma" size="14" style="0"/>
+              <Font name="HP Simplified Light" size="14" style="0"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Additional Information"/>
           </Properties>
@@ -607,7 +607,7 @@
         <Component class="javax.swing.JLabel" name="lSection">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Tahoma" size="14" style="0"/>
+              <Font name="HP Simplified Light" size="14" style="0"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Section"/>
           </Properties>
@@ -625,7 +625,7 @@
         <Component class="javax.swing.JLabel" name="lCell">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Tahoma" size="14" style="0"/>
+              <Font name="HP Simplified Light" size="14" style="0"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Cell"/>
           </Properties>
@@ -633,7 +633,7 @@
         <Component class="javax.swing.JLabel" name="lFacility">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Tahoma" size="14" style="0"/>
+              <Font name="HP Simplified Light" size="14" style="0"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Facility"/>
           </Properties>
@@ -692,9 +692,6 @@
       <SubComponents>
         <Component class="javax.swing.JLabel" name="bClear">
           <Properties>
-            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Tahoma" size="14" style="0"/>
-            </Property>
             <Property name="text" type="java.lang.String" value="Clear"/>
             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
               <Border info="org.netbeans.modules.form.compat2.border.EmptyBorderInfo">
@@ -714,9 +711,6 @@
         </Component>
         <Component class="javax.swing.JLabel" name="bSave1">
           <Properties>
-            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Tahoma" size="14" style="0"/>
-            </Property>
             <Property name="text" type="java.lang.String" value="Save"/>
             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
               <Border info="org.netbeans.modules.form.compat2.border.EmptyBorderInfo">
@@ -821,7 +815,7 @@
         <Component class="javax.swing.JLabel" name="lArrest">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Tahoma" size="14" style="0"/>
+              <Font name="HP Simplified Light" size="14" style="0"/>
             </Property>
             <Property name="horizontalAlignment" type="int" value="0"/>
             <Property name="text" type="java.lang.String" value="Arrest Date"/>
@@ -842,7 +836,7 @@
         <Component class="javax.swing.JLabel" name="lId">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Tahoma" size="14" style="0"/>
+              <Font name="HP Simplified Light" size="14" style="0"/>
             </Property>
             <Property name="text" type="java.lang.String" value="ID"/>
             <Property name="verticalAlignment" type="int" value="1"/>
@@ -863,9 +857,6 @@
         </Component>
         <Component class="javax.swing.JLabel" name="bBrowse">
           <Properties>
-            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Tahoma" size="14" style="0"/>
-            </Property>
             <Property name="text" type="java.lang.String" value="Browse"/>
             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
               <Border info="org.netbeans.modules.form.compat2.border.EmptyBorderInfo">
@@ -885,9 +876,6 @@
         </Component>
         <Component class="javax.swing.JLabel" name="bRemove">
           <Properties>
-            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Tahoma" size="14" style="0"/>
-            </Property>
             <Property name="text" type="java.lang.String" value="Remove"/>
             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
               <Border info="org.netbeans.modules.form.compat2.border.EmptyBorderInfo">
@@ -1011,7 +999,7 @@
         <Component class="javax.swing.JLabel" name="lColor">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Tahoma" size="14" style="0"/>
+              <Font name="HP Simplified Light" size="14" style="0"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Color"/>
           </Properties>
@@ -1048,7 +1036,7 @@
         <Component class="javax.swing.JLabel" name="lHeight">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Tahoma" size="14" style="0"/>
+              <Font name="HP Simplified Light" size="14" style="0"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Height"/>
           </Properties>
@@ -1064,7 +1052,7 @@
         <Component class="javax.swing.JLabel" name="lHair">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Tahoma" size="14" style="0"/>
+              <Font name="HP Simplified Light" size="14" style="0"/>
             </Property>
             <Property name="horizontalAlignment" type="int" value="11"/>
             <Property name="text" type="java.lang.String" value="Hair"/>
@@ -1106,7 +1094,7 @@
         <Component class="javax.swing.JLabel" name="lWeight">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Tahoma" size="14" style="0"/>
+              <Font name="HP Simplified Light" size="14" style="0"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Weight"/>
           </Properties>
@@ -1114,7 +1102,7 @@
         <Component class="javax.swing.JLabel" name="lBloodgroup">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Tahoma" size="14" style="0"/>
+              <Font name="HP Simplified Light" size="14" style="0"/>
             </Property>
             <Property name="horizontalAlignment" type="int" value="11"/>
             <Property name="text" type="java.lang.String" value="Blood Group "/>
@@ -1157,7 +1145,7 @@
         <Component class="javax.swing.JLabel" name="lEyes">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Tahoma" size="14" style="0"/>
+              <Font name="HP Simplified Light" size="14" style="0"/>
             </Property>
             <Property name="horizontalAlignment" type="int" value="11"/>
             <Property name="text" type="java.lang.String" value="Eyes "/>

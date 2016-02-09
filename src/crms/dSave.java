@@ -36,7 +36,7 @@ public class dSave extends javax.swing.JDialog {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setForeground(java.awt.Color.lightGray);
 
-        jLabel1.setBackground(new java.awt.Color(66, 134, 240));
+        jLabel1.setBackground(new java.awt.Color(51, 51, 51));
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
