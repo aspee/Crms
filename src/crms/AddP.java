@@ -194,7 +194,7 @@ public class AddP extends javax.swing.JDialog {
     private void jLabel3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel3MouseClicked
 
         Date dateFromDateChooser = jCalendar1.getDate();
-        if(dateFromDateChooser.after(new Date()))
+        if(dateFromDateChooser.after(new Date()) || jCheckBox1.isSelected())
         {
         String dateString = (String.format("%1$tY-%1$tm-%1$td", dateFromDateChooser));
         if (jCheckBox1.isSelected()) {

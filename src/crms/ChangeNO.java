@@ -22,23 +22,24 @@ public class ChangeNO extends javax.swing.JDialog {
      * Creates new form ChangeN
      */
     java.awt.Frame parent;
+
     public ChangeNO(java.awt.Frame parent, boolean modal) throws SQLException {
         super(parent, modal);
-        getContentPane().setBackground(new Color(255,255,255));
+        getContentPane().setBackground(new Color(255, 255, 255));
         initComponents();
-        this.parent=parent;
-         try {
+        this.parent = parent;
+        try {
             // TODO add your handling code here:
-             ResultSet rs=Database.getStatement().executeQuery("select Mobile from tblUsers where id="+Database.getID());
-             rs.next();
-             jTextField1.setText(rs.getString(1));
-         } catch (SQLException ex) {
+            ResultSet rs = Database.getStatement().executeQuery("select Mobile from tblUsers where id=" + Database.getID());
+            rs.next();
+            jTextField1.setText(rs.getString(1));
+        } catch (SQLException ex) {
             Logger.getLogger(ChangeNO.class.getName()).log(Level.SEVERE, null, ex);
         }
         setLocationRelativeTo(null);
         setVisible(true);
         jTextField2.setTransferHandler(null);
-        
+
     }
 
     /**
@@ -159,7 +160,7 @@ public class ChangeNO extends javax.swing.JDialog {
 
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
         // TODO add your handling code here:
-        
+
     }//GEN-LAST:event_jTextField1ActionPerformed
 
     private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
@@ -168,7 +169,7 @@ public class ChangeNO extends javax.swing.JDialog {
 
     private void jTextField2KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField2KeyTyped
         // TODO add your handling code here:
-         char caracter = evt.getKeyChar();
+        char caracter = evt.getKeyChar();
         if (((caracter < '0') || (caracter > '9')) || jTextField2.getText().length() >= 10 && (caracter != '\b')) {
             evt.consume();
         }
@@ -176,27 +177,31 @@ public class ChangeNO extends javax.swing.JDialog {
 
     private void OkMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_OkMouseClicked
         // TODO add your handling code here:
-        if(jTextField2.getText().length()==10)
-        {
-        try {
-            // TODO add your handling code here:
-            Database.getStatement().executeUpdate("update tblUsers set Mobile='"+jTextField2.getText()+"'where id="+Database.getID());
-        } catch (SQLException ex) {
-            Logger.getLogger(ChangeNO.class.getName()).log(Level.SEVERE, null, ex);
+        if (jTextField2.getText().length() == 10) {
+            ResultSet rs;
+            try {
+                rs = Database.getStatement().executeQuery("select mobile from tblUsers where id<>" + Database.getID() + " and mobile='" + jTextField2.getText() + "'");
+                if (rs.next()) {
+                    jLabel4.setText("Mobile Number Already Exist");
+
+                } else {
+                    Database.getStatement().executeUpdate("update tblUsers set Mobile='" + jTextField2.getText() + "'where id=" + Database.getID());
+                    Home h = (Home) parent;
+                    h.setInfo();
+                    dispose();
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(AddU.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+        } else {
+            jLabel4.setText("Not a Valid Mobile Number");
         }
-        Home h=(Home)parent;
-        h.setName();
-        dispose();
-        }
-        else
-        {
-           jLabel4.setText("Please Enter Valid Mobile Number");
-        }
-        
+
     }//GEN-LAST:event_OkMouseClicked
 
     private void CancelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_CancelMouseClicked
-         dispose();
+        dispose();
     }//GEN-LAST:event_CancelMouseClicked
 
     /**

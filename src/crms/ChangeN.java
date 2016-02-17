@@ -167,7 +167,7 @@ public class ChangeN extends javax.swing.JDialog {
             Logger.getLogger(ChangeN.class.getName()).log(Level.SEVERE, null, ex);
         }
         Home h=(Home)parent;
-        h.setName();
+        h.setInfo();
         dispose();
     }//GEN-LAST:event_OkMouseClicked
 

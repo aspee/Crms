@@ -115,11 +115,15 @@ public class AddC extends javax.swing.JPanel {
             pst.executeUpdate();
             parent.ipc(oldid);
             parent.pdf(oldid);
+            editing = false;
+
         } catch (SQLException ex) {
             Logger.getLogger(AddC.class.getName()).log(Level.SEVERE, null, ex);
         }
+
         clearAll();
         CID.setText("#" + currentID());
+
     }
 
     /**
@@ -1246,7 +1250,7 @@ public class AddC extends javax.swing.JPanel {
                     IMAGE.setIcon(new ImageIcon(((new ImageIcon(edit.getBytes("image"))).getImage()).getScaledInstance(192, 192, java.awt.Image.SCALE_SMOOTH)));
                 } else {
 
-                    IMAGE.setIcon(new ImageIcon(((new ImageIcon(getClass().getResource("/res/jinsignia.alpha.png"))).getImage()).getScaledInstance(192, 192, java.awt.Image.SCALE_SMOOTH)));
+                    IMAGE.setIcon(new ImageIcon(((new ImageIcon(getClass().getResource("/res/alert.png"))).getImage()).getScaledInstance(192, 192, java.awt.Image.SCALE_SMOOTH)));
 
                 }
                 String tempad = null;

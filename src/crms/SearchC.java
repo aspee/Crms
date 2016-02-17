@@ -25,6 +25,8 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellRenderer;
+import javax.swing.table.TableColumn;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 
@@ -74,9 +76,9 @@ public class SearchC extends javax.swing.JPanel {
         dtm.isCellEditable(0, 0);
         initComponents();
         fetchCriminals();
-        this.rowSorter = new TableRowSorter<>(jTable3.getModel());
-        jTable3.setRowSorter(rowSorter);
-        jScrollPane1.getViewport().setBackground(Color.WHITE);
+        this.rowSorter = new TableRowSorter<>(table.getModel());
+        table.setRowSorter(rowSorter);
+        scroll.getViewport().setBackground(Color.WHITE);
 
     }
 
@@ -90,8 +92,8 @@ public class SearchC extends javax.swing.JPanel {
     private void initComponents() {
 
         buttonGroup1 = new javax.swing.ButtonGroup();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTable3 = new javax.swing.JTable(dtm);
+        scroll = new javax.swing.JScrollPane();
+        table = new javax.swing.JTable(dtm);
         tCell1 = new javax.swing.JTextField();
         lCell1 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
@@ -149,23 +151,24 @@ public class SearchC extends javax.swing.JPanel {
         setBackground(new java.awt.Color(255, 255, 255));
         setPreferredSize(new java.awt.Dimension(906, 574));
 
-        jScrollPane1.setBackground(new java.awt.Color(255, 255, 255));
-        jScrollPane1.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
-        jScrollPane1.setOpaque(false);
-        jScrollPane1.addMouseListener(new java.awt.event.MouseAdapter() {
+        scroll.setBackground(new java.awt.Color(255, 255, 255));
+        scroll.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
+        scroll.setOpaque(false);
+        scroll.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jScrollPane1MouseClicked(evt);
+                scrollMouseClicked(evt);
             }
         });
 
-        jTable3.setOpaque(false);
-        jTable3.setSelectionBackground(new java.awt.Color(66, 133, 244));
-        jTable3.addMouseListener(new java.awt.event.MouseAdapter() {
+        table.setModel(dtm);
+        table.setOpaque(false);
+        table.setSelectionBackground(new java.awt.Color(66, 133, 244));
+        table.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jTable3MouseClicked(evt);
+                tableMouseClicked(evt);
             }
         });
-        jScrollPane1.setViewportView(jTable3);
+        scroll.setViewportView(table);
 
         tCell1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         tCell1.addActionListener(new java.awt.event.ActionListener() {
@@ -179,11 +182,11 @@ public class SearchC extends javax.swing.JPanel {
             }
         });
 
-        lCell1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lCell1.setFont(new java.awt.Font("HP Simplified Light", 0, 11)); // NOI18N
         lCell1.setText("Quick Search");
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Search", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 14))); // NOI18N
+        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Search", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("HP Simplified Light", 0, 14))); // NOI18N
 
         lGender.setFont(new java.awt.Font("HP Simplified Light", 0, 14)); // NOI18N
         lGender.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
@@ -377,6 +380,7 @@ public class SearchC extends javax.swing.JPanel {
             }
         });
 
+        Search.setFont(new java.awt.Font("HP Simplified Light", 0, 11)); // NOI18N
         Search.setText("Search");
         Search.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -384,6 +388,7 @@ public class SearchC extends javax.swing.JPanel {
             }
         });
 
+        jLabel4.setFont(new java.awt.Font("HP Simplified Light", 0, 11)); // NOI18N
         jLabel4.setText("Clear");
         jLabel4.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -692,7 +697,7 @@ public class SearchC extends javax.swing.JPanel {
                         .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                         .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 879, Short.MAX_VALUE)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 879, Short.MAX_VALUE)
+                        .addComponent(scroll, javax.swing.GroupLayout.DEFAULT_SIZE, 879, Short.MAX_VALUE)
                         .addGroup(layout.createSequentialGroup()
                             .addComponent(lCell1)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -710,28 +715,30 @@ public class SearchC extends javax.swing.JPanel {
                     .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(scroll, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(tCell1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lCell1))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(lCell1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(3, 3, 3)))
                 .addContainerGap(58, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jScrollPane1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jScrollPane1MouseClicked
+    private void scrollMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_scrollMouseClicked
         // TODO add your handling code here:
 
-    }//GEN-LAST:event_jScrollPane1MouseClicked
+    }//GEN-LAST:event_scrollMouseClicked
 
-    private void jTable3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable3MouseClicked
+    private void tableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableMouseClicked
         if (evt.getClickCount() == 2 && !evt.isConsumed()) {
             evt.consume();
-            new Show((Integer.parseInt("" + jTable3.getValueAt(jTable3.getSelectedRow(), 0)))).setVisible(true);
+            new Show((Integer.parseInt("" + table.getValueAt(table.getSelectedRow(), 0)))).setVisible(true);
 
             //handle double click event.
         }
-    }//GEN-LAST:event_jTable3MouseClicked
+    }//GEN-LAST:event_tableMouseClicked
 
     private void tFirstActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tFirstActionPerformed
         // TODO add your handling code here:
@@ -837,15 +844,15 @@ public class SearchC extends javax.swing.JPanel {
         // TODO add your handling code here:
         Home h = (Home) parent;
         h.showAddCriminal();
-        h.editCriminals(Integer.parseInt((String) jTable3.getValueAt(jTable3.getSelectedRow(), 0)));
+        h.editCriminals(Integer.parseInt((String) table.getValueAt(table.getSelectedRow(), 0)));
 
     }//GEN-LAST:event_jLabel1MouseClicked
 
     private void jLabel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MouseClicked
         // TODO add your handling code here:
-        int temp = Integer.parseInt("" + jTable3.getValueAt(jTable3.getSelectedRow(), 0));
+        int temp = Integer.parseInt("" + table.getValueAt(table.getSelectedRow(), 0));
         int result = JOptionPane.showOptionDialog(this,
-                "Are you sure you want to Delete?\nID:" + temp + "\nName:" + jTable3.getValueAt(jTable3.getSelectedRow(), 1),
+                "Are you sure you want to Delete?\nID:" + temp + "\nName:" + table.getValueAt(table.getSelectedRow(), 1),
                 "Password Confirmation Required", JOptionPane.YES_NO_OPTION,
                 JOptionPane.QUESTION_MESSAGE, null, null, null);
         if (result == JOptionPane.YES_OPTION) {
@@ -865,7 +872,7 @@ public class SearchC extends javax.swing.JPanel {
 
     private void jLabel3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel3MouseClicked
         // TODO add your handling code here:
-        new Show((Integer.parseInt("" + jTable3.getValueAt(jTable3.getSelectedRow(), 0)))).setVisible(true);
+        new Show((Integer.parseInt("" + table.getValueAt(table.getSelectedRow(), 0)))).setVisible(true);
 
     }//GEN-LAST:event_jLabel3MouseClicked
 
@@ -917,8 +924,6 @@ public class SearchC extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable3;
     private javax.swing.JLabel lArrest;
     private javax.swing.JLabel lBloodgroup;
     private javax.swing.JLabel lCell;
@@ -944,6 +949,7 @@ public class SearchC extends javax.swing.JPanel {
     private javax.swing.JLabel ldob;
     private javax.swing.JRadioButton rFemale;
     private javax.swing.JRadioButton rMale;
+    private javax.swing.JScrollPane scroll;
     private com.toedter.calendar.JDateChooser tArrestDate;
     private javax.swing.JTextField tCell;
     private javax.swing.JTextField tCell1;
@@ -957,6 +963,7 @@ public class SearchC extends javax.swing.JPanel {
     private javax.swing.JTextField tMiddle;
     private javax.swing.JTextField tSection;
     private javax.swing.JTextField tWeight;
+    private javax.swing.JTable table;
     private com.toedter.calendar.JDateChooser tdob;
     // End of variables declaration//GEN-END:variables
 
@@ -981,7 +988,7 @@ public class SearchC extends javax.swing.JPanel {
     public void fetchCriminals() {
         try {
             dtm.setRowCount(0);
-            ResultSet rs = Database.getStatement().executeQuery("Select  cid,fname,mname,lname,gender,ad,city,facility,section,cell from mtblCriminals");
+            ResultSet rs = Database.getStatement().executeQuery("Select  cid,fname,lname,ad,city,facility,section,cell from mtblCriminals");
             ResultSetMetaData rsmd = rs.getMetaData();
             int num = rsmd.getColumnCount();
             String[] name = new String[num];
@@ -1004,6 +1011,8 @@ public class SearchC extends javax.swing.JPanel {
                 }
                 dtm.addRow(rowdata);
             }
+            tableautofit();
+            
             //ImageIcon icon = new ImageIcon(b);
             // System.out.println("lol"+b);
             // jLabel1.setIcon(new ImageIcon (Toolkit.getDefaultToolkit().createImage(b)));
@@ -1079,7 +1088,7 @@ public class SearchC extends javax.swing.JPanel {
             } else {
                 sHeight = String.valueOf(Height).replace(".0", "");
             }
-            ResultSet rs = Database.getStatement().executeQuery("select cid,fname,mname,lname,gender,ad,city,facility,section,cell from mtblCriminals where "
+            ResultSet rs = Database.getStatement().executeQuery("select cid,fname,lname,ad,city,facility,section,cell from mtblCriminals where "
                     + "ifnull(ad,1) like '%" + dateArrest + "%' and "
                     + "fname like '%" + tFirst.getText() + "%' and "
                     + "mname like '%" + tMiddle.getText() + "%' and "
@@ -1113,6 +1122,7 @@ public class SearchC extends javax.swing.JPanel {
                 }
                 dtm.addRow(rowdata);
             }
+            tableautofit();
             System.out.println(Height);
 
         } catch (SQLException ex) {
@@ -1124,7 +1134,7 @@ public class SearchC extends javax.swing.JPanel {
     private void searchById(int id) {
         try {
             dtm.setRowCount(0);
-            ResultSet rs = Database.getStatement().executeQuery("Select cid,fname,mname,lname,gender,ad,city,facility,section,cell from mtblCriminals where cid=" + id);
+            ResultSet rs = Database.getStatement().executeQuery("Select cid,fname,lname,ad,city,facility,section,cell from mtblCriminals where cid=" + id);
             ResultSetMetaData rsmd = rs.getMetaData();
             int num = rsmd.getColumnCount();
             String[] name = new String[num];
@@ -1141,6 +1151,7 @@ public class SearchC extends javax.swing.JPanel {
                 dtm.addRow(rowdata);
 
             }
+            tableautofit();
         } catch (SQLException ex) {
             Logger.getLogger(SearchC.class
                     .getName()).log(Level.SEVERE, null, ex);
@@ -1159,4 +1170,28 @@ public class SearchC extends javax.swing.JPanel {
             clearAll();
         }
     }
+
+    private void tableautofit() {
+        for (int column = 0; column < table.getColumnCount(); column++) {
+                TableColumn tableColumn = table.getColumnModel().getColumn(column);
+                int preferredWidth = tableColumn.getMinWidth();
+                int maxWidth = tableColumn.getMaxWidth();
+
+                for (int row = 0; row < table.getRowCount(); row++) {
+                    TableCellRenderer cellRenderer = table.getCellRenderer(row, column);
+                    Component c = table.prepareRenderer(cellRenderer, row, column);
+                    int width = c.getPreferredSize().width + table.getIntercellSpacing().width;
+                    preferredWidth = Math.max(preferredWidth, width);
+
+        //  We've exceeded the maximum width, no need to check other rows
+                    if (preferredWidth >= maxWidth) {
+                        preferredWidth = maxWidth;
+                        break;
+                    }
+                }
+
+                tableColumn.setPreferredWidth(preferredWidth);
+            }
+    }
+
 }

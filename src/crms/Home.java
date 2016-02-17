@@ -42,7 +42,8 @@ public class Home extends javax.swing.JFrame {
 
         initComponents();
 
-        setName();
+        setInfo();
+        
         Permissions();
         Cards.add(new Settings(this), "Settings");
         sc = new SearchC(this);
@@ -57,9 +58,10 @@ public class Home extends javax.swing.JFrame {
         getContentPane().setBackground(new Color(247, 247, 247));
     }
 
-    public void setName() {
+    public void setInfo() {
         try {
             Hello.setText("Hello, " + Database.getName());
+            Role.setText("Role:"+Database.getRole());
         } catch (SQLException ex) {
             Logger.getLogger(Home.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -112,6 +114,7 @@ public class Home extends javax.swing.JFrame {
         Hello = new javax.swing.JLabel();
         Cards = new javax.swing.JPanel();
         jLabel3 = new crms.CButton();
+        Role = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setBackground(new java.awt.Color(66, 133, 244));
@@ -126,7 +129,7 @@ public class Home extends javax.swing.JFrame {
 
         Settings.setBackground(new java.awt.Color(51, 51, 51));
         Settings.setForeground(new java.awt.Color(51, 51, 51));
-        Settings.setIcon(new javax.swing.ImageIcon(getClass().getResource("/res/Settings.png"))); // NOI18N
+        Settings.setIcon(new javax.swing.ImageIcon(getClass().getResource("/res/home.png"))); // NOI18N
         Settings.setToolTipText("");
         Settings.setFocusable(false);
         Settings.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -141,7 +144,7 @@ public class Home extends javax.swing.JFrame {
         bAddc.setBackground(new java.awt.Color(51, 51, 51));
         bAddc.setForeground(new java.awt.Color(51, 51, 51));
         bAddc.setIcon(new javax.swing.ImageIcon(getClass().getResource("/res/Criminal.png"))); // NOI18N
-        bAddc.setToolTipText("");
+        bAddc.setToolTipText("Add Criminal");
         bAddc.setFocusable(false);
         bAddc.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         bAddc.setMargin(new java.awt.Insets(5, 5, 5, 5));
@@ -156,7 +159,7 @@ public class Home extends javax.swing.JFrame {
         bSearch.setBackground(new java.awt.Color(51, 51, 51));
         bSearch.setForeground(new java.awt.Color(51, 51, 51));
         bSearch.setIcon(new javax.swing.ImageIcon(getClass().getResource("/res/Search.png"))); // NOI18N
-        bSearch.setToolTipText("");
+        bSearch.setToolTipText("Search Criminal");
         bSearch.setFocusable(false);
         bSearch.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         bSearch.setMargin(new java.awt.Insets(5, 5, 5, 5));
@@ -171,7 +174,7 @@ public class Home extends javax.swing.JFrame {
         bAddu.setBackground(new java.awt.Color(51, 51, 51));
         bAddu.setForeground(new java.awt.Color(51, 51, 51));
         bAddu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/res/Add.png"))); // NOI18N
-        bAddu.setToolTipText("");
+        bAddu.setToolTipText("Add Users");
         bAddu.setFocusable(false);
         bAddu.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         bAddu.setMargin(new java.awt.Insets(5, 5, 5, 5));
@@ -201,6 +204,12 @@ public class Home extends javax.swing.JFrame {
             }
         });
 
+        Role.setBackground(new java.awt.Color(247, 247, 247));
+        Role.setFont(new java.awt.Font("HP Simplified", 0, 16)); // NOI18N
+        Role.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        Role.setText(" ");
+        Role.setOpaque(true);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -208,8 +217,9 @@ public class Home extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(Role, javax.swing.GroupLayout.PREFERRED_SIZE, 231, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(Hello, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(38, 38, 38)
                         .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -226,7 +236,8 @@ public class Home extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 9, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(Hello, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Role, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(Cards, javax.swing.GroupLayout.PREFERRED_SIZE, 574, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -310,6 +321,7 @@ public class Home extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel Cards;
     private javax.swing.JLabel Hello;
+    private javax.swing.JLabel Role;
     private javax.swing.JButton Settings;
     private javax.swing.JButton bAddc;
     private javax.swing.JButton bAddu;
@@ -329,10 +341,12 @@ public class Home extends javax.swing.JFrame {
         } else if (Role.equals("Jailer")) {
             jToolBar1.remove(bAddu);
 
-        } else if (Role.equals("CBI") || Role.equals("Police") || Role.equals("Judge")) {
+        } else if (Role.equals("CBI") || Role.equals("Police")) {
             jToolBar1.remove(bAddu);
             jToolBar1.remove(bAddc);
-        }
+        } else if (Role.equals("Judge")) {
+            jToolBar1.remove(bAddu);
+        } 
         jToolBar1.revalidate();
         jToolBar1.repaint();
     }
