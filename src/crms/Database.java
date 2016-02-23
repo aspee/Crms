@@ -90,6 +90,15 @@ public class Database
         
         return con;
     }
+    public static void closeStatement()
+    {
+        
+        try {
+            st.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
     
     public static String getName() throws SQLException
     {   

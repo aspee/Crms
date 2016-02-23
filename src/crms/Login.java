@@ -92,7 +92,7 @@ public class Login extends javax.swing.JFrame implements ActionListener, KeyList
         jPanel1.setOpaque(false);
 
         tfUsername.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        tfUsername.setText("peter");
+        tfUsername.setText("judge");
         tfUsername.setMaximumSize(new java.awt.Dimension(10, 10));
         tfUsername.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -112,7 +112,7 @@ public class Login extends javax.swing.JFrame implements ActionListener, KeyList
         lPassword.setText("Password:");
 
         tfPassword.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        tfPassword.setText("peter");
+        tfPassword.setText("judge");
         tfPassword.setMaximumSize(new java.awt.Dimension(10, 10));
         tfPassword.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

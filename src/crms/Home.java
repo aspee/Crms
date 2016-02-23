@@ -37,11 +37,10 @@ public class Home extends javax.swing.JFrame {
     Crimes c;
     SearchC sc;
     AddC ac;
-
+    Report rp;
     public Home() {
-
         initComponents();
-
+        
         setInfo();
         
         Permissions();
@@ -53,6 +52,8 @@ public class Home extends javax.swing.JFrame {
         Cards.add(new AddU(), "Add User");
         c = new Crimes(this);
         Cards.add(c, "Crimes");
+        rp=new Report();
+        Cards.add(rp,"Report");
         cl = (CardLayout) (Cards.getLayout());
         addWindowListener(exitListener);
         getContentPane().setBackground(new Color(247, 247, 247));
@@ -111,6 +112,7 @@ public class Home extends javax.swing.JFrame {
         bAddc = new javax.swing.JButton();
         bSearch = new javax.swing.JButton();
         bAddu = new javax.swing.JButton();
+        bReport = new javax.swing.JButton();
         Hello = new javax.swing.JLabel();
         Cards = new javax.swing.JPanel();
         jLabel3 = new crms.CButton();
@@ -186,6 +188,21 @@ public class Home extends javax.swing.JFrame {
         });
         jToolBar1.add(bAddu);
 
+        bReport.setBackground(new java.awt.Color(51, 51, 51));
+        bReport.setForeground(new java.awt.Color(51, 51, 51));
+        bReport.setIcon(new javax.swing.ImageIcon(getClass().getResource("/res/1456098385_pen.png"))); // NOI18N
+        bReport.setToolTipText("Add Users");
+        bReport.setFocusable(false);
+        bReport.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        bReport.setMargin(new java.awt.Insets(5, 5, 5, 5));
+        bReport.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        bReport.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bReportActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(bReport);
+
         Hello.setBackground(new java.awt.Color(247, 247, 247));
         Hello.setFont(new java.awt.Font("HP Simplified", 0, 16)); // NOI18N
         Hello.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
@@ -214,6 +231,7 @@ public class Home extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -223,11 +241,10 @@ public class Home extends javax.swing.JFrame {
                         .addComponent(Hello, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(38, 38, 38)
                         .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(Cards, javax.swing.GroupLayout.PREFERRED_SIZE, 906, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(Cards, javax.swing.GroupLayout.PREFERRED_SIZE, 906, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
-            .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -283,6 +300,11 @@ public class Home extends javax.swing.JFrame {
         sc.clearAll();
     }//GEN-LAST:event_bSearchActionPerformed
 
+    private void bReportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bReportActionPerformed
+        cl.show(Cards,"Report");
+        rp.crimeRate();
+    }//GEN-LAST:event_bReportActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -325,6 +347,7 @@ public class Home extends javax.swing.JFrame {
     private javax.swing.JButton Settings;
     private javax.swing.JButton bAddc;
     private javax.swing.JButton bAddu;
+    private javax.swing.JButton bReport;
     private javax.swing.JButton bSearch;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JToolBar jToolBar1;

@@ -39,8 +39,8 @@ public class PrintUtilities implements Printable {
 
     public void print() {
         PrinterJob printJob = PrinterJob.getPrinterJob();
-       Show h = (Show)SwingUtilities.getWindowAncestor(componentToBePrinted);
-        printJob.setJobName(h.getJobName());
+      // Show h = (Show)SwingUtilities.getWindowAncestor(componentToBePrinted);
+       // printJob.setJobName(h.getJobName());
         printJob.setPrintable(this);
         if (printJob.printDialog()) {
             try {

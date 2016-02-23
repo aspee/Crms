@@ -41,7 +41,7 @@ public class AddC extends javax.swing.JPanel {
      * Creates new form AddC
      */
     JFileChooser chooser;
-    DefaultComboBoxModel mState, mCity;
+    DefaultComboBoxModel mState, mCity, aState, aCity;
     PreparedStatement pst;
     static boolean editing = false;
     boolean imagePresent = false;
@@ -51,10 +51,20 @@ public class AddC extends javax.swing.JPanel {
 
         mState = new DefaultComboBoxModel();
         mCity = new DefaultComboBoxModel();
+        aState = new DefaultComboBoxModel();
+        aCity = new DefaultComboBoxModel();
         allStates();
+        arrestedState();
         initComponents();
         this.parent = (Home) parent;
         CID.setText("#" + currentID());
+        if (!Database.getRole().equals("Judge")) {
+            System.out.println("time to disable");
+           // jLabel6.setEnabled(false);
+            jLabel6.setVisible(false);
+            }
+        tCell.setTransferHandler(null);
+        
 
     }
 
@@ -68,10 +78,10 @@ public class AddC extends javax.swing.JPanel {
                 Database.getStatement().execute("delete from tblpunishment where id=" + oldid);
                 Database.getStatement().execute("delete from mtblCriminals where cid=" + oldid);
                 Database.getStatement().execute("SET FOREIGN_KEY_CHECKS=1;");
-                pst = Database.getConnection().prepareStatement("insert into mtblCriminals values(" + oldid + ",?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+                pst = Database.getConnection().prepareStatement("insert into mtblCriminals(cid,image,image_size,ad,fname,mname,lname,dob,state,city,address,gender,mstatus,color,hair,bg,height,weight,eyes,facility,section,cell,ai) values(" + oldid + ",?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
                 editing = false;
             } else {
-                pst = Database.getConnection().prepareStatement("insert into mtblCriminals values(null,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+                pst = Database.getConnection().prepareStatement("insert into mtblCriminals(cid,image,image_size,ad,fname,mname,lname,dob,state,city,address,gender,mstatus,color,hair,bg,height,weight,eyes,facility,section,cell,ai) values(null,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
             }
             Date dateFromDateChooser = tdob.getDate();
             Date dateFromDateChooser1 = tArrestdate.getDate();
@@ -158,7 +168,6 @@ public class AddC extends javax.swing.JPanel {
         lCity = new javax.swing.JLabel();
         cCity = new javax.swing.JComboBox(mCity);
         jRadioButton1 = new javax.swing.JRadioButton();
-        jLabel5 = new javax.swing.JLabel();
         tdob = new com.toedter.calendar.JDateChooser();
         jLabel6 = new crms.CButton();
         jPanel3 = new javax.swing.JPanel();
@@ -217,7 +226,6 @@ public class AddC extends javax.swing.JPanel {
         lMiddle.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lMiddle.setText("Middle");
 
-        cMarital.setEditable(true);
         cMarital.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         cMarital.setModel(new javax.swing.DefaultComboBoxModel(new String[] { " ", "Single", "Married", "Widowed", "Separated", "Divorced" }));
         cMarital.addActionListener(new java.awt.event.ActionListener() {
@@ -245,7 +253,6 @@ public class AddC extends javax.swing.JPanel {
         lState.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         lState.setText("State ");
 
-        cState.setEditable(true);
         cState.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         cState.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
@@ -318,7 +325,6 @@ public class AddC extends javax.swing.JPanel {
         lCity.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         lCity.setText("City ");
 
-        cCity.setEditable(true);
         cCity.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         cCity.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -331,9 +337,6 @@ public class AddC extends javax.swing.JPanel {
         jRadioButton1.setFont(new java.awt.Font("HP Simplified Light", 0, 12)); // NOI18N
         jRadioButton1.setSelected(true);
         jRadioButton1.setText("Unknown");
-
-        jLabel5.setForeground(new java.awt.Color(255, 0, 0));
-        jLabel5.setText("*");
 
         jLabel6.setText("Crimes & Punishments");
         jLabel6.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -390,8 +393,6 @@ public class AddC extends javax.swing.JPanel {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE))
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jLabel5)
                                 .addGap(0, 0, Short.MAX_VALUE)))))
                 .addContainerGap(11, Short.MAX_VALUE))
         );
@@ -434,10 +435,9 @@ public class AddC extends javax.swing.JPanel {
                             .addComponent(jRadioButton1)))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lAddress))
-                .addGap(18, 18, Short.MAX_VALUE)
+                .addGap(18, 30, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cMarital, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lMarital, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
@@ -543,7 +543,7 @@ public class AddC extends javax.swing.JPanel {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jPanel5.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
+        jPanel5.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jPanel5.setOpaque(false);
 
         bClear.setText("Clear");
@@ -649,16 +649,16 @@ public class AddC extends javax.swing.JPanel {
                         .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(IMAGE, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addGroup(jPanel6Layout.createSequentialGroup()
-                                    .addComponent(bBrowse, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(bRemove, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel6Layout.createSequentialGroup()
                                     .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                        .addComponent(lArrest, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(lArrest, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addComponent(tArrestdate, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 8, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 6, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel6Layout.createSequentialGroup()
+                                    .addComponent(bBrowse, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(43, 43, 43)
+                                    .addComponent(bRemove, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE))))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -675,13 +675,13 @@ public class AddC extends javax.swing.JPanel {
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(bBrowse, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(bRemove, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(38, 38, 38)
+                .addGap(18, 18, 18)
                 .addComponent(lArrest)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(tArrestdate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(22, Short.MAX_VALUE))
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(tArrestdate, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jPanel4.setBorder(javax.swing.BorderFactory.createEtchedBorder());
@@ -732,7 +732,6 @@ public class AddC extends javax.swing.JPanel {
 
         tEyes.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
-        cHair.setEditable(true);
         cHair.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         cHair.setModel(new javax.swing.DefaultComboBoxModel(new String[] { " ", "Straight", "Curly" }));
 
@@ -747,7 +746,6 @@ public class AddC extends javax.swing.JPanel {
         lKg.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lKg.setText("Kg.");
 
-        cBloodgroup.setEditable(true);
         cBloodgroup.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         cBloodgroup.setModel(new javax.swing.DefaultComboBoxModel(new String[] { " ", "A +ve", "A -ve", "B +ve", "B -ve", "O +ve", "O -ve", "AB +ve", "AB -ve" }));
         cBloodgroup.setToolTipText("");
@@ -761,7 +759,6 @@ public class AddC extends javax.swing.JPanel {
         lEyes.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         lEyes.setText("Eyes ");
 
-        tColor.setEditable(true);
         tColor.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         tColor.setModel(new javax.swing.DefaultComboBoxModel(new String[] { " ", "Light", "Fair", "Medium", "Olive", "Brown", "Black" }));
         tColor.setToolTipText("");
@@ -865,41 +862,20 @@ public class AddC extends javax.swing.JPanel {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(14, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(51, Short.MAX_VALUE))
+                .addContainerGap(48, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
-
-    private void tMiddleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tMiddleActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_tMiddleActionPerformed
-
-    private void tLastActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tLastActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_tLastActionPerformed
-
-    private void tFirstActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tFirstActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_tFirstActionPerformed
-
-    private void cStateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cStateActionPerformed
-
-
-    }//GEN-LAST:event_cStateActionPerformed
-
-    private void cMaritalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cMaritalActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_cMaritalActionPerformed
 
     private void CIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CIDActionPerformed
         // TODO add your handling code here:
@@ -912,11 +888,6 @@ public class AddC extends javax.swing.JPanel {
     private void cBloodgroupActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cBloodgroupActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_cBloodgroupActionPerformed
-
-    private void cStateItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cStateItemStateChanged
-        // TODO add your handling code here:
-        setcState();
-    }//GEN-LAST:event_cStateItemStateChanged
 
     private void tFootKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tFootKeyTyped
         // TODO add your handling code here:
@@ -971,10 +942,6 @@ public class AddC extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_bBrowseMouseClicked
 
-    private void cCityActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cCityActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_cCityActionPerformed
-
     private void bRemoveMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bRemoveMouseClicked
         // TODO add your handling code here:
         IMAGE.setIcon(new javax.swing.ImageIcon(getClass().getResource("/res/jinsignia.alpha.png")));
@@ -997,9 +964,38 @@ public class AddC extends javax.swing.JPanel {
         h.showCrimes();
     }//GEN-LAST:event_jLabel6MouseClicked
 
+    private void cCityActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cCityActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cCityActionPerformed
+
+    private void tMiddleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tMiddleActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tMiddleActionPerformed
+
+    private void tFirstActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tFirstActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tFirstActionPerformed
+
+    private void tLastActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tLastActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tLastActionPerformed
+
+    private void cStateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cStateActionPerformed
+
+    }//GEN-LAST:event_cStateActionPerformed
+
+    private void cStateItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cStateItemStateChanged
+        // TODO add your handling code here:
+        setcState();
+    }//GEN-LAST:event_cStateItemStateChanged
+
     private void cMaritalKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cMaritalKeyTyped
         // TODO add your handling code here:
     }//GEN-LAST:event_cMaritalKeyTyped
+
+    private void cMaritalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cMaritalActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cMaritalActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -1019,7 +1015,6 @@ public class AddC extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
@@ -1110,8 +1105,10 @@ public class AddC extends javax.swing.JPanel {
             ResultSet rs = Database.getStatement().executeQuery("SELECT `AUTO_INCREMENT` FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = 'crms' AND TABLE_NAME = 'mtblCriminals';");
             rs.next();
             currentid = rs.getInt(1);
+
         } catch (SQLException ex) {
-            Logger.getLogger(AddC.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(AddC.class
+                    .getName()).log(Level.SEVERE, null, ex);
         }
         return (currentid);
     }
@@ -1141,6 +1138,8 @@ public class AddC extends javax.swing.JPanel {
         tArrestdate.setDate(null);
         mState.setSelectedItem("");
         mCity.setSelectedItem("");
+        aState.setSelectedItem("");
+        aCity.setSelectedItem("");
         cMarital.setSelectedIndex(0);
         cHair.setSelectedIndex(0);
         cBloodgroup.setSelectedIndex(0);
@@ -1185,9 +1184,11 @@ public class AddC extends javax.swing.JPanel {
                 if (rs.next()) {
                     s += "Cell Occupied\n";
                     a = a & false;
+
                 }
             } catch (SQLException ex) {
-                Logger.getLogger(AddC.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(AddC.class
+                        .getName()).log(Level.SEVERE, null, ex);
             }
         }
 
@@ -1208,9 +1209,11 @@ public class AddC extends javax.swing.JPanel {
             mCity.addElement("");
             while (rs2.next()) {
                 mState.addElement("" + rs2.getString(1));
+
             }
         } catch (SQLException ex) {
-            Logger.getLogger(AddC.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(AddC.class
+                    .getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -1313,9 +1316,11 @@ public class AddC extends javax.swing.JPanel {
 
             }
         } catch (SQLException ex) {
-            Logger.getLogger(AddC.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(AddC.class
+                    .getName()).log(Level.SEVERE, null, ex);
         } catch (ParseException ex) {
-            Logger.getLogger(AddC.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(AddC.class
+                    .getName()).log(Level.SEVERE, null, ex);
         }
 
     }
@@ -1340,10 +1345,59 @@ public class AddC extends javax.swing.JPanel {
             }
             if (empty == true) {
                 mCity.addElement("");
+
             }
 
         } catch (SQLException ex) {
-            Logger.getLogger(AddC.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(AddC.class
+                    .getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    private void arrestedState() {
+        try {
+
+            //cState.removeAllItems();
+            ResultSet rs2 = Database.getStatement().executeQuery("select name from location where parent_id=100");
+            //rs2.next();
+            aState.addElement("");
+            aCity.addElement("");
+            while (rs2.next()) {
+                aState.addElement("" + rs2.getString(1));
+
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(AddC.class
+                    .getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+
+    private void setaCity() {
+          try {
+            // TODO add your handling code here:
+            //cCity.removeAllItems();
+            //  mState.removeElement("");
+            aCity.removeAllElements();
+            ResultSet rs = Database.getStatement().executeQuery("select location_id from location where name='" + aState.getSelectedItem() + "'");
+            int lid = 100;
+            while (rs.next()) {
+                lid = rs.getInt(1);
+            }
+            ResultSet rs1 = Database.getStatement().executeQuery("select name from location where parent_id=" + lid);
+            Boolean empty = true;
+            while (rs1.next()) {
+                aCity.addElement(rs1.getString(1));
+                empty = false;
+            }
+            if (empty == true) {
+                aCity.addElement("");
+
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(AddC.class
+                    .getName()).log(Level.SEVERE, null, ex);
         }
     }
 
