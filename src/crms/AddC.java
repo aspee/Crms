@@ -56,6 +56,8 @@ public class AddC extends javax.swing.JPanel {
         allStates();
         arrestedState();
         initComponents();
+        tdob.setMaxSelectableDate(new Date());
+        
         this.parent = (Home) parent;
         CID.setText("#" + currentID());
         if (!Database.getRole().equals("Judge")) {
@@ -701,7 +703,6 @@ public class AddC extends javax.swing.JPanel {
         lInch.setText("inch");
 
         tInch.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        tInch.setText("0");
         tInch.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 tInchKeyTyped(evt);
@@ -1152,7 +1153,7 @@ public class AddC extends javax.swing.JPanel {
 
         String s = "";
         Boolean a = true;
-
+       
         if (tArrestdate.getDate() == null) {
             s += "Arrest Date Required\n";
             a = a & false;
