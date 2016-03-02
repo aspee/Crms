@@ -79,7 +79,12 @@ public class SearchC extends javax.swing.JPanel {
         this.rowSorter = new TableRowSorter<>(table.getModel());
         table.setRowSorter(rowSorter);
         scroll.getViewport().setBackground(Color.WHITE);
-
+        System.out.println(Database.getRole());
+        if (Database.getRole().equals("Police") || Database.getRole().equals("CBI")) {
+            System.out.println(Database.getRole());
+            jLabel1.setVisible(false);
+            jLabel2.setVisible(false);
+        }
     }
 
     /**
@@ -842,14 +847,20 @@ public class SearchC extends javax.swing.JPanel {
 
     private void jLabel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MouseClicked
         // TODO add your handling code here:
-        Home h = (Home) parent;
-        h.showAddCriminal();
-        h.editCriminals(Integer.parseInt((String) table.getValueAt(table.getSelectedRow(), 0)));
+        if (table.getSelectedRow() > -1) {
+            Home h = (Home) parent;
+            h.showAddCriminal();
+            h.editCriminals(Integer.parseInt((String) table.getValueAt(table.getSelectedRow(), 0)));
+        }
+        else
+            JOptionPane.showMessageDialog(this, "Select An Entry!");
 
     }//GEN-LAST:event_jLabel1MouseClicked
 
     private void jLabel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MouseClicked
-        // TODO add your handling code here:
+       // TODO add your handling code here:
+        if(table.getSelectedRow()>-1)
+        {
         int temp = Integer.parseInt("" + table.getValueAt(table.getSelectedRow(), 0));
         int result = JOptionPane.showOptionDialog(this,
                 "Are you sure you want to Delete?\nID:" + temp + "\nName:" + table.getValueAt(table.getSelectedRow(), 1),
@@ -868,11 +879,19 @@ public class SearchC extends javax.swing.JPanel {
             fetchCriminals();
             // clearAll();
         }
+        }
+        else
+        {
+            JOptionPane.showMessageDialog(this, "Select An Entry!");
+        }
     }//GEN-LAST:event_jLabel2MouseClicked
 
     private void jLabel3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel3MouseClicked
         // TODO add your handling code here:
+        if(table.getSelectedRow()>-1)
         new Show((Integer.parseInt("" + table.getValueAt(table.getSelectedRow(), 0)))).setVisible(true);
+        else
+            JOptionPane.showMessageDialog(this, "Selet an Entry");
 
     }//GEN-LAST:event_jLabel3MouseClicked
 
@@ -918,8 +937,8 @@ public class SearchC extends javax.swing.JPanel {
     private javax.swing.JComboBox cHair;
     private javax.swing.JComboBox cMarital;
     private javax.swing.JComboBox cState;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
+    public javax.swing.JLabel jLabel1;
+    public javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
@@ -1012,7 +1031,7 @@ public class SearchC extends javax.swing.JPanel {
                 dtm.addRow(rowdata);
             }
             tableautofit();
-            
+
             //ImageIcon icon = new ImageIcon(b);
             // System.out.println("lol"+b);
             // jLabel1.setIcon(new ImageIcon (Toolkit.getDefaultToolkit().createImage(b)));
@@ -1173,25 +1192,25 @@ public class SearchC extends javax.swing.JPanel {
 
     private void tableautofit() {
         for (int column = 0; column < table.getColumnCount(); column++) {
-                TableColumn tableColumn = table.getColumnModel().getColumn(column);
-                int preferredWidth = tableColumn.getMinWidth();
-                int maxWidth = tableColumn.getMaxWidth();
+            TableColumn tableColumn = table.getColumnModel().getColumn(column);
+            int preferredWidth = tableColumn.getMinWidth();
+            int maxWidth = tableColumn.getMaxWidth();
 
-                for (int row = 0; row < table.getRowCount(); row++) {
-                    TableCellRenderer cellRenderer = table.getCellRenderer(row, column);
-                    Component c = table.prepareRenderer(cellRenderer, row, column);
-                    int width = c.getPreferredSize().width + table.getIntercellSpacing().width;
-                    preferredWidth = Math.max(preferredWidth, width);
+            for (int row = 0; row < table.getRowCount(); row++) {
+                TableCellRenderer cellRenderer = table.getCellRenderer(row, column);
+                Component c = table.prepareRenderer(cellRenderer, row, column);
+                int width = c.getPreferredSize().width + table.getIntercellSpacing().width;
+                preferredWidth = Math.max(preferredWidth, width);
 
-        //  We've exceeded the maximum width, no need to check other rows
-                    if (preferredWidth >= maxWidth) {
-                        preferredWidth = maxWidth;
-                        break;
-                    }
+                //  We've exceeded the maximum width, no need to check other rows
+                if (preferredWidth >= maxWidth) {
+                    preferredWidth = maxWidth;
+                    break;
                 }
-
-                tableColumn.setPreferredWidth(preferredWidth);
             }
+
+            tableColumn.setPreferredWidth(preferredWidth);
+        }
     }
 
 }

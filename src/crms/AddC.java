@@ -57,16 +57,14 @@ public class AddC extends javax.swing.JPanel {
         arrestedState();
         initComponents();
         tdob.setMaxSelectableDate(new Date());
-        
+
         this.parent = (Home) parent;
         CID.setText("#" + currentID());
         if (!Database.getRole().equals("Judge")) {
             System.out.println("time to disable");
-           // jLabel6.setEnabled(false);
             jLabel6.setVisible(false);
-            }
+        }
         tCell.setTransferHandler(null);
-        
 
     }
 
@@ -79,12 +77,14 @@ public class AddC extends javax.swing.JPanel {
                 Database.getStatement().execute("delete from tblIPC where id=" + oldid);
                 Database.getStatement().execute("delete from tblpunishment where id=" + oldid);
                 Database.getStatement().execute("delete from mtblCriminals where cid=" + oldid);
+                 Database.getStatement().execute("delete from crimelocation where cid=" + oldid);
                 Database.getStatement().execute("SET FOREIGN_KEY_CHECKS=1;");
                 pst = Database.getConnection().prepareStatement("insert into mtblCriminals(cid,image,image_size,ad,fname,mname,lname,dob,state,city,address,gender,mstatus,color,hair,bg,height,weight,eyes,facility,section,cell,ai) values(" + oldid + ",?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
                 editing = false;
             } else {
                 pst = Database.getConnection().prepareStatement("insert into mtblCriminals(cid,image,image_size,ad,fname,mname,lname,dob,state,city,address,gender,mstatus,color,hair,bg,height,weight,eyes,facility,section,cell,ai) values(null,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
             }
+            
             Date dateFromDateChooser = tdob.getDate();
             Date dateFromDateChooser1 = tArrestdate.getDate();
             String dateString = (String.format("%1$tY-%1$tm-%1$td", dateFromDateChooser));
@@ -485,6 +485,11 @@ public class AddC extends javax.swing.JPanel {
         tSection.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
         tFacility.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        tFacility.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tFacilityActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -497,11 +502,10 @@ public class AddC extends javax.swing.JPanel {
                     .addComponent(lSection, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(lCell, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 56, Short.MAX_VALUE)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(tCell, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(tSection, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(tFacility, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(tCell, javax.swing.GroupLayout.DEFAULT_SIZE, 160, Short.MAX_VALUE)
+                    .addComponent(tSection, javax.swing.GroupLayout.DEFAULT_SIZE, 160, Short.MAX_VALUE)
+                    .addComponent(tFacility))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel2)
@@ -525,10 +529,8 @@ public class AddC extends javax.swing.JPanel {
                 .addContainerGap()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(tFacility, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lFacility))
-                        .addGap(18, 18, 18)
+                        .addComponent(lFacility)
+                        .addGap(24, 24, 24)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(lSection)
                             .addComponent(tSection, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -537,7 +539,9 @@ public class AddC extends javax.swing.JPanel {
                             .addComponent(lCell)
                             .addComponent(tCell, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(tFacility, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
@@ -893,7 +897,7 @@ public class AddC extends javax.swing.JPanel {
     private void tFootKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tFootKeyTyped
         // TODO add your handling code here:
         char caracter = evt.getKeyChar();
-        if (((caracter < '0') || (caracter > '9')) || tFoot.getText().length() >= 2 && (caracter != '\b')) {
+        if (((caracter < '0') || (caracter > '9')) || tFoot.getText().length()>= 1  && (caracter != '\b')) {
             evt.consume();
         }
     }//GEN-LAST:event_tFootKeyTyped
@@ -901,9 +905,16 @@ public class AddC extends javax.swing.JPanel {
     private void tInchKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tInchKeyTyped
         // TODO add your handling code here:
         char caracter = evt.getKeyChar();
-        if (((caracter < '0') || (caracter > '9')) || tInch.getText().length() >= 1 && (caracter != '\b')) {
+        if (((caracter < '0') || (caracter > '9')) || tInch.getText().length()>=2 && (caracter != '\b')) {
             evt.consume();
         }
+        else
+        {   if(!"".equals(tInch.getText()))
+                if(Integer.parseInt(tInch.getText()+""+caracter)>11)
+                
+                    evt.consume();
+        }
+       
     }//GEN-LAST:event_tInchKeyTyped
 
     private void tWeightKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tWeightKeyTyped
@@ -913,14 +924,6 @@ public class AddC extends javax.swing.JPanel {
             evt.consume();
         }
     }//GEN-LAST:event_tWeightKeyTyped
-
-    private void tCellKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tCellKeyTyped
-        // TODO add your handling code here:
-        char caracter = evt.getKeyChar();
-        if (((caracter < '0') || (caracter > '9')) || tCell.getText().length() >= 11 && (caracter != '\b')) {
-            evt.consume();
-        }
-    }//GEN-LAST:event_tCellKeyTyped
 
     private void tColorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tColorActionPerformed
         // TODO add your handling code here:
@@ -997,6 +1000,18 @@ public class AddC extends javax.swing.JPanel {
     private void cMaritalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cMaritalActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_cMaritalActionPerformed
+
+    private void tCellKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tCellKeyTyped
+        // TODO add your handling code here:
+        char caracter = evt.getKeyChar();
+        if (((caracter < '0') || (caracter > '9')) || tCell.getText().length() >= 11 && (caracter != '\b')) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_tCellKeyTyped
+
+    private void tFacilityActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tFacilityActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tFacilityActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -1153,7 +1168,10 @@ public class AddC extends javax.swing.JPanel {
 
         String s = "";
         Boolean a = true;
-       
+        if (tdob.getDate()!=null && tdob.getDate().after(new Date())) {
+            s += "Dob cannot be in the future\n";
+            a = a & false;
+        }
         if (tArrestdate.getDate() == null) {
             s += "Arrest Date Required\n";
             a = a & false;
@@ -1178,14 +1196,18 @@ public class AddC extends javax.swing.JPanel {
             a = a & false;
         } else {
             try {
-                ResultSet rs = Database.getStatement().executeQuery("select cell from mtblcriminals where cid<>" + CID.getText().substring(1) + " "
+                ResultSet rs = Database.getStatement().executeQuery("select cid from mtblcriminals where cid<>" + CID.getText().substring(1) + " "
                         + "and cell='" + tCell.getText() + "' "
                         + "and facility='" + tFacility.getText() + "' "
                         + "and section='" + tSection.getText() + "'");
                 if (rs.next()) {
+                    String tempid=rs.getString(1);
+                    rs=Database.getStatement().executeQuery("select tdate from tblPunishment where id="+tempid+" and tdate>curdate()");
+                    if(rs.next())
+                    {
                     s += "Cell Occupied\n";
                     a = a & false;
-
+                    }
                 }
             } catch (SQLException ex) {
                 Logger.getLogger(AddC.class
@@ -1375,7 +1397,7 @@ public class AddC extends javax.swing.JPanel {
     }
 
     private void setaCity() {
-          try {
+        try {
             // TODO add your handling code here:
             //cCity.removeAllItems();
             //  mState.removeElement("");

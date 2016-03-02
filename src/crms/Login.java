@@ -119,6 +119,11 @@ public class Login extends javax.swing.JFrame implements ActionListener, KeyList
                 tfPasswordActionPerformed(evt);
             }
         });
+        tfPassword.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                tfPasswordKeyTyped(evt);
+            }
+        });
 
         lValid.setFont(new java.awt.Font("HP Simplified Light", 0, 16)); // NOI18N
         lValid.setForeground(new java.awt.Color(249, 1, 1));
@@ -234,6 +239,13 @@ public class Login extends javax.swing.JFrame implements ActionListener, KeyList
         // TODO add your handling code here:
         System.exit(0);
     }//GEN-LAST:event_jLabel1MouseClicked
+
+    private void tfPasswordKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tfPasswordKeyTyped
+         char caracter = evt.getKeyChar();
+        if (tfPassword.getText().length() >= 20) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_tfPasswordKeyTyped
 
     /**
      * @param args the command line arguments

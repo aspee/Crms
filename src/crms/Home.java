@@ -38,13 +38,15 @@ public class Home extends javax.swing.JFrame {
     SearchC sc;
     AddC ac;
     Report rp;
+    Settings s;
+
     public Home() {
         initComponents();
-        
+
         setInfo();
-        
-        Permissions();
-        Cards.add(new Settings(this), "Settings");
+
+        s = new Settings(this);
+        Cards.add(s, "Settings");
         sc = new SearchC(this);
         Cards.add(sc, "Search Criminal");
         ac = new AddC(this);
@@ -52,17 +54,18 @@ public class Home extends javax.swing.JFrame {
         Cards.add(new AddU(), "Add User");
         c = new Crimes(this);
         Cards.add(c, "Crimes");
-        rp=new Report();
-        Cards.add(rp,"Report");
+        rp = new Report();
+        Cards.add(rp, "Report");
         cl = (CardLayout) (Cards.getLayout());
         addWindowListener(exitListener);
         getContentPane().setBackground(new Color(247, 247, 247));
+        Permissions();
     }
 
     public void setInfo() {
         try {
             Hello.setText("Hello, " + Database.getName());
-            Role.setText("Role:"+Database.getRole());
+            Role.setText("Role:" + Database.getRole());
         } catch (SQLException ex) {
             Logger.getLogger(Home.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -301,7 +304,7 @@ public class Home extends javax.swing.JFrame {
     }//GEN-LAST:event_bSearchActionPerformed
 
     private void bReportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bReportActionPerformed
-        cl.show(Cards,"Report");
+        cl.show(Cards, "Report");
         rp.crimeRate();
     }//GEN-LAST:event_bReportActionPerformed
 
@@ -356,11 +359,9 @@ public class Home extends javax.swing.JFrame {
     private void Permissions() {
         String Role = Database.getRole();
         if (Role.equals("Admin")) {
-            //No Admin Panel
-            //jToolBar1.remove(bAddu);
             jToolBar1.remove(bAddc);
             jToolBar1.remove(bSearch);
-
+            jToolBar1.remove(bReport);
         } else if (Role.equals("Jailer")) {
             jToolBar1.remove(bAddu);
 
@@ -369,7 +370,7 @@ public class Home extends javax.swing.JFrame {
             jToolBar1.remove(bAddc);
         } else if (Role.equals("Judge")) {
             jToolBar1.remove(bAddu);
-        } 
+        }
         jToolBar1.revalidate();
         jToolBar1.repaint();
     }

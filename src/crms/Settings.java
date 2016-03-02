@@ -44,6 +44,11 @@ public class Settings extends javax.swing.JPanel {
         dtm.isCellEditable(0, 0);
         initComponents();
         this.parent = parent;
+        if (Database.getRole().equals("Admin")) {
+            System.out.println("time to disable");
+            jTextArea1.setVisible(false);
+        }
+        else
         Cal();
     }
 
@@ -85,6 +90,8 @@ public class Settings extends javax.swing.JPanel {
                 jLabel4MouseClicked(evt);
             }
         });
+
+        jScrollPane2.setBackground(new java.awt.Color(255, 255, 255));
 
         jTextArea1.setEditable(false);
         jTextArea1.setColumns(20);
@@ -173,5 +180,10 @@ public class Settings extends javax.swing.JPanel {
         } catch (SQLException ex) {
             Logger.getLogger(Crimes.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+    public void removeLog()
+    {
+        //this.remove(jTextArea1);
+        jTextArea1.setVisible(false);
     }
 }
