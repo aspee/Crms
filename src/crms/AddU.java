@@ -60,7 +60,7 @@ public class AddU extends javax.swing.JPanel {
         tMobile.setTransferHandler(null);
         tLocation.setTransferHandler(null);
 
-        tID.setText("#" + currentID());
+        tID.setText("$" + currentID());
         try {
             pst = Database.getConnection().prepareStatement("insert into tblUsers values(null,?,?,AES_ENCRYPT(?,'rycbarm'),?,?,?,null);");
         } catch (SQLException ex) {
@@ -115,28 +115,28 @@ public class AddU extends javax.swing.JPanel {
 
         setBackground(new java.awt.Color(255, 255, 255));
 
-        jLabel2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel2.setFont(new java.awt.Font("HP Simplified Light", 0, 14)); // NOI18N
         jLabel2.setText("ID");
 
-        jLabel3.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel3.setFont(new java.awt.Font("HP Simplified Light", 0, 14)); // NOI18N
         jLabel3.setText("Name");
 
-        jLabel4.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel4.setFont(new java.awt.Font("HP Simplified Light", 0, 14)); // NOI18N
         jLabel4.setText("Username");
 
-        jLabel5.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel5.setFont(new java.awt.Font("HP Simplified Light", 0, 14)); // NOI18N
         jLabel5.setText("Password");
 
-        jLabel6.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel6.setFont(new java.awt.Font("HP Simplified Light", 0, 14)); // NOI18N
         jLabel6.setText("Role");
 
-        jLabel7.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel7.setFont(new java.awt.Font("HP Simplified Light", 0, 14)); // NOI18N
         jLabel7.setText("Mobile No");
 
-        jLabel8.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel8.setFont(new java.awt.Font("HP Simplified Light", 0, 14)); // NOI18N
         jLabel8.setText("Location");
 
-        jLabel9.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel9.setFont(new java.awt.Font("HP Simplified Light", 0, 14)); // NOI18N
         jLabel9.setText("Last Login");
 
         tLastlogin.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -195,7 +195,7 @@ public class AddU extends javax.swing.JPanel {
             }
         });
 
-        tID.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        tID.setFont(new java.awt.Font("HP Simplified Light", 0, 14)); // NOI18N
         tID.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         tID.setEnabled(false);
         tID.addActionListener(new java.awt.event.ActionListener() {
@@ -212,7 +212,7 @@ public class AddU extends javax.swing.JPanel {
             }
         });
 
-        jButton7.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jButton7.setFont(new java.awt.Font("HP Simplified Light", 0, 14)); // NOI18N
         jButton7.setText("........................illuminati");
         jButton7.setToolTipText("Show Password");
         jButton7.addActionListener(new java.awt.event.ActionListener() {
@@ -221,7 +221,7 @@ public class AddU extends javax.swing.JPanel {
             }
         });
 
-        bRefresh.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        bRefresh.setFont(new java.awt.Font("HP Simplified Light", 0, 14)); // NOI18N
         bRefresh.setText("Refresh");
         bRefresh.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -229,7 +229,7 @@ public class AddU extends javax.swing.JPanel {
             }
         });
 
-        bSave.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        bSave.setFont(new java.awt.Font("HP Simplified Light", 0, 14)); // NOI18N
         bSave.setText("Save");
         bSave.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -244,7 +244,7 @@ public class AddU extends javax.swing.JPanel {
             }
         });
 
-        bNew.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        bNew.setFont(new java.awt.Font("HP Simplified Light", 0, 14)); // NOI18N
         bNew.setText("New");
         bNew.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -252,7 +252,7 @@ public class AddU extends javax.swing.JPanel {
             }
         });
 
-        bEdit.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        bEdit.setFont(new java.awt.Font("HP Simplified Light", 0, 14)); // NOI18N
         bEdit.setText("Edit");
         bEdit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -310,7 +310,7 @@ public class AddU extends javax.swing.JPanel {
                 .addContainerGap())
         );
 
-        bDelete.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        bDelete.setFont(new java.awt.Font("HP Simplified Light", 0, 14)); // NOI18N
         bDelete.setText("Delete");
         bDelete.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -330,7 +330,7 @@ public class AddU extends javax.swing.JPanel {
             }
         });
 
-        lCell1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lCell1.setFont(new java.awt.Font("HP Simplified Light", 0, 14)); // NOI18N
         lCell1.setText("Quick Search");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -515,7 +515,7 @@ public class AddU extends javax.swing.JPanel {
         // TODO add your handling code here:
         fetchUsers();
         if (!edited) {
-            tID.setText("#" + currentID());
+            tID.setText("$" + currentID());
         }
     }//GEN-LAST:event_bRefreshActionPerformed
 
@@ -546,7 +546,7 @@ public class AddU extends javax.swing.JPanel {
         }
         tPassword.setText("");
         cRole.setSelectedItem("Jailer");
-        tID.setText("#" + currentID());
+        tID.setText("$" + currentID());
         edited = false;
         bEdit.setEnabled(true);
         bRefresh.setEnabled(true);
@@ -745,7 +745,7 @@ public class AddU extends javax.swing.JPanel {
         try {
             ResultSet rs = Database.getStatement().executeQuery("select * from tblUsers where id=" + id);
             if (rs.next()) {
-                tID.setText("#" + rs.getInt(1));
+                tID.setText("$" + rs.getInt(1));
                 tName.setText("" + rs.getString(2));
                 tUsername.setText("" + rs.getString(3));
                 cRole.setSelectedItem("" + rs.getString(5));
@@ -820,7 +820,7 @@ public class AddU extends javax.swing.JPanel {
             a = a & false;
         } else {
             if (tMobile.getText().length() != 10) {
-                s += "Mobile Number must contain 10 digits";
+                s += "Mobile Number must contain 10 digits\n";
                 a = a & false;
             } else {
                 ResultSet rs;
@@ -871,7 +871,7 @@ public class AddU extends javax.swing.JPanel {
         }
         tPassword.setText("");
         cRole.setSelectedItem("Jailer");
-        tID.setText("#" + currentID());
+        tID.setText("$" + currentID());
         edited = false;
         bEdit.setEnabled(true);
         bRefresh.setEnabled(true);

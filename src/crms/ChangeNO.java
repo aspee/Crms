@@ -27,6 +27,7 @@ public class ChangeNO extends javax.swing.JDialog {
         super(parent, modal);
         getContentPane().setBackground(new Color(255, 255, 255));
         initComponents();
+        jTextField2.setTransferHandler(null);
         this.parent = parent;
         try {
             // TODO add your handling code here:

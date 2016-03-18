@@ -44,7 +44,7 @@ public class Home extends javax.swing.JFrame {
         initComponents();
 
         setInfo();
-
+        this.setTitle("Criminal Record Management");
         s = new Settings(this);
         Cards.add(s, "Settings");
         sc = new SearchC(this);
@@ -77,6 +77,8 @@ public class Home extends javax.swing.JFrame {
 
     public void showAddCriminal() {
         cl.show(Cards, "Add Criminal");
+        ac.ifpolice();
+        
     }
 
     public void ipc(int id) {
@@ -135,7 +137,7 @@ public class Home extends javax.swing.JFrame {
         Settings.setBackground(new java.awt.Color(51, 51, 51));
         Settings.setForeground(new java.awt.Color(51, 51, 51));
         Settings.setIcon(new javax.swing.ImageIcon(getClass().getResource("/res/home.png"))); // NOI18N
-        Settings.setToolTipText("");
+        Settings.setToolTipText("Home");
         Settings.setFocusable(false);
         Settings.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         Settings.setMargin(new java.awt.Insets(5, 5, 5, 5));
@@ -240,8 +242,8 @@ public class Home extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(Role, javax.swing.GroupLayout.PREFERRED_SIZE, 231, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(Hello, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(Hello, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGap(38, 38, 38)
                         .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
@@ -365,9 +367,11 @@ public class Home extends javax.swing.JFrame {
         } else if (Role.equals("Jailer")) {
             jToolBar1.remove(bAddu);
 
-        } else if (Role.equals("CBI") || Role.equals("Police")) {
+        } else if (Role.equals("CBI")) {
             jToolBar1.remove(bAddu);
             jToolBar1.remove(bAddc);
+        } else if (Role.equals("Police")) {
+            jToolBar1.remove(bAddu);
         } else if (Role.equals("Judge")) {
             jToolBar1.remove(bAddu);
         }

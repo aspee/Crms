@@ -25,11 +25,12 @@ public class ChangeN extends javax.swing.JDialog {
         super(parent, modal);
         getContentPane().setBackground(new Color(255,255,255));
         initComponents();
+         jTextField2.setTransferHandler(null);
         this.parent=parent;
         jTextField1.setText(Database.getName());
         setLocationRelativeTo(null);
         setVisible(true);
-        jTextField2.setTransferHandler(null);
+       
         
     }
 

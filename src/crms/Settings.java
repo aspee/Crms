@@ -46,10 +46,10 @@ public class Settings extends javax.swing.JPanel {
         this.parent = parent;
         if (Database.getRole().equals("Admin")) {
             System.out.println("time to disable");
-            jTextArea1.setVisible(false);
+            jXTable1.setVisible(false);
+        } else {
+            Cal();
         }
-        else
-        Cal();
     }
 
     /**
@@ -64,8 +64,8 @@ public class Settings extends javax.swing.JPanel {
         jLabel5 = new crms.CButton();
         jLabel3 = new crms.CButton();
         jLabel4 = new crms.CButton();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jXTable1 = new org.jdesktop.swingx.JXTable();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setPreferredSize(new java.awt.Dimension(908, 607));
@@ -91,30 +91,41 @@ public class Settings extends javax.swing.JPanel {
             }
         });
 
-        jScrollPane2.setBackground(new java.awt.Color(255, 255, 255));
+        jScrollPane1.setBackground(new java.awt.Color(255, 255, 255));
+        jScrollPane1.setBorder(javax.swing.BorderFactory.createTitledBorder("Today"));
 
-        jTextArea1.setEditable(false);
-        jTextArea1.setColumns(20);
-        jTextArea1.setFont(new java.awt.Font("HP Simplified Light", 0, 14)); // NOI18N
-        jTextArea1.setRows(5);
-        jTextArea1.setBorder(javax.swing.BorderFactory.createTitledBorder("Today"));
-        jScrollPane2.setViewportView(jTextArea1);
+        jXTable1.setForeground(new java.awt.Color(255, 255, 255));
+        jXTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jXTable1.setEditable(false);
+        jXTable1.setEnabled(false);
+        jXTable1.setGridColor(new java.awt.Color(255, 255, 255));
+        jScrollPane1.setViewportView(jXTable1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+            .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jScrollPane2)
-                    .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(0, 489, Short.MAX_VALUE)
                         .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane1))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -126,8 +137,8 @@ public class Settings extends javax.swing.JPanel {
                     .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 494, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(73, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 540, Short.MAX_VALUE)
+                .addGap(27, 27, 27))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -159,31 +170,31 @@ public class Settings extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTextArea jTextArea1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private org.jdesktop.swingx.JXTable jXTable1;
     // End of variables declaration//GEN-END:variables
 
     private void Cal() {
         try {
 
-            ResultSet rs2 = Database.getStatement().executeQuery("select tblPunishment.id,mtblCriminals.fname,tblPunishment.ptype,tblPunishment.tdate,tblPunishment.fine from mtblCriminals , tblPunishment where tblPunishment.id=mtblCriminals.cid and tblPunishment.tdate=curdate()");
-            jTextArea1.setText("");
+            ResultSet rs2 = Database.getStatement().executeQuery("select tblPunishment.id,mtblCriminals.fname,mtblCriminals.lname,tblPunishment.ptype,tblPunishment.tdate,tblPunishment.fine from mtblCriminals , tblPunishment where tblPunishment.id=mtblCriminals.cid and tblPunishment.tdate=curdate()");
+
+            ResultSetMetaData rsmd = rs2.getMetaData();
+            String header[] = {"ID","First Name","Last Name","Punishment","Date","Fine"};
+            DefaultTableModel dtm = (DefaultTableModel) jXTable1.getModel();
+            dtm.setRowCount(0);
+            dtm.setColumnIdentifiers(header);
             while (rs2.next()) {
-                for (int i = 0; i < 5; i++) {
-                    
-                    jTextArea1.append(rs2.getString(i + 1)+" ");
-                }
-                jTextArea1.append("\n");
-  
+                dtm.addRow(header);
             }
 
         } catch (SQLException ex) {
             Logger.getLogger(Crimes.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    public void removeLog()
-    {
+
+    public void removeLog() {
         //this.remove(jTextArea1);
-        jTextArea1.setVisible(false);
+        jXTable1.setVisible(false);
     }
 }

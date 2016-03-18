@@ -27,11 +27,11 @@ public class CButton extends JLabel implements MouseListener {
         setFont(new java.awt.Font("Tahoma", 0, 14));
         setFont(new java.awt.Font("HP Simplified", 0, 14));
 //        setForeground(new java.awt.Color(247, 247, 247));
-          setForeground(new java.awt.Color(255, 255, 255));
+        setForeground(new java.awt.Color(255, 255, 255));
         setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         setOpaque(true);
         this.addMouseListener(this);
-        
+
     }
 
     @Override
@@ -41,28 +41,37 @@ public class CButton extends JLabel implements MouseListener {
 
     @Override
     public void mousePressed(MouseEvent me) {
-        setBackground(Color.WHITE);
-        setForeground(Color.BLACK);
+        if (this.isEnabled()) {
+            setBackground(Color.WHITE);
+            setForeground(Color.BLACK);
+        }
     }
 
     @Override
     public void mouseReleased(MouseEvent me) {
-        setBackground(new Color(51, 51, 51));
-        setForeground(Color.WHITE);
+        if (this.isEnabled()) {
+            setBackground(new Color(51, 51, 51));
+            setForeground(Color.WHITE);
+        }
+
     }
 
     @Override
     public void mouseEntered(MouseEvent me) {
-        setCursor(new Cursor(Cursor.HAND_CURSOR));
-        Border one = BorderFactory.createEtchedBorder();
-        Border two = BorderFactory.createMatteBorder(1, 1, 1, 1, Color.WHITE);
-        setBorder(BorderFactory.createCompoundBorder(one,two));
+        if (this.isEnabled()) {
+            setCursor(new Cursor(Cursor.HAND_CURSOR));
+            Border one = BorderFactory.createEtchedBorder();
+            Border two = BorderFactory.createMatteBorder(1, 1, 1, 1, Color.WHITE);
+            setBorder(BorderFactory.createCompoundBorder(one, two));
+        }
     }
 
     @Override
     public void mouseExited(MouseEvent me) {
-        setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
-        setBorder(null);
+     
+            setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+            setBorder(null);
+        
     }
 
 }

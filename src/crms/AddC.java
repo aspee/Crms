@@ -46,6 +46,7 @@ public class AddC extends javax.swing.JPanel {
     static boolean editing = false;
     boolean imagePresent = false;
     Home parent;
+    byte[] tmpimg;
 
     public AddC(javax.swing.JFrame parent) {
 
@@ -56,15 +57,44 @@ public class AddC extends javax.swing.JPanel {
         allStates();
         arrestedState();
         initComponents();
+        chooser = new JFileChooser();
         tdob.setMaxSelectableDate(new Date());
-
+        tdob.setDate(null);
         this.parent = (Home) parent;
         CID.setText("#" + currentID());
+
         if (!Database.getRole().equals("Judge")) {
-            System.out.println("time to disable");
             jLabel6.setVisible(false);
         }
+        if (Database.getRole().equals("Police")) {
+            JPanel tJpanel = null;
+            for (Component c : this.getComponents()) {
+                if (c.getClass().toString().contains("javax.swing.JPanel")) {
+                    tJpanel = (JPanel) c;
+                    for (Component d : tJpanel.getComponents()) {
+                        d.setEnabled(false);
+                    }
+                }
+            }
+            IMAGE.setEnabled(true);
+            tAddress.setEnabled(false);
+            tAdditional.setEnabled(false);
+        }
+
         tCell.setTransferHandler(null);
+        tEyes.setTransferHandler(null);
+        tFacility.setTransferHandler(null);
+        tFirst.setTransferHandler(null);
+        tFoot.setTransferHandler(null);
+        tInch.setTransferHandler(null);
+        tLast.setTransferHandler(null);
+        tMiddle.setTransferHandler(null);
+        tSection.setTransferHandler(null);
+        tWeight.setTransferHandler(null);
+        tdob.setTransferHandler(null);
+        tAdditional.setTransferHandler(null);
+        tAddress.setTransferHandler(null);
+        tArrestdate.setTransferHandler(null);
 
     }
 
@@ -72,19 +102,19 @@ public class AddC extends javax.swing.JPanel {
         try {
             int oldid = Integer.parseInt(CID.getText().substring(1));
             if (editing) {
-                System.out.println("Editing:" + oldid);
                 Database.getStatement().execute("SET FOREIGN_KEY_CHECKS=0;");
                 Database.getStatement().execute("delete from tblIPC where id=" + oldid);
                 Database.getStatement().execute("delete from tblpunishment where id=" + oldid);
+                byteImage(oldid);
                 Database.getStatement().execute("delete from mtblCriminals where cid=" + oldid);
-                 Database.getStatement().execute("delete from crimelocation where cid=" + oldid);
+                Database.getStatement().execute("delete from crimelocation where cid=" + oldid);
                 Database.getStatement().execute("SET FOREIGN_KEY_CHECKS=1;");
                 pst = Database.getConnection().prepareStatement("insert into mtblCriminals(cid,image,image_size,ad,fname,mname,lname,dob,state,city,address,gender,mstatus,color,hair,bg,height,weight,eyes,facility,section,cell,ai) values(" + oldid + ",?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
                 editing = false;
             } else {
                 pst = Database.getConnection().prepareStatement("insert into mtblCriminals(cid,image,image_size,ad,fname,mname,lname,dob,state,city,address,gender,mstatus,color,hair,bg,height,weight,eyes,facility,section,cell,ai) values(null,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
             }
-            
+
             Date dateFromDateChooser = tdob.getDate();
             Date dateFromDateChooser1 = tArrestdate.getDate();
             String dateString = (String.format("%1$tY-%1$tm-%1$td", dateFromDateChooser));
@@ -93,7 +123,6 @@ public class AddC extends javax.swing.JPanel {
             }
             String dateString1 = String.format("%1$tY-%1$tm-%1$td", dateFromDateChooser1);
             storeImage();
-            // pst.setBinaryStream(2,);
             pst.setString(3, dateString1);
             pst.setString(4, tFirst.getText());
             pst.setString(5, tMiddle.getText());
@@ -123,7 +152,6 @@ public class AddC extends javax.swing.JPanel {
             pst.setString(20, tSection.getText());
             pst.setString(21, tCell.getText());
             pst.setString(22, tAdditional.getText());
-
             pst.executeUpdate();
             parent.ipc(oldid);
             parent.pdf(oldid);
@@ -132,9 +160,16 @@ public class AddC extends javax.swing.JPanel {
         } catch (SQLException ex) {
             Logger.getLogger(AddC.class.getName()).log(Level.SEVERE, null, ex);
         }
-
-        clearAll();
-        CID.setText("#" + currentID());
+        if (Database.getRole().equals("Police")) {
+            tFacility.setEnabled(false);
+            tSection.setEnabled(false);
+            tCell.setEnabled(false);
+            bSave1.setEnabled(false);
+        } else {
+            tArrestdate.setEnabled(true);
+            clearAll();
+            CID.setText("#" + currentID());
+        }
 
     }
 
@@ -196,11 +231,11 @@ public class AddC extends javax.swing.JPanel {
         CID = new javax.swing.JTextField();
         lId = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
-        tArrestdate = new org.jdesktop.swingx.JXDatePicker();
         bBrowse = new crms.CButton()
         ;
         bRemove = new crms.CButton()
         ;
+        tArrestdate = new com.toedter.calendar.JDateChooser();
         jPanel4 = new javax.swing.JPanel();
         lColor = new javax.swing.JLabel();
         tWeight = new javax.swing.JTextField();
@@ -273,6 +308,11 @@ public class AddC extends javax.swing.JPanel {
                 tLastActionPerformed(evt);
             }
         });
+        tLast.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                tLastKeyTyped(evt);
+            }
+        });
 
         jScrollPane1.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         jScrollPane1.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
@@ -282,6 +322,11 @@ public class AddC extends javax.swing.JPanel {
         tAddress.setLineWrap(true);
         tAddress.setRows(5);
         tAddress.setWrapStyleWord(true);
+        tAddress.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                tAddressKeyTyped(evt);
+            }
+        });
         jScrollPane1.setViewportView(tAddress);
 
         lName.setFont(new java.awt.Font("HP Simplified Light", 0, 14)); // NOI18N
@@ -299,6 +344,11 @@ public class AddC extends javax.swing.JPanel {
                 tFirstActionPerformed(evt);
             }
         });
+        tFirst.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                tFirstKeyTyped(evt);
+            }
+        });
 
         lGender.setFont(new java.awt.Font("HP Simplified Light", 0, 14)); // NOI18N
         lGender.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
@@ -308,6 +358,11 @@ public class AddC extends javax.swing.JPanel {
         tMiddle.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 tMiddleActionPerformed(evt);
+            }
+        });
+        tMiddle.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                tMiddleKeyTyped(evt);
             }
         });
 
@@ -339,6 +394,14 @@ public class AddC extends javax.swing.JPanel {
         jRadioButton1.setFont(new java.awt.Font("HP Simplified Light", 0, 12)); // NOI18N
         jRadioButton1.setSelected(true);
         jRadioButton1.setText("Unknown");
+
+        tdob.setDateFormatString("d/MM/yyyy");
+        tdob.setMaxSelectableDate(new java.util.Date(253370748675000L));
+        tdob.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tdobMouseClicked(evt);
+            }
+        });
 
         jLabel6.setText("Crimes & Punishments");
         jLabel6.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -452,6 +515,11 @@ public class AddC extends javax.swing.JPanel {
         tAdditional.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         tAdditional.setLineWrap(true);
         tAdditional.setRows(5);
+        tAdditional.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                tAdditionalKeyTyped(evt);
+            }
+        });
         jScrollPane2.setViewportView(tAdditional);
 
         lAdditional.setFont(new java.awt.Font("HP Simplified Light", 0, 14)); // NOI18N
@@ -483,11 +551,21 @@ public class AddC extends javax.swing.JPanel {
         lFacility.setText("Facility");
 
         tSection.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        tSection.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                tSectionKeyTyped(evt);
+            }
+        });
 
         tFacility.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         tFacility.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 tFacilityActionPerformed(evt);
+            }
+        });
+        tFacility.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                tFacilityKeyTyped(evt);
             }
         });
 
@@ -601,7 +679,7 @@ public class AddC extends javax.swing.JPanel {
         lArrest.setText("Arrest Date");
 
         CID.setEditable(false);
-        CID.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        CID.setFont(new java.awt.Font("HP Simplified Light", 0, 14)); // NOI18N
         CID.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         CID.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -615,12 +693,6 @@ public class AddC extends javax.swing.JPanel {
 
         jLabel1.setForeground(new java.awt.Color(255, 0, 0));
         jLabel1.setText("*");
-
-        tArrestdate.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                tArrestdateActionPerformed(evt);
-            }
-        });
 
         bBrowse.setText("Browse");
         bBrowse.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
@@ -640,6 +712,8 @@ public class AddC extends javax.swing.JPanel {
             }
         });
 
+        tArrestdate.setDateFormatString("d/MM/yyyy");
+
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
         jPanel6Layout.setHorizontalGroup(
@@ -656,10 +730,12 @@ public class AddC extends javax.swing.JPanel {
                             .addComponent(IMAGE, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                 .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel6Layout.createSequentialGroup()
-                                    .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                        .addComponent(lArrest, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(tArrestdate, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(jPanel6Layout.createSequentialGroup()
+                                            .addComponent(lArrest, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addGap(0, 0, Short.MAX_VALUE))
+                                        .addComponent(tArrestdate, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 6, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel6Layout.createSequentialGroup()
                                     .addComponent(bBrowse, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -685,7 +761,7 @@ public class AddC extends javax.swing.JPanel {
                 .addComponent(lArrest)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 22, Short.MAX_VALUE)
                     .addComponent(tArrestdate, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -736,6 +812,11 @@ public class AddC extends javax.swing.JPanel {
         });
 
         tEyes.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        tEyes.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                tEyesKeyTyped(evt);
+            }
+        });
 
         cHair.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         cHair.setModel(new javax.swing.DefaultComboBoxModel(new String[] { " ", "Straight", "Curly" }));
@@ -897,7 +978,7 @@ public class AddC extends javax.swing.JPanel {
     private void tFootKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tFootKeyTyped
         // TODO add your handling code here:
         char caracter = evt.getKeyChar();
-        if (((caracter < '0') || (caracter > '9')) || tFoot.getText().length()>= 1  && (caracter != '\b')) {
+        if (((caracter < '0') || (caracter > '9')) || tFoot.getText().length() >= 1 && (caracter != '\b')) {
             evt.consume();
         }
     }//GEN-LAST:event_tFootKeyTyped
@@ -905,16 +986,16 @@ public class AddC extends javax.swing.JPanel {
     private void tInchKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tInchKeyTyped
         // TODO add your handling code here:
         char caracter = evt.getKeyChar();
-        if (((caracter < '0') || (caracter > '9')) || tInch.getText().length()>=2 && (caracter != '\b')) {
+        if (((caracter < '0') || (caracter > '9')) || tInch.getText().length() >= 2 && (caracter != '\b')) {
             evt.consume();
-        }
-        else
-        {   if(!"".equals(tInch.getText()))
-                if(Integer.parseInt(tInch.getText()+""+caracter)>11)
-                
+        } else {
+            if (!"".equals(tInch.getText())) {
+                if (Integer.parseInt(tInch.getText() + "" + caracter) > 11) {
                     evt.consume();
+                }
+            }
         }
-       
+
     }//GEN-LAST:event_tInchKeyTyped
 
     private void tWeightKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tWeightKeyTyped
@@ -929,43 +1010,50 @@ public class AddC extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_tColorActionPerformed
 
-    private void tArrestdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tArrestdateActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_tArrestdateActionPerformed
-
     private void bBrowseMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bBrowseMouseClicked
-        chooser = new JFileChooser();
-        chooser.setAcceptAllFileFilterUsed(false);
-        FileNameExtensionFilter filter = new FileNameExtensionFilter(
-                "JPG & PNG Images", "jpg", "png");
-        chooser.setFileFilter(filter);
-        int returnVal = chooser.showOpenDialog(this);
-        if (returnVal == JFileChooser.APPROVE_OPTION) {
-            IMAGE.setIcon(new ImageIcon(((new ImageIcon("" + chooser.getSelectedFile())).getImage()).getScaledInstance(192, 192, java.awt.Image.SCALE_SMOOTH)));
-            imagePresent = true;
+        if (bBrowse.isEnabled()) {
+
+            chooser.setAcceptAllFileFilterUsed(false);
+            FileNameExtensionFilter filter = new FileNameExtensionFilter(
+                    "JPG & PNG Images", "jpg", "png");
+            chooser.setFileFilter(filter);
+            int returnVal = chooser.showOpenDialog(this);
+            if (returnVal == JFileChooser.APPROVE_OPTION) {
+                IMAGE.setIcon(new ImageIcon(((new ImageIcon("" + chooser.getSelectedFile())).getImage()).getScaledInstance(192, 192, java.awt.Image.SCALE_SMOOTH)));
+                imagePresent = true;
+            }
         }
     }//GEN-LAST:event_bBrowseMouseClicked
 
     private void bRemoveMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bRemoveMouseClicked
-        // TODO add your handling code here:
-        IMAGE.setIcon(new javax.swing.ImageIcon(getClass().getResource("/res/jinsignia.alpha.png")));
-        imagePresent = false;
+        if (bRemove.isEnabled()) {
+            IMAGE.setIcon(new javax.swing.ImageIcon(getClass().getResource("/res/jinsignia.alpha.png")));
+            imagePresent = false;
+        }
     }//GEN-LAST:event_bRemoveMouseClicked
 
     private void bClearMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bClearMouseClicked
-        clearAll();
+        if (bClear.isEnabled()) {
+            clearAll();
+            tArrestdate.setEnabled(true);
+        }
     }//GEN-LAST:event_bClearMouseClicked
 
     private void bSave1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bSave1MouseClicked
-        if (verify()) {
-            setAll();
-            Saved();
+        if (bSave1.isEnabled()) {
+
+            if (verify()) {
+                setAll();
+                Saved();
+            }
         }
     }//GEN-LAST:event_bSave1MouseClicked
 
     private void jLabel6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel6MouseClicked
-        Home h = (Home) parent;
-        h.showCrimes();
+        if (jLabel6.isEnabled()) {
+            Home h = (Home) parent;
+            h.showCrimes();
+        }
     }//GEN-LAST:event_jLabel6MouseClicked
 
     private void cCityActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cCityActionPerformed
@@ -1012,6 +1100,66 @@ public class AddC extends javax.swing.JPanel {
     private void tFacilityActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tFacilityActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_tFacilityActionPerformed
+
+    private void tdobMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tdobMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tdobMouseClicked
+
+    private void tFirstKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tFirstKeyTyped
+        char caracter = evt.getKeyChar();
+        if (tFirst.getText().length() >= 20 || !(caracter < '0' || caracter > '9')) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_tFirstKeyTyped
+
+    private void tMiddleKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tMiddleKeyTyped
+        char caracter = evt.getKeyChar();
+        if (tMiddle.getText().length() >= 20 || !(caracter < '0' || caracter > '9')) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_tMiddleKeyTyped
+
+    private void tLastKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tLastKeyTyped
+        char caracter = evt.getKeyChar();
+        if (tLast.getText().length() >= 20 || !(caracter < '0' || caracter > '9')) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_tLastKeyTyped
+
+    private void tAddressKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tAddressKeyTyped
+        char caracter = evt.getKeyChar();
+        if (tAddress.getText().length() >= 100) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_tAddressKeyTyped
+
+    private void tFacilityKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tFacilityKeyTyped
+        char caracter = evt.getKeyChar();
+        if (tFacility.getText().length() >= 20) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_tFacilityKeyTyped
+
+    private void tSectionKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tSectionKeyTyped
+        char caracter = evt.getKeyChar();
+        if (tSection.getText().length() >= 20) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_tSectionKeyTyped
+
+    private void tAdditionalKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tAdditionalKeyTyped
+        char caracter = evt.getKeyChar();
+        if (tAdditional.getText().length() >= 500) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_tAdditionalKeyTyped
+
+    private void tEyesKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tEyesKeyTyped
+        char caracter = evt.getKeyChar();
+        if (tEyes.getText().length() >= 20) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_tEyesKeyTyped
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -1069,7 +1217,7 @@ public class AddC extends javax.swing.JPanel {
     private javax.swing.JRadioButton rMale;
     private javax.swing.JTextArea tAdditional;
     private javax.swing.JTextArea tAddress;
-    private org.jdesktop.swingx.JXDatePicker tArrestdate;
+    private com.toedter.calendar.JDateChooser tArrestdate;
     private javax.swing.JTextField tCell;
     private javax.swing.JComboBox tColor;
     private javax.swing.JTextField tEyes;
@@ -1099,7 +1247,6 @@ public class AddC extends javax.swing.JPanel {
                 if (file != null) {
                     filePath = file.getPath();
                 }
-
                 if (filePath != null) {
                     FileInputStream fileInputStream = new FileInputStream(filePath);
                     byte b[] = new byte[fileInputStream.available()];
@@ -1107,6 +1254,10 @@ public class AddC extends javax.swing.JPanel {
                     fileInputStream.close();
                     pst.setBytes(1, b);
                     pst.setInt(2, 1);
+                } else {
+                    pst.setBytes(1, tmpimg);
+                    pst.setInt(2, 2);
+
                 }
             }
         } catch (Exception e) {
@@ -1133,7 +1284,6 @@ public class AddC extends javax.swing.JPanel {
         JTextField tfield = null;
         JPanel tJpanel = null;
         for (Component c : this.getComponents()) {
-            //  System.out.println(c);
             if (c.getClass().toString().contains("javax.swing.JPanel")) {
                 tJpanel = (JPanel) c;
                 for (Component d : tJpanel.getComponents()) {
@@ -1168,7 +1318,7 @@ public class AddC extends javax.swing.JPanel {
 
         String s = "";
         Boolean a = true;
-        if (tdob.getDate()!=null && tdob.getDate().after(new Date())) {
+        if (tdob.getDate() != null && tdob.getDate().after(new Date())) {
             s += "Dob cannot be in the future\n";
             a = a & false;
         }
@@ -1197,16 +1347,15 @@ public class AddC extends javax.swing.JPanel {
         } else {
             try {
                 ResultSet rs = Database.getStatement().executeQuery("select cid from mtblcriminals where cid<>" + CID.getText().substring(1) + " "
-                        + "and cell='" + tCell.getText() + "' "
+                        + "and cell=" + tCell.getText() + " "
                         + "and facility='" + tFacility.getText() + "' "
                         + "and section='" + tSection.getText() + "'");
                 if (rs.next()) {
-                    String tempid=rs.getString(1);
-                    rs=Database.getStatement().executeQuery("select tdate from tblPunishment where id="+tempid+" and tdate>curdate()");
-                    if(rs.next())
-                    {
-                    s += "Cell Occupied\n";
-                    a = a & false;
+                    String tempid = rs.getString(1);
+                    rs = Database.getStatement().executeQuery("select tdate from tblPunishment where id=" + tempid + " and tdate>curdate()");
+                    if (rs.next()) {
+                        s += "Cell Occupied\n";
+                        a = a & false;
                     }
                 }
             } catch (SQLException ex) {
@@ -1264,18 +1413,16 @@ public class AddC extends javax.swing.JPanel {
     void editCriminal(int cid) {
         clearAll();
         CID.setText("#" + cid);
-
+        tArrestdate.setEnabled(false);
         try {
 
             ResultSet edit = Database.getStatement().executeQuery("select * from mtblCriminals where cid=" + cid);
             if (edit.next()) {
-                //        setcState();
-//                cCity.setSelectedItem(""+rs.getString("city"));
                 this.editing = true;
                 if (!(new String(edit.getBytes("image"))).equals("null")) {
+                    imagePresent = true;
                     IMAGE.setIcon(new ImageIcon(((new ImageIcon(edit.getBytes("image"))).getImage()).getScaledInstance(192, 192, java.awt.Image.SCALE_SMOOTH)));
                 } else {
-
                     IMAGE.setIcon(new ImageIcon(((new ImageIcon(getClass().getResource("/res/alert.png"))).getImage()).getScaledInstance(192, 192, java.awt.Image.SCALE_SMOOTH)));
 
                 }
@@ -1421,6 +1568,38 @@ public class AddC extends javax.swing.JPanel {
         } catch (SQLException ex) {
             Logger.getLogger(AddC.class
                     .getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public void ifpolice() {
+        if (Database.getRole().equals("Police")) {
+            JPanel tJpanel = null;
+            for (Component c : this.getComponents()) {
+                if (c.getClass().toString().contains("javax.swing.JPanel")) {
+                    tJpanel = (JPanel) c;
+                    for (Component d : tJpanel.getComponents()) {
+                        d.setEnabled(false);
+                    }
+                }
+            }
+            IMAGE.setEnabled(true);
+            tAddress.setEnabled(false);
+            tAdditional.setEnabled(false);
+            tFacility.setEnabled(true);
+            tCell.setEnabled(true);
+            tSection.setEnabled(true);
+            bSave1.setEnabled(true);
+        }
+    }
+
+    private void byteImage(int oldid) {
+        try {
+            ResultSet ima = Database.getStatement().executeQuery("select image  from mtblCriminals where cid=" + oldid);
+            if (ima.next()) {
+                tmpimg = ima.getBytes(1);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(AddC.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

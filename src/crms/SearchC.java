@@ -80,9 +80,13 @@ public class SearchC extends javax.swing.JPanel {
         table.setRowSorter(rowSorter);
         scroll.getViewport().setBackground(Color.WHITE);
         System.out.println(Database.getRole());
-        if (Database.getRole().equals("Police") || Database.getRole().equals("CBI")) {
+        if (Database.getRole().equals("CBI")) {
             System.out.println(Database.getRole());
             jLabel1.setVisible(false);
+            jLabel2.setVisible(false);
+        }
+        if (Database.getRole().equals("Police")) {
+            System.out.println(Database.getRole());
             jLabel2.setVisible(false);
         }
     }
@@ -739,7 +743,7 @@ public class SearchC extends javax.swing.JPanel {
     private void tableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableMouseClicked
         if (evt.getClickCount() == 2 && !evt.isConsumed()) {
             evt.consume();
-            new Show((Integer.parseInt("" + table.getValueAt(table.getSelectedRow(), 0)))).setVisible(true);
+            new Show((Integer.parseInt("" + table.getValueAt(table.getSelectedRow(), 1)))).setVisible(true);
 
             //handle double click event.
         }
@@ -850,48 +854,47 @@ public class SearchC extends javax.swing.JPanel {
         if (table.getSelectedRow() > -1) {
             Home h = (Home) parent;
             h.showAddCriminal();
-            h.editCriminals(Integer.parseInt((String) table.getValueAt(table.getSelectedRow(), 0)));
-        }
-        else
+            h.editCriminals(Integer.parseInt((String) table.getValueAt(table.getSelectedRow(), 1)));
+        } else {
             JOptionPane.showMessageDialog(this, "Select An Entry!");
+        }
 
     }//GEN-LAST:event_jLabel1MouseClicked
 
     private void jLabel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MouseClicked
-       // TODO add your handling code here:
-        if(table.getSelectedRow()>-1)
-        {
-        int temp = Integer.parseInt("" + table.getValueAt(table.getSelectedRow(), 0));
-        int result = JOptionPane.showOptionDialog(this,
-                "Are you sure you want to Delete?\nID:" + temp + "\nName:" + table.getValueAt(table.getSelectedRow(), 1),
-                "Password Confirmation Required", JOptionPane.YES_NO_OPTION,
-                JOptionPane.QUESTION_MESSAGE, null, null, null);
-        if (result == JOptionPane.YES_OPTION) {
-            try {
-                Database.getStatement().execute("SET FOREIGN_KEY_CHECKS=0;");
-                Database.getStatement().execute("delete from tblIPC where id=" + temp);
-                Database.getStatement().execute("delete from tblpunishment where id=" + temp);
-                Database.getStatement().execute("delete from mtblCriminals where cid=" + temp);
-                Database.getStatement().execute("SET FOREIGN_KEY_CHECKS=1;");
-            } catch (SQLException ex) {
-                Logger.getLogger(AddU.class.getName()).log(Level.SEVERE, null, ex);
+        // TODO add your handling code here:
+        if (table.getSelectedRow() > -1) {
+            int temp = Integer.parseInt("" + table.getValueAt(table.getSelectedRow(), 1));
+            int result = JOptionPane.showOptionDialog(this,
+                    "Are you sure you want to Delete?\nID:" + temp + "\nName:" + table.getValueAt(table.getSelectedRow(), 1),
+                    "Password Confirmation Required", JOptionPane.YES_NO_OPTION,
+                    JOptionPane.QUESTION_MESSAGE, null, null, null);
+            if (result == JOptionPane.YES_OPTION) {
+                try {
+                    Database.getStatement().execute("SET FOREIGN_KEY_CHECKS=0;");
+                    Database.getStatement().execute("delete from tblIPC where id=" + temp);
+                    Database.getStatement().execute("delete from tblpunishment where id=" + temp);
+                    Database.getStatement().execute("delete from mtblCriminals where cid=" + temp);
+                    Database.getStatement().execute("delete from crimelocation where cid=" + temp);
+                    Database.getStatement().execute("SET FOREIGN_KEY_CHECKS=1;");
+                } catch (SQLException ex) {
+                    Logger.getLogger(AddU.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                fetchCriminals();
+                // clearAll();
             }
-            fetchCriminals();
-            // clearAll();
-        }
-        }
-        else
-        {
+        } else {
             JOptionPane.showMessageDialog(this, "Select An Entry!");
         }
     }//GEN-LAST:event_jLabel2MouseClicked
 
     private void jLabel3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel3MouseClicked
         // TODO add your handling code here:
-        if(table.getSelectedRow()>-1)
-        new Show((Integer.parseInt("" + table.getValueAt(table.getSelectedRow(), 0)))).setVisible(true);
-        else
-            JOptionPane.showMessageDialog(this, "Selet an Entry");
+        if (table.getSelectedRow() > -1) {
+            new Show((Integer.parseInt("" + table.getValueAt(table.getSelectedRow(), 1)))).setVisible(true);
+        } else {
+            JOptionPane.showMessageDialog(this, "Selet an Entry!");
+        }
 
     }//GEN-LAST:event_jLabel3MouseClicked
 
@@ -1010,22 +1013,20 @@ public class SearchC extends javax.swing.JPanel {
             ResultSet rs = Database.getStatement().executeQuery("Select  cid,fname,lname,ad,city,facility,section,cell from mtblCriminals");
             ResultSetMetaData rsmd = rs.getMetaData();
             int num = rsmd.getColumnCount();
-            String[] name = new String[num];
+            String[] name = new String[num + 1];
+            name[0] = "status";
             for (int i = 0; i < num; i++) {
-                name[i] = rsmd.getColumnName(i + 1);
+                name[i + 1] = rsmd.getColumnName(i + 1);
             }
             dtm.setColumnIdentifiers(name);
             byte b[] = null;
             while (rs.next()) {
-                // b=rs.getBytes(2);
-                String rowdata[] = new String[num];
+
+                String rowdata[] = new String[num + 1];
+                rowdata[0] = status(rs.getString(1));
                 for (int i = 0; i < num; i++) {
-                    /* if(i==1)
-                     {  
-                     b=rs.getBytes(2);
-                     }
-                     else*/
-                    rowdata[i] = rs.getString(i + 1);
+
+                    rowdata[i + 1] = rs.getString(i + 1);
 
                 }
                 dtm.addRow(rowdata);
@@ -1126,23 +1127,42 @@ public class SearchC extends javax.swing.JPanel {
                     + "facility like '%" + tFacility.getText() + "%' and "
                     + "section like '%" + tSection.getText() + "%' and "
                     + "cell like '%" + tCell.getText() + "%'");
+//            ResultSetMetaData rsmd = rs.getMetaData();
+//            int num = rsmd.getColumnCount();
+//            String[] name = new String[num];
+//            for (int i = 0; i < num; i++) {
+//                name[i] = rsmd.getColumnName(i + 1);
+//            }
+//            dtm.setColumnIdentifiers(name);
+//            while (rs.next()) {
+//                // b=rs.getBytes(2);
+//                String rowdata[] = new String[num];
+//                for (int i = 0; i < num; i++) {
+//                    rowdata[i] = rs.getString(i + 1);
+//                }
+//                dtm.addRow(rowdata);
+//            }
+//            tableautofit();
+//            System.out.println(Height);
             ResultSetMetaData rsmd = rs.getMetaData();
             int num = rsmd.getColumnCount();
-            String[] name = new String[num];
+            String[] name = new String[num + 1];
+            name[0] = "status";
             for (int i = 0; i < num; i++) {
-                name[i] = rsmd.getColumnName(i + 1);
+                name[i + 1] = rsmd.getColumnName(i + 1);
             }
             dtm.setColumnIdentifiers(name);
             while (rs.next()) {
-                // b=rs.getBytes(2);
-                String rowdata[] = new String[num];
+
+                String rowdata[] = new String[num + 1];
+                rowdata[0] = status(rs.getString(1));
                 for (int i = 0; i < num; i++) {
-                    rowdata[i] = rs.getString(i + 1);
+
+                    rowdata[i + 1] = rs.getString(i + 1);
+
                 }
                 dtm.addRow(rowdata);
             }
-            tableautofit();
-            System.out.println(Height);
 
         } catch (SQLException ex) {
             Logger.getLogger(SearchC.class
@@ -1156,19 +1176,23 @@ public class SearchC extends javax.swing.JPanel {
             ResultSet rs = Database.getStatement().executeQuery("Select cid,fname,lname,ad,city,facility,section,cell from mtblCriminals where cid=" + id);
             ResultSetMetaData rsmd = rs.getMetaData();
             int num = rsmd.getColumnCount();
-            String[] name = new String[num];
+            String[] name = new String[num + 1];
+            name[0] = "status";
             for (int i = 0; i < num; i++) {
-                name[i] = rsmd.getColumnName(i + 1);
+                name[i + 1] = rsmd.getColumnName(i + 1);
             }
             dtm.setColumnIdentifiers(name);
+            byte b[] = null;
             while (rs.next()) {
-                // b=rs.getBytes(2);
-                String rowdata[] = new String[num];
+
+                String rowdata[] = new String[num + 1];
+                rowdata[0] = status(rs.getString(1));
                 for (int i = 0; i < num; i++) {
-                    rowdata[i] = rs.getString(i + 1);
+
+                    rowdata[i + 1] = rs.getString(i + 1);
+
                 }
                 dtm.addRow(rowdata);
-
             }
             tableautofit();
         } catch (SQLException ex) {
@@ -1211,6 +1235,29 @@ public class SearchC extends javax.swing.JPanel {
 
             tableColumn.setPreferredWidth(preferredWidth);
         }
+    }
+
+    private String status(String id) {
+        int i = Integer.parseInt(id);
+        String status = null;
+        try {
+            ResultSet rs1 = Database.getStatement().executeQuery("select * from tblPunishment where id=" + id);
+            if (rs1.next()) {
+                if (rs1.getDate("tdate").after(new Date())) {
+                    status = "in";
+                } else {
+                    if (rs1.getString("ptype").equals("Imprison till")) {
+                        status = "out";
+                    } else {
+                        status = "Dead";
+                    }
+                }
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(SearchC.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return status;
     }
 
 }

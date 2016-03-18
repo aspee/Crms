@@ -52,6 +52,8 @@ public class Login extends javax.swing.JFrame implements ActionListener, KeyList
         tfUsername.addActionListener(Login.this);
         tfPassword.addActionListener(Login.this);
         bLogin.addMouseListener(Login.this);
+        tfUsername.setTransferHandler(null);
+        tfPassword.setTransferHandler(null);
 
     }
 
@@ -92,11 +94,17 @@ public class Login extends javax.swing.JFrame implements ActionListener, KeyList
         jPanel1.setOpaque(false);
 
         tfUsername.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        tfUsername.setText("judge");
+        tfUsername.setText("sushant");
+        tfUsername.setToolTipText("");
         tfUsername.setMaximumSize(new java.awt.Dimension(10, 10));
         tfUsername.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 tfUsernameActionPerformed(evt);
+            }
+        });
+        tfUsername.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                tfUsernameKeyTyped(evt);
             }
         });
 
@@ -112,7 +120,7 @@ public class Login extends javax.swing.JFrame implements ActionListener, KeyList
         lPassword.setText("Password:");
 
         tfPassword.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        tfPassword.setText("judge");
+        tfPassword.setText("mrrobot");
         tfPassword.setMaximumSize(new java.awt.Dimension(10, 10));
         tfPassword.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -125,7 +133,7 @@ public class Login extends javax.swing.JFrame implements ActionListener, KeyList
             }
         });
 
-        lValid.setFont(new java.awt.Font("HP Simplified Light", 0, 16)); // NOI18N
+        lValid.setFont(new java.awt.Font("HP Simplified Light", 1, 16)); // NOI18N
         lValid.setForeground(new java.awt.Color(249, 1, 1));
         lValid.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lValid.setText(" ");
@@ -241,11 +249,18 @@ public class Login extends javax.swing.JFrame implements ActionListener, KeyList
     }//GEN-LAST:event_jLabel1MouseClicked
 
     private void tfPasswordKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tfPasswordKeyTyped
-         char caracter = evt.getKeyChar();
+        char caracter = evt.getKeyChar();
         if (tfPassword.getText().length() >= 20) {
             evt.consume();
         }
     }//GEN-LAST:event_tfPasswordKeyTyped
+
+    private void tfUsernameKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tfUsernameKeyTyped
+        char caracter = evt.getKeyChar();
+        if (tfUsername.getText().length() >= 30) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_tfUsernameKeyTyped
 
     /**
      * @param args the command line arguments
@@ -260,7 +275,7 @@ public class Login extends javax.swing.JFrame implements ActionListener, KeyList
         try {
             //javax.swing.UIManager.put("control", new Color(0xbed3e6));
             //javax.swing.UIManager.put("Button.background",new Color(0xbed3e6));
-             //javax.swing.UIManager.put("nimbusBase", new Color(0x878c96));
+            //javax.swing.UIManager.put("nimbusBase", new Color(0x878c96));
 
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Windows".equals(info.getName())) {
