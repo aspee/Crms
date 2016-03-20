@@ -266,7 +266,6 @@ public class SearchC extends javax.swing.JPanel {
             }
         });
 
-        tColor.setEditable(true);
         tColor.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         tColor.setModel(new javax.swing.DefaultComboBoxModel(new String[] { " ", "Light", "Fair", "Medium", "Olive", "Brown", "Black" }));
         tColor.setToolTipText("");
@@ -442,9 +441,8 @@ public class SearchC extends javax.swing.JPanel {
             }
         });
 
-        cHair.setEditable(true);
         cHair.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        cHair.setModel(new javax.swing.DefaultComboBoxModel(new String[] { " ", "Straight", "Curly" }));
+        cHair.setModel(new javax.swing.DefaultComboBoxModel(new String[] { " ", "Straight", "Curly", "Black", "Blonde", "Red", "Bald" }));
 
         ldob.setFont(new java.awt.Font("HP Simplified Light", 0, 14)); // NOI18N
         ldob.setText("DOB");

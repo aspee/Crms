@@ -819,7 +819,7 @@ public class AddC extends javax.swing.JPanel {
         });
 
         cHair.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        cHair.setModel(new javax.swing.DefaultComboBoxModel(new String[] { " ", "Straight", "Curly" }));
+        cHair.setModel(new javax.swing.DefaultComboBoxModel(new String[] { " ", "Straight", "Curly", "Black", "Blonde", "Red", "Bald" }));
 
         lWeight.setFont(new java.awt.Font("HP Simplified Light", 0, 14)); // NOI18N
         lWeight.setText("Weight");

@@ -120,7 +120,7 @@ public class Login extends javax.swing.JFrame implements ActionListener, KeyList
         lPassword.setText("Password:");
 
         tfPassword.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        tfPassword.setText("mrrobot");
+        tfPassword.setText("admin");
         tfPassword.setMaximumSize(new java.awt.Dimension(10, 10));
         tfPassword.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
